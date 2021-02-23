@@ -11,6 +11,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SignupViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
+
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passTextField;
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *bioTextField;
 @end
 
 NS_ASSUME_NONNULL_END

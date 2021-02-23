@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController
+@interface HomeViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
@@ -15,5 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 
-@end
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passTextField;
 
+@property (nonatomic, retain) NSString *email;
+@property (nonatomic, retain) NSString *pass;
+
+@end

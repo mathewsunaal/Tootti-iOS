@@ -16,10 +16,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    // Set delegates
+    self.emailTextField.delegate = self;
+    self.passTextField.delegate = self;
 }
 
 - (IBAction)login:(UIButton *)sender {
     
+    // Update the string properties
+    self.email = self.emailTextField.text;
+    self.pass = self.passTextField.text;
+    
+    NSLog(@"Logging In for: %@",self.email);
     [self performSegueWithIdentifier:@"loginSession" sender:self];
 }
 
@@ -33,4 +42,11 @@
     [self performSegueWithIdentifier:@"showSettings" sender:self];
 }
 
+// Textfield delegate methods
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    return TRUE;
+}
 @end
