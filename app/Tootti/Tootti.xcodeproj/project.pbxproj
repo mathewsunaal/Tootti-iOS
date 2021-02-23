@@ -3,13 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
+		4DB3245F25E565C0006B09B4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245E25E565C0006B09B4 /* SessionViewController.m */; };
+		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
 		529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */; };
-		529E89B225D4F16C004CD9B4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89B125D4F16C004CD9B4 /* ViewController.m */; };
+		529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89B125D4F16C004CD9B4 /* HomeViewController.m */; };
 		529E89B525D4F16C004CD9B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 529E89B325D4F16C004CD9B4 /* Main.storyboard */; };
 		529E89B725D4F16E004CD9B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 529E89B625D4F16E004CD9B4 /* Assets.xcassets */; };
 		529E89BA25D4F16E004CD9B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 529E89B825D4F16E004CD9B4 /* LaunchScreen.storyboard */; };
@@ -20,13 +23,19 @@
 
 /* Begin PBXFileReference section */
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
+		4DB3245925E5656D006B09B4 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
+		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		4DB3245D25E565C0006B09B4 /* SessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SessionViewController.h; sourceTree = "<group>"; };
+		4DB3245E25E565C0006B09B4 /* SessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
+		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		529E89AB25D4F16C004CD9B4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		529E89B025D4F16C004CD9B4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		529E89B125D4F16C004CD9B4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		529E89B025D4F16C004CD9B4 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		529E89B125D4F16C004CD9B4 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		529E89B425D4F16C004CD9B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		529E89B625D4F16E004CD9B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		529E89B925D4F16E004CD9B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,14 +83,20 @@
 				529E89AB25D4F16C004CD9B4 /* AppDelegate.m */,
 				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
 				529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */,
-				529E89B025D4F16C004CD9B4 /* ViewController.h */,
-				529E89B125D4F16C004CD9B4 /* ViewController.m */,
+				529E89B025D4F16C004CD9B4 /* HomeViewController.h */,
+				529E89B125D4F16C004CD9B4 /* HomeViewController.m */,
 				529E89B325D4F16C004CD9B4 /* Main.storyboard */,
 				529E89B625D4F16E004CD9B4 /* Assets.xcassets */,
 				529E89B825D4F16E004CD9B4 /* LaunchScreen.storyboard */,
 				529E89BB25D4F16E004CD9B4 /* Info.plist */,
 				529E89C425D4F2CC004CD9B4 /* GoogleService-Info.plist */,
 				529E89BC25D4F16E004CD9B4 /* main.m */,
+				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
+				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
+				4DB3245D25E565C0006B09B4 /* SessionViewController.h */,
+				4DB3245E25E565C0006B09B4 /* SessionViewController.m */,
+				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
+				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -100,7 +115,6 @@
 				5A5703EA173AA8535F10302E /* Pods-Tootti.debug.xcconfig */,
 				20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -218,10 +232,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				529E89B225D4F16C004CD9B4 /* ViewController.m in Sources */,
+				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
+				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
+				4DB3245F25E565C0006B09B4 /* SessionViewController.m in Sources */,
+				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
