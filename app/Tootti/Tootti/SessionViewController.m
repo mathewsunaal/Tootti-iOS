@@ -6,8 +6,12 @@
 //
 
 #import "SessionViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface SessionViewController ()
+@interface SessionViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+
+@property (nonatomic, retain) AVAudioRecorder *audioRecorder;
+@property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -20,6 +24,14 @@
 
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording initiated");
+}
+
+- (IBAction)endAudioRecord:(UIButton *)sender {
+    NSLog(@"Audio recording ended");
+}
+
+- (IBAction)playAudio:(UIButton *)sender {
+    NSLog(@"Audio playback initiated");
 }
 
 /*
