@@ -18,6 +18,10 @@
     // Do any additional setup after loading the view.
 }
 
+- (IBAction)recordAudio:(UIButton *)sender {
+    NSLog(@"Audio recording initiated");
+}
+
 /*
 #pragma mark - Navigation
 

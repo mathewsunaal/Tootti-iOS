@@ -10,6 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SessionViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
 
 @end
 

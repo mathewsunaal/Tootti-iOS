@@ -37,6 +37,9 @@
     self.bio = self.bioTextField.text;
     
     NSLog(@"Create Account Request");
+    
+    // Firebase call to create new user ...
+    
 }
 
 // Textfield delegate methods
@@ -46,6 +49,8 @@
     [textField resignFirstResponder];
     return TRUE;
 }
+
+
 /*
 #pragma mark - Navigation
 

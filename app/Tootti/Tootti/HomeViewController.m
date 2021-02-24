@@ -29,6 +29,8 @@
     self.pass = self.passTextField.text;
     
     NSLog(@"Logging In for: %@",self.email);
+    
+    // Firebase function to login user.. (move seague to success block)
     [self performSegueWithIdentifier:@"loginSession" sender:self];
 }
 
