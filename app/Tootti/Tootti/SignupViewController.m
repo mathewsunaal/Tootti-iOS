@@ -26,7 +26,7 @@
     self.emailTextField.delegate = self;
     self.passTextField.delegate = self;
     self.usernameTextField.delegate = self;
-    self.bioTextField.delegate = self;
+    self.instrumentTextField.delegate = self;
 }
 
 - (IBAction)createAccount:(UIButton *)sender {
@@ -34,7 +34,7 @@
     self.email = self.emailTextField.text;
     self.pass = self.passTextField.text;
     self.username = self.usernameTextField.text;
-    self.bio = self.bioTextField.text;
+    self.bio = self.instrumentTextField.text;
     
     NSLog(@"Create Account Request");
     
