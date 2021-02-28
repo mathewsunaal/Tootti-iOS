@@ -118,7 +118,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcc-jc-8tx">
-                                <rect key="frame" x="162" y="543.5" width="50" height="50"/>
+                                <rect key="frame" x="162" y="533.5" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" backgroundImage="record.circle" catalog="system"/>
@@ -127,19 +127,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTn-8W-YKs">
-                                <rect key="frame" x="67" y="547.5" width="40" height="40"/>
+                                <rect key="frame" x="262" y="537.5" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="play.fill" catalog="system"/>
                                 <connections>
                                     <action selector="playAudio:" destination="w7q-8h-R3B" eventType="touchUpInside" id="ejZ-e1-GhT"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQf-lk-Vmw">
-                                <rect key="frame" x="279" y="548" width="40" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="]" backgroundImage="stop.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="endAudioRecord:" destination="w7q-8h-R3B" eventType="touchUpInside" id="c3C-9j-ac5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -150,7 +142,6 @@
                     <connections>
                         <outlet property="playButton" destination="ZTn-8W-YKs" id="JTU-b3-AMm"/>
                         <outlet property="recordButton" destination="bcc-jc-8tx" id="44d-JT-hgE"/>
-                        <outlet property="stopButton" destination="kQf-lk-Vmw" id="QdM-Ja-o4S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="igg-zw-SgN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -245,7 +236,6 @@
         <image name="gearshape.fill" catalog="system" width="128" height="121"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="record.circle" catalog="system" width="128" height="121"/>
-        <image name="stop.fill" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
