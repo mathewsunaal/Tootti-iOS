@@ -61,9 +61,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D925A2925EC4EEE00907574 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		529E899E25D4F16C004CD9B4 = {
 			isa = PBXGroup;
 			children = (
+				4D925A2925EC4EEE00907574 /* Assets */,
 				529E89A925D4F16C004CD9B4 /* Tootti */,
 				529E89A825D4F16C004CD9B4 /* Products */,
 				B42353C5FEE36A87AA02E0C0 /* Pods */,
