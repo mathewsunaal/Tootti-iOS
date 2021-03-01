@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D925A3025EC5DC200907574 /* CreateSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A2F25EC5DC200907574 /* CreateSessionDetailVC.m */; };
-		4D925A3425EC5DE600907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A3325EC5DE600907574 /* JoinSessionDetailVC.m */; };
-		4D925A3825EC5E2700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A3725EC5E2700907574 /* HomeSessionVC.m */; };
+		4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */; };
+		4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5A25EC68E700907574 /* HomeSessionVC.m */; };
+		4D925A5F25EC68E700907574 /* RecordingSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */; };
+		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
-		4DB3245F25E565C0006B09B4 /* RecordingSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245E25E565C0006B09B4 /* RecordingSessionViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
@@ -27,16 +27,16 @@
 
 /* Begin PBXFileReference section */
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
-		4D925A2E25EC5DC200907574 /* CreateSessionDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateSessionDetailVC.h; sourceTree = "<group>"; };
-		4D925A2F25EC5DC200907574 /* CreateSessionDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateSessionDetailVC.m; sourceTree = "<group>"; };
-		4D925A3225EC5DE600907574 /* JoinSessionDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinSessionDetailVC.h; sourceTree = "<group>"; };
-		4D925A3325EC5DE600907574 /* JoinSessionDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinSessionDetailVC.m; sourceTree = "<group>"; };
-		4D925A3625EC5E2700907574 /* HomeSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeSessionVC.h; sourceTree = "<group>"; };
-		4D925A3725EC5E2700907574 /* HomeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSessionVC.m; sourceTree = "<group>"; };
+		4D925A5525EC68E600907574 /* RecordingSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingSessionViewController.h; sourceTree = "<group>"; };
+		4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSessionDetailVC.h; sourceTree = "<group>"; };
+		4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSessionDetailVC.m; sourceTree = "<group>"; };
+		4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinSessionDetailVC.h; sourceTree = "<group>"; };
+		4D925A5925EC68E700907574 /* HomeSessionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeSessionVC.h; sourceTree = "<group>"; };
+		4D925A5A25EC68E700907574 /* HomeSessionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSessionVC.m; sourceTree = "<group>"; };
+		4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingSessionViewController.m; sourceTree = "<group>"; };
+		4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionDetailVC.m; sourceTree = "<group>"; };
 		4DB3245925E5656D006B09B4 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
-		4DB3245D25E565C0006B09B4 /* RecordingSessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordingSessionViewController.h; sourceTree = "<group>"; };
-		4DB3245E25E565C0006B09B4 /* RecordingSessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordingSessionViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -99,6 +99,14 @@
 		529E89A925D4F16C004CD9B4 /* Tootti */ = {
 			isa = PBXGroup;
 			children = (
+				4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */,
+				4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */,
+				4D925A5925EC68E700907574 /* HomeSessionVC.h */,
+				4D925A5A25EC68E700907574 /* HomeSessionVC.m */,
+				4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */,
+				4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */,
+				4D925A5525EC68E600907574 /* RecordingSessionViewController.h */,
+				4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */,
 				529E89AA25D4F16C004CD9B4 /* AppDelegate.h */,
 				529E89AB25D4F16C004CD9B4 /* AppDelegate.m */,
 				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
@@ -113,16 +121,8 @@
 				529E89BC25D4F16E004CD9B4 /* main.m */,
 				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
-				4DB3245D25E565C0006B09B4 /* RecordingSessionViewController.h */,
-				4DB3245E25E565C0006B09B4 /* RecordingSessionViewController.m */,
 				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
 				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
-				4D925A2E25EC5DC200907574 /* CreateSessionDetailVC.h */,
-				4D925A2F25EC5DC200907574 /* CreateSessionDetailVC.m */,
-				4D925A3225EC5DE600907574 /* JoinSessionDetailVC.h */,
-				4D925A3325EC5DE600907574 /* JoinSessionDetailVC.m */,
-				4D925A3625EC5E2700907574 /* HomeSessionVC.h */,
-				4D925A3725EC5E2700907574 /* HomeSessionVC.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -259,16 +259,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D925A3825EC5E2700907574 /* HomeSessionVC.m in Sources */,
+				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
+				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
-				4D925A3425EC5DE600907574 /* JoinSessionDetailVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
+				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
-				4DB3245F25E565C0006B09B4 /* RecordingSessionViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
-				4D925A3025EC5DC200907574 /* CreateSessionDetailVC.m in Sources */,
+				4D925A5F25EC68E700907574 /* RecordingSessionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

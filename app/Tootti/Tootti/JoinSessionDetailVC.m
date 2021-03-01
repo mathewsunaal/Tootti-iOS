@@ -17,6 +17,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (IBAction)joinSession:(UIButton *)sender {
+}
 
 /*
 #pragma mark - Navigation
