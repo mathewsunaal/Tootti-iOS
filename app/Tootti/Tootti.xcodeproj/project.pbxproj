@@ -35,6 +35,7 @@
 		4D925A5A25EC68E700907574 /* HomeSessionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSessionVC.m; sourceTree = "<group>"; };
 		4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingSessionViewController.m; sourceTree = "<group>"; };
 		4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionDetailVC.m; sourceTree = "<group>"; };
+		4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToottiDefinitions.h; sourceTree = "<group>"; };
 		4DB3245925E5656D006B09B4 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
 				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
 				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
+				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";

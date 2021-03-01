@@ -6,6 +6,7 @@
 //
 
 #import "SignupViewController.h"
+#import "ToottiDefinitions.h"
 
 @interface SignupViewController () <UITextFieldDelegate>
 
@@ -27,7 +28,24 @@
     self.passTextField.delegate = self;
     self.usernameTextField.delegate = self;
     self.instrumentTextField.delegate = self;
+    
+    [self setupViews];
 }
+
+- (void) setupViews {
+    
+    // Set background colour of view controller
+    [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    
+    // Setup buttons
+    self.createAccountButton.backgroundColor = BUTTON_DARK_TEAL;
+    self.createAccountButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    self.createAccountButton.clipsToBounds = YES;
+    [self.createAccountButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.createAccountButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+    
+}
+
 
 - (IBAction)createAccount:(UIButton *)sender {
     

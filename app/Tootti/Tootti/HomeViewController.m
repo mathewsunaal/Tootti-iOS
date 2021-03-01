@@ -6,6 +6,7 @@
 //
 
 #import "HomeViewController.h"
+#import "ToottiDefinitions.h"
 
 @interface HomeViewController ()
 
@@ -20,6 +21,27 @@
     // Set delegates
     self.emailTextField.delegate = self;
     self.passTextField.delegate = self;
+    
+    [self setupViews];
+}
+
+- (void) setupViews {
+    
+    // Set background colour of view controller
+    [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    
+    // Setup buttons
+    self.loginButton.backgroundColor = BUTTON_DARK_TEAL;
+    self.loginButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    self.loginButton.clipsToBounds = YES;
+    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.loginButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+    
+    self.signupButton.backgroundColor = BUTTON_DARK_TEAL;
+    self.signupButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    self.signupButton.clipsToBounds = YES;
+    [self.signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.signupButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
 
 - (IBAction)login:(UIButton *)sender {

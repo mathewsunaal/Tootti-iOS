@@ -6,6 +6,7 @@
 //
 
 #import "RecordingSessionViewController.h"
+#import "ToottiDefinitions.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface RecordingSessionViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
@@ -21,7 +22,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self setupViews];
     [self setupAVSession];
+    
+}
+
+- (void) setupViews {
+    // Set background colour of view controller
+    [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    
 }
 
 -(void) setupAVSession {

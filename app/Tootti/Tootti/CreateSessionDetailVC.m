@@ -6,6 +6,7 @@
 //
 
 #import "CreateSessionDetailVC.h"
+#import "ToottiDefinitions.h"
 
 @interface CreateSessionDetailVC ()
 
@@ -15,10 +16,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
+    
+    [self setupViews];
+}
+
+- (void) setupViews {
+    // Set background colour of view controller
+    [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    
+    // Setup buttons
+    self.createSessionButton.backgroundColor = BUTTON_DARK_TEAL;
+    self.createSessionButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    self.createSessionButton.clipsToBounds = YES;
+    [self.createSessionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.createSessionButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
 
 - (IBAction)createNewSession:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
 }
 
 /*
