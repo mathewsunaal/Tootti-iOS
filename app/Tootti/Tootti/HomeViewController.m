@@ -31,7 +31,7 @@
     NSLog(@"Logging In for: %@",self.email);
     
     // Firebase function to login user.. (move seague to success block)
-    [self performSegueWithIdentifier:@"loginSession" sender:self];
+    [self performSegueWithIdentifier:@"loginUser" sender:self];
 }
 
 - (IBAction)singup:(UIButton *)sender {
@@ -39,10 +39,10 @@
     [self performSegueWithIdentifier:@"showSignUp" sender:self];
 }
 
-- (IBAction)openSettings:(id)sender {
-    
-    [self performSegueWithIdentifier:@"showSettings" sender:self];
-}
+//- (IBAction)openSettings:(id)sender {
+//
+//    [self performSegueWithIdentifier:@"showSettings" sender:self];
+//}
 
 // Textfield delegate methods
 

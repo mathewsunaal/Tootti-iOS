@@ -5,17 +5,17 @@
 //  Created by Sunaal Philip Mathew on 2021-02-23.
 //
 
-#import "SessionViewController.h"
+#import "RecordingSessionViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface SessionViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface RecordingSessionViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 
 @end
 
-@implementation SessionViewController
+@implementation RecordingSessionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
