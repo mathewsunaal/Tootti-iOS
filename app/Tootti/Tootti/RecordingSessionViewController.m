@@ -13,6 +13,9 @@
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
+@property (nonatomic, retain) NSTimer *recordTimer;
+@property (nonatomic) int timerMinutes;
+@property (nonatomic) int timerSeconds;
 
 @end
 
@@ -70,24 +73,23 @@
     }
     
     if (!self.audioRecorder.recording) {
+        // Setup Audio session
         AVAudioSession *session = [AVAudioSession sharedInstance];
         [session setActive:YES error:nil];
-        
         // Start recording
         [self.audioRecorder record];
-        
-        // Update button
+        // Update UI
         [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
+        [self startRecordTimer];
     }
     else {
             
         // Stop recording
         // NOTE: we can also implement pause here and stop separately
         [self.audioRecorder stop];
-            
-        // Update button
+        // Update UI
         [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-            
+        [self resetRecordTimer];
         // Deactivate audio session
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         [audioSession setActive:NO error:nil];
@@ -103,6 +105,43 @@
         [self.audioPlayer setDelegate:self];
         [self.audioPlayer play];
     }
+}
+
+- (void) startRecordTimer {
+    NSLog(@"Start record timer");
+    self.timerSeconds=0; self.timerMinutes=0;
+    self.recordTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                        target:self
+                                                      selector:@selector(timerDidFire)
+                                                      userInfo:nil
+                                                       repeats:YES];
+}
+
+- (void) timerDidFire {
+    self.timerSeconds += 1;
+    self.timerMinutes = self.timerSeconds/60;
+    
+    //Format strings for timer
+    NSString *formatMinutes,*formatSeconds;
+    if(self.timerMinutes < 10) {
+        formatMinutes = [NSString stringWithFormat:@"0%d",self.timerMinutes];
+    } else {
+        formatMinutes = [NSString stringWithFormat:@"%d",self.timerMinutes];
+    }
+    if(self.timerSeconds%60 < 10) {
+        formatSeconds = [NSString stringWithFormat:@"0%d",self.timerSeconds%60];
+    } else {
+        formatSeconds = [NSString stringWithFormat:@"%d",self.timerSeconds%60];
+    }
+    //Update timer label
+    [self.recordTimerLabel setText:[NSString stringWithFormat:@"%@:%@",formatMinutes,formatSeconds]];
+}
+
+- (void) resetRecordTimer {
+    NSLog(@"Start record timer");
+    [self.recordTimer invalidate];
+    self.timerMinutes = 0; self.timerSeconds = 0;
+    [self.recordTimerLabel setText:@"00:00"];
 }
 
 @end
