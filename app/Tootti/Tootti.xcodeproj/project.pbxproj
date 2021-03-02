@@ -14,6 +14,11 @@
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
+		520122D425EBED9000801880 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122D325EBED9000801880 /* User.m */; };
+		520122D825EBEFC200801880 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122D725EBEFC200801880 /* Audio.m */; };
+		520122DE25EBF54900801880 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122DD25EBF54900801880 /* Session.m */; };
+		520122E225EBFA7400801880 /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122E125EBFA7400801880 /* HostUserDecorator.m */; };
+		520122E625EC005100801880 /* GuestUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122E525EC005100801880 /* GuestUserDecorator.m */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
 		529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */; };
 		529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89B125D4F16C004CD9B4 /* HomeViewController.m */; };
@@ -41,6 +46,16 @@
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		520122D025EB757200801880 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		520122D325EBED9000801880 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		520122D625EBEFB300801880 /* Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		520122D725EBEFC200801880 /* Audio.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
+		520122DB25EBF35500801880 /* HostUserDecorator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
+		520122DC25EBF53A00801880 /* Session.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		520122DD25EBF54900801880 /* Session.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
+		520122E125EBFA7400801880 /* HostUserDecorator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
+		520122E425EBFFB300801880 /* GuestUserDecorator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuestUserDecorator.h; sourceTree = "<group>"; };
+		520122E525EC005100801880 /* GuestUserDecorator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		529E89AB25D4F16C004CD9B4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
