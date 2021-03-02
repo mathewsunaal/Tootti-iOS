@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */; };
+		4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5A25EC68E700907574 /* HomeSessionVC.m */; };
+		4D925A5F25EC68E700907574 /* RecordingSessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */; };
+		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
-		4DB3245F25E565C0006B09B4 /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245E25E565C0006B09B4 /* SessionViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
 		520122D425EBED9000801880 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 520122D325EBED9000801880 /* User.m */; };
@@ -29,10 +32,17 @@
 
 /* Begin PBXFileReference section */
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
+		4D925A5525EC68E600907574 /* RecordingSessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingSessionViewController.h; sourceTree = "<group>"; };
+		4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSessionDetailVC.h; sourceTree = "<group>"; };
+		4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSessionDetailVC.m; sourceTree = "<group>"; };
+		4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinSessionDetailVC.h; sourceTree = "<group>"; };
+		4D925A5925EC68E700907574 /* HomeSessionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeSessionVC.h; sourceTree = "<group>"; };
+		4D925A5A25EC68E700907574 /* HomeSessionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSessionVC.m; sourceTree = "<group>"; };
+		4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingSessionViewController.m; sourceTree = "<group>"; };
+		4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionDetailVC.m; sourceTree = "<group>"; };
+		4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToottiDefinitions.h; sourceTree = "<group>"; };
 		4DB3245925E5656D006B09B4 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
-		4DB3245D25E565C0006B09B4 /* SessionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SessionViewController.h; sourceTree = "<group>"; };
-		4DB3245E25E565C0006B09B4 /* SessionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -76,26 +86,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		525946AA25E89A2000ED4402 /* Utilities */ = {
+		4D925A2925EC4EEE00907574 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				520122D025EB757200801880 /* User.h */,
-				520122D325EBED9000801880 /* User.m */,
-				520122D625EBEFB300801880 /* Audio.h */,
-				520122D725EBEFC200801880 /* Audio.m */,
-				520122DB25EBF35500801880 /* HostUserDecorator.h */,
-				520122DC25EBF53A00801880 /* Session.h */,
-				520122DD25EBF54900801880 /* Session.m */,
-				520122E125EBFA7400801880 /* HostUserDecorator.m */,
-				520122E425EBFFB300801880 /* GuestUserDecorator.h */,
-				520122E525EC005100801880 /* GuestUserDecorator.m */,
 			);
-			path = Utilities;
-			sourceTree = SOURCE_ROOT;
+			path = Assets;
+			sourceTree = "<group>";
 		};
 		529E899E25D4F16C004CD9B4 = {
 			isa = PBXGroup;
 			children = (
+				4D925A2925EC4EEE00907574 /* Assets */,
 				529E89A925D4F16C004CD9B4 /* Tootti */,
 				529E89A825D4F16C004CD9B4 /* Products */,
 				B42353C5FEE36A87AA02E0C0 /* Pods */,
@@ -114,7 +115,14 @@
 		529E89A925D4F16C004CD9B4 /* Tootti */ = {
 			isa = PBXGroup;
 			children = (
-				525946AA25E89A2000ED4402 /* Utilities */,
+				4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */,
+				4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */,
+				4D925A5925EC68E700907574 /* HomeSessionVC.h */,
+				4D925A5A25EC68E700907574 /* HomeSessionVC.m */,
+				4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */,
+				4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */,
+				4D925A5525EC68E600907574 /* RecordingSessionViewController.h */,
+				4D925A5B25EC68E700907574 /* RecordingSessionViewController.m */,
 				529E89AA25D4F16C004CD9B4 /* AppDelegate.h */,
 				529E89AB25D4F16C004CD9B4 /* AppDelegate.m */,
 				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
@@ -129,10 +137,9 @@
 				529E89BC25D4F16E004CD9B4 /* main.m */,
 				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
-				4DB3245D25E565C0006B09B4 /* SessionViewController.h */,
-				4DB3245E25E565C0006B09B4 /* SessionViewController.m */,
 				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
 				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
+				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -269,18 +276,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				520122D825EBEFC200801880 /* Audio.m in Sources */,
-				520122E625EC005100801880 /* GuestUserDecorator.m in Sources */,
-				520122D425EBED9000801880 /* User.m in Sources */,
+				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
+				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
-				520122DE25EBF54900801880 /* Session.m in Sources */,
-				520122E225EBFA7400801880 /* HostUserDecorator.m in Sources */,
+				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
-				4DB3245F25E565C0006B09B4 /* SessionViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
+				4D925A5F25EC68E700907574 /* RecordingSessionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +430,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26NN9TDW83;
 				INFOPLIST_FILE = Tootti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -443,6 +449,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 26NN9TDW83;
 				INFOPLIST_FILE = Tootti/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

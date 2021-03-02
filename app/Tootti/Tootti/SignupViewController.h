@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passTextField;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *bioTextField;
+@property (weak, nonatomic) IBOutlet UITextField *instrumentTextField;
 @end
 
 NS_ASSUME_NONNULL_END
