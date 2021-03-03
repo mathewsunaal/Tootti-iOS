@@ -23,6 +23,8 @@
 - (void) setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    // Set up logo image
+    self.logoImageView.image = [UIImage imageNamed:@"app-logo"];
     
     // Setup buttons
     self.joinSessionButton.backgroundColor = BUTTON_DARK_TEAL;

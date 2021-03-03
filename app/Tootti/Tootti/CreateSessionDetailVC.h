@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *trackLinkTextField;
 @property (weak, nonatomic) IBOutlet UITextField *musiciansTextField;
 @property (weak, nonatomic) IBOutlet UIButton *createSessionButton;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 
 @end
 

@@ -205,6 +205,7 @@
                         <outlet property="createAccountButton" destination="9IE-tV-NCD" id="lZ1-xY-b6j"/>
                         <outlet property="emailTextField" destination="bsQ-E2-Ezi" id="07w-l8-IFi"/>
                         <outlet property="instrumentTextField" destination="Y5s-yU-hxh" id="LCL-5L-LyJ"/>
+                        <outlet property="logoImageView" destination="dEy-FD-9r5" id="VpE-bA-EuK"/>
                         <outlet property="passTextField" destination="5SD-wV-LJL" id="Ktx-D8-Mcd"/>
                         <outlet property="usernameTextField" destination="gmP-m3-bYa" id="Nih-9W-Pvn"/>
                     </connections>
@@ -257,10 +258,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Jm-Ko-PSB">
-                                <rect key="frame" x="183" y="50" width="300" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBD-Pa-dQP">
                                 <rect key="frame" x="223" y="306" width="220" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -270,6 +267,10 @@
                                     <action selector="createNewSession:" destination="4a7-rE-FcP" eventType="touchUpInside" id="MO3-AW-S4q"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="app-logo" translatesAutoresizingMaskIntoConstraints="NO" id="9Jm-Ko-PSB">
+                                <rect key="frame" x="223" y="50" width="220" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="reB-v6-jZS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -277,6 +278,7 @@
                     <navigationItem key="navigationItem" id="ddb-dM-Yfu"/>
                     <connections>
                         <outlet property="createSessionButton" destination="lBD-Pa-dQP" id="ylF-fA-ifs"/>
+                        <outlet property="logoImageView" destination="9Jm-Ko-PSB" id="Xwj-W6-oXs"/>
                         <outlet property="musiciansTextField" destination="7Bl-Jg-gVd" id="1U1-6Z-VSi"/>
                         <outlet property="nameTextField" destination="aG5-9U-0EA" id="Vv9-jp-mTN"/>
                         <outlet property="trackLinkTextField" destination="F8z-2a-zzC" id="6vC-1N-ypf"/>
@@ -295,8 +297,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10d-lb-BEi">
-                                <rect key="frame" x="183" y="50" width="300" height="70"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="app-logo" translatesAutoresizingMaskIntoConstraints="NO" id="10d-lb-BEi">
+                                <rect key="frame" x="223" y="50" width="220" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJi-Li-taH">
@@ -305,7 +307,7 @@
                                 <state key="normal" backgroundImage="gearshape" catalog="system"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoL-9h-HyP">
-                                <rect key="frame" x="70" y="215" width="220" height="35"/>
+                                <rect key="frame" x="70" y="275" width="220" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                 <state key="normal" title="Create Session"/>
@@ -313,8 +315,16 @@
                                     <action selector="createSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="StZ-Mi-J06"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="create-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-1Y-thL">
+                                <rect key="frame" x="70" y="147" width="220" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="join-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="j0f-jJ-AEB">
+                                <rect key="frame" x="377" y="147" width="220" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK4-NK-fx0">
-                                <rect key="frame" x="400" y="215" width="220" height="35"/>
+                                <rect key="frame" x="377" y="275" width="220" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Join Session"/>
                                 <connections>
@@ -337,7 +347,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="beR-Cw-T4c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1452" y="103"/>
+            <point key="canvasLocation" x="1451.4242878560722" y="101.59999999999999"/>
         </scene>
         <!--Join Session DetailVC-->
         <scene sceneID="XGt-GI-KOH">
@@ -353,10 +363,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w3Q-Aw-XRw">
-                                <rect key="frame" x="183" y="50" width="300" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WpL-R4-KWQ">
                                 <rect key="frame" x="223" y="247" width="220" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -366,6 +372,10 @@
                                     <action selector="joinSession:" destination="Osw-3a-18j" eventType="touchUpInside" id="hkt-em-6z2"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="app-logo" translatesAutoresizingMaskIntoConstraints="NO" id="w3Q-Aw-XRw">
+                                <rect key="frame" x="223" y="50" width="220" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zhs-Gp-HvE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -380,14 +390,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sQ3-UL-eif" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1452" y="921"/>
+            <point key="canvasLocation" x="1451.4242878560722" y="920.79999999999995"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="i4Q-Ze-jWW"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="app-logo" width="419" height="140"/>
+        <image name="create-session-icon" width="512" height="512"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="join-session-icon" width="512" height="512"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="record.circle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">

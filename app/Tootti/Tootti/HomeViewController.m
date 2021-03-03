@@ -25,10 +25,16 @@
     [self setupViews];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+}
+
 - (void) setupViews {
     
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    // Setup home logo
+    self.logoImageView.image = [UIImage imageNamed:@"home-logo"];
     
     // Setup buttons
     self.loginButton.backgroundColor = BUTTON_DARK_TEAL;
