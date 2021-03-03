@@ -5,11 +5,11 @@
 //  Created by Sunaal Philip Mathew on 2021-02-23.
 //
 
-#import "RecordingSessionViewController.h"
+#import "RecordingSessionVC.h"
 #import "ToottiDefinitions.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface RecordingSessionViewController () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation RecordingSessionViewController
+@implementation RecordingSessionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,12 +36,21 @@
     
 }
 
+// Get path for storage
+-(NSString *) getAudioPathwithFormat: (NSString *)audioFormat  {
+    // return a formatted string for a file name
+    //NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    //formatter.dateFormat = @"ddMMMYY_hhmmssa";
+    
+    return [NSString stringWithFormat:@"%f%@", [[NSDate date] timeIntervalSince1970],audioFormat];
+}
+
 -(void) setupAVSession {
     
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               @"testAudio.m4a",
+                               [self getAudioPathwithFormat:@".m4a"],
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     

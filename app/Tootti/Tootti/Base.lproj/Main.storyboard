@@ -97,10 +97,10 @@
             </objects>
             <point key="canvasLocation" x="-201" y="858"/>
         </scene>
-        <!--Recording Session View Controller-->
+        <!--Recording SessionVC-->
         <scene sceneID="cw9-St-BFf">
             <objects>
-                <viewController id="w7q-8h-R3B" customClass="RecordingSessionViewController" sceneMemberID="viewController">
+                <viewController id="w7q-8h-R3B" customClass="RecordingSessionVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mV1-Km-oUw">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
