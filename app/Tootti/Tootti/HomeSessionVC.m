@@ -7,10 +7,13 @@
 
 #import "HomeSessionVC.h"
 #import "ToottiDefinitions.h"
-
+#import "HomeViewController.h"
+#import "User.h"
+@import Firebase;
 @interface HomeSessionVC ()
 
 @end
+
 
 @implementation HomeSessionVC
 
@@ -19,6 +22,7 @@
     // Do any additional setup after loading the view.
     [self setupViews];
 }
+
 
 - (void) setupViews {
     // Set background colour of view controller
@@ -41,12 +45,22 @@
     
 }
 
+
 - (IBAction)createSession:(UIButton *)sender {
     [self performSegueWithIdentifier:@"createSession" sender:self];
 }
 
 - (IBAction)joinSession:(UIButton *)sender {
     [self performSegueWithIdentifier:@"joinSession" sender:self];
+}
+- (IBAction)logOutTapped:(id)sender {
+    //[[FIRAuth auth] removeAuthStateDidChangeListener: userHandle];
+    NSLog(@"tapppppppppped");
+    self.user = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
+    [self performSegueWithIdentifier:@"logoutSegue" sender:self];
+    
 }
 
 

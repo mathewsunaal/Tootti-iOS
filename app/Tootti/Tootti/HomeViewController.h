@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+@import Firebase;
 @interface HomeViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
@@ -16,8 +17,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passTextField;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *pass;
 
 @end
+

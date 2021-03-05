@@ -11,13 +11,15 @@
 @implementation User
 //Constructor
 - (instancetype) initWithUid: (NSString *)uid
-                    password: (NSString *)password
+                       email: (NSString *)email
+                  instrument: (NSString *)instrument
                 joinedSessions:(NSArray *)joinedSessions
               allMergedSongs: (NSArray *) allMergedSongs {
     self = [super init];
     if (self) {
         _uid = uid;
-        _password = password;
+        _email = email;
+        _instrument = instrument;
         _joinedSessions = joinedSessions;
         _allMergedSongs = allMergedSongs;
     }

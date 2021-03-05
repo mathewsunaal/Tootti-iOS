@@ -8,12 +8,14 @@
 
 @interface User: NSObject
 @property (readonly) NSString *uid;
-@property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString *instrument;
+@property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSArray *joinedSessions;
 @property (strong, nonatomic) NSArray *allMergedSongs;
 
 - (instancetype) initWithUid: (NSString *)uid
-                 password: (NSString *)password
+                    email: (NSString *) email
+                  instrument: (NSString *)instrument
                 joinedSessions: (NSArray *)joinedSessions
               allMergedSongs: (NSArray *)allMergedSongs;
 

@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "User.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeSessionVC : UIViewController
@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *createSessionButton;
 @property (weak, nonatomic) IBOutlet UIButton *joinSessionButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) User *user;
 
 @end
 
