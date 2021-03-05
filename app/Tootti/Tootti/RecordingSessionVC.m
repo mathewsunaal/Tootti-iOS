@@ -26,13 +26,15 @@
     // Do any additional setup after loading the view.
     
     [self setupViews];
-    [self setupAVSession];
-    
+    [self setupAVSessionwithSpeaker:NO];
 }
 
 - (void) setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
+    
+    // Hide recording timestamp
+    self.recordTimerLabel.hidden = YES;
     
 }
 
@@ -45,8 +47,8 @@
     return [NSString stringWithFormat:@"%f%@", [[NSDate date] timeIntervalSince1970],audioFormat];
 }
 
--(void) setupAVSession {
-    
+-(void) setupAVSessionwithSpeaker:(BOOL) speaker {
+    BOOL success; NSError *error;
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
@@ -54,76 +56,134 @@
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     
-    // Setup audio session
+    // Setup AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
- 
-    // Define AVAudioRecorder settings
-    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    if (!success) {
+        NSLog(@"AVAudioSession error setting category:%@",error);
+    }
+   
+
+    if (speaker) {
+        // Set the audioSession override
+        success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+        if (!success) {
+            NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+        }
+    }
+
+    // Define AVAudioRecorder settings (PCM,44100,2xchannels)
+    NSDictionary * recordSettings;
+    recordSettings = [[NSMutableDictionary alloc] init];
+    [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+    [recordSettings setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+    [recordSettings setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    [recordSettings setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    [recordSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    [recordSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     // Initiate and prepare the recorder
-    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSetting error:NULL];
+    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSettings error:NULL];
     self.audioRecorder.delegate = self;
     self.audioRecorder.meteringEnabled = YES;
     [self.audioRecorder prepareToRecord];
-    
 }
 
 
 // Button action methods
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording pressed");
+    NSError *error;
     
     if(self.audioPlayer.playing) {
         [self.audioPlayer stop];
     }
     
     if (!self.audioRecorder.recording) {
-        // Setup Audio session
+        // Activate AVAudioSession
         AVAudioSession *session = [AVAudioSession sharedInstance];
-        [session setActive:YES error:nil];
+        BOOL success = [session setActive:YES error:&error];
+        if (!success) {
+            NSLog(@"AVAudioSession error activating: %@",error);
+        }
+        else {
+             NSLog(@"AudioSession active");
+        }
         // Start recording
         [self.audioRecorder record];
         // Update UI
         [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-        [self startRecordTimer];
+        [self startTimer];
+        self.playButton.userInteractionEnabled = NO;
+        self.playButton.alpha = 0.5;
     }
     else {
             
         // Stop recording
         // NOTE: we can also implement pause here and stop separately
         [self.audioRecorder stop];
-        // Update UI
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-        [self resetRecordTimer];
         // Deactivate audio session
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        [audioSession setActive:NO error:nil];
+        BOOL success = [audioSession setActive:NO error:&error];
+        if (!success) {
+            NSLog(@"AVAudioSession error deactivating: %@",error);
+        }
+        else {
+             NSLog(@"AudioSession inactive");
+        }
+        
+        // Update UI
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
+        [self resetTimer];
+        self.playButton.userInteractionEnabled = YES;
+        self.playButton.alpha = 1.0;
     }
 }
 
 
 - (IBAction)playAudio:(UIButton *)sender {
     NSLog(@"Audio playback initiated");
+    if (self.audioRecorder.recording)
+        return;
     
-    if (!self.audioRecorder.recording){
+    if (!self.audioPlayer.isPlaying){
         self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.audioRecorder.url error:nil];
         [self.audioPlayer setDelegate:self];
         [self.audioPlayer play];
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
+        
+    }
+    else {
+        [self.audioPlayer pause];
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
     }
 }
 
-- (void) startRecordTimer {
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    if(flag) {
+        //self.playButton.userInteractionEnabled = YES;
+        [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
+        NSLog(@"Player did finish playing");
+    }
+}
+
+- (void) startTimer {
     NSLog(@"Start record timer");
+    self.recordTimerLabel.hidden = NO;
     self.timerSeconds=0; self.timerMinutes=0;
     self.recordTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                         target:self
                                                       selector:@selector(timerDidFire)
                                                       userInfo:nil
                                                        repeats:YES];
+}
+
+- (void) resetTimer {
+    NSLog(@"Reset record timer");
+    [self.recordTimer invalidate];
+    self.timerMinutes = 0; self.timerSeconds = 0;
+    [self.recordTimerLabel setText:@"00:00"];
+    self.recordTimerLabel.hidden = YES;
 }
 
 - (void) timerDidFire {
@@ -144,13 +204,6 @@
     }
     //Update timer label
     [self.recordTimerLabel setText:[NSString stringWithFormat:@"%@:%@",formatMinutes,formatSeconds]];
-}
-
-- (void) resetRecordTimer {
-    NSLog(@"Start record timer");
-    [self.recordTimer invalidate];
-    self.timerMinutes = 0; self.timerSeconds = 0;
-    [self.recordTimerLabel setText:@"00:00"];
 }
 
 @end

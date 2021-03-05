@@ -10,7 +10,11 @@
 #import "HomeViewController.h"
 #import "User.h"
 @import Firebase;
+#import "Session.h"
+
 @interface HomeSessionVC ()
+@property(nonatomic,retain) Session *session;
+//@property(nonatomic,retain) User *user;
 
 @end
 
@@ -23,8 +27,16 @@
     [self setupViews];
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.pageIndex = 0;
+    [self.tabBarController setSelectedIndex:self.pageIndex];
+    
+}
 
 - (void) setupViews {
+    
+    
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     // Set up logo image

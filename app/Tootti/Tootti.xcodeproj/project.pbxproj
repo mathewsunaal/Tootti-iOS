@@ -13,6 +13,13 @@
 		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
+		4DB7994225F183D3004C1C8B /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993825F183D3004C1C8B /* Session.m */; };
+		4DB7994325F183D3004C1C8B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993925F183D3004C1C8B /* User.m */; };
+		4DB7994425F183D3004C1C8B /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */; };
+		4DB7994525F183D3004C1C8B /* GuestUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */; };
+		4DB7994625F183D3004C1C8B /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994125F183D3004C1C8B /* Audio.m */; };
+		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
+		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
 		52739D8425F1C9310097561B /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D7A25F1C9310097561B /* Session.m */; };
 		52739D8525F1C9310097561B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D7B25F1C9310097561B /* User.m */; };
@@ -45,6 +52,20 @@
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		4DB7993825F183D3004C1C8B /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
+		4DB7993925F183D3004C1C8B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		4DB7993A25F183D3004C1C8B /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
+		4DB7993B25F183D3004C1C8B /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		4DB7993C25F183D3004C1C8B /* GuestUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestUserDecorator.h; sourceTree = "<group>"; };
+		4DB7993D25F183D3004C1C8B /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		4DB7993E25F183D3004C1C8B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
+		4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
+		4DB7994125F183D3004C1C8B /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
+		4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeSessionVC.h; sourceTree = "<group>"; };
+		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
+		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
+		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		52739D7A25F1C9310097561B /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		52739D7B25F1C9310097561B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
@@ -86,11 +107,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D925A2925EC4EEE00907574 /* Assets */ = {
+		4DB7993725F183D3004C1C8B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4DB7993825F183D3004C1C8B /* Session.m */,
+				4DB7993925F183D3004C1C8B /* User.m */,
+				4DB7993A25F183D3004C1C8B /* HostUserDecorator.h */,
+				4DB7993B25F183D3004C1C8B /* Audio.h */,
+				4DB7993C25F183D3004C1C8B /* GuestUserDecorator.h */,
+				4DB7993D25F183D3004C1C8B /* Session.h */,
+				4DB7993E25F183D3004C1C8B /* User.h */,
+				4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */,
+				4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */,
+				4DB7994125F183D3004C1C8B /* Audio.m */,
 			);
-			path = Assets;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		52739D7925F1C9310097561B /* Utilities */ = {
@@ -113,7 +144,7 @@
 		529E899E25D4F16C004CD9B4 = {
 			isa = PBXGroup;
 			children = (
-				4D925A2925EC4EEE00907574 /* Assets */,
+				4DB7993725F183D3004C1C8B /* Utilities */,
 				529E89A925D4F16C004CD9B4 /* Tootti */,
 				529E89A825D4F16C004CD9B4 /* Products */,
 				B42353C5FEE36A87AA02E0C0 /* Pods */,
@@ -158,6 +189,10 @@
 				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
 				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
 				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
+				4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */,
+				4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */,
+				4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */,
+				4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -295,20 +330,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
-				52739D8725F1C9310097561B /* GuestUserDecorator.m in Sources */,
+				4DB7994525F183D3004C1C8B /* GuestUserDecorator.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
-				52739D8425F1C9310097561B /* Session.m in Sources */,
-				52739D8825F1C9310097561B /* Audio.m in Sources */,
+				4DB7994225F183D3004C1C8B /* Session.m in Sources */,
+				4DB7994625F183D3004C1C8B /* Audio.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
+				4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
-				52739D8525F1C9310097561B /* User.m in Sources */,
+				4DB7994325F183D3004C1C8B /* User.m in Sources */,
+				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
 				4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */,
-				52739D8625F1C9310097561B /* HostUserDecorator.m in Sources */,
+				4DB7994425F183D3004C1C8B /* HostUserDecorator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +489,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 769F367252;
 				INFOPLIST_FILE = Tootti/Info.plist;
@@ -461,6 +499,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "tootti-app.Tootti";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -471,6 +510,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 769F367252;
 				INFOPLIST_FILE = Tootti/Info.plist;
@@ -480,6 +520,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "tootti-app.Tootti";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

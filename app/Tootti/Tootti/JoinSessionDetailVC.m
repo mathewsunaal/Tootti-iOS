@@ -38,14 +38,15 @@
     [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
+    UITabBarController *tabBarVC = [segue destinationViewController];
+    [tabBarVC setSelectedIndex:1];
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

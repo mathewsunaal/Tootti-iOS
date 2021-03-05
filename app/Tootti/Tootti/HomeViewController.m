@@ -8,7 +8,7 @@
 #import "HomeViewController.h"
 #import "HomeSessionVC.h"
 #import "ToottiDefinitions.h"
-#include "Utilities/User.h"
+#include "User.h"
 
 @import Firebase;
 @interface HomeViewController ()
