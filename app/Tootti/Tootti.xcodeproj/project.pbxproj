@@ -21,12 +21,7 @@
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
-		52739D8425F1C9310097561B /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D7A25F1C9310097561B /* Session.m */; };
-		52739D8525F1C9310097561B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D7B25F1C9310097561B /* User.m */; };
-		52739D8625F1C9310097561B /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D8125F1C9310097561B /* HostUserDecorator.m */; };
-		52739D8725F1C9310097561B /* GuestUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D8225F1C9310097561B /* GuestUserDecorator.m */; };
-		52739D8825F1C9310097561B /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 52739D8325F1C9310097561B /* Audio.m */; };
-		5296526225F1974200AEEA01 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5296526125F1974200AEEA01 /* GoogleService-Info.plist */; };
+		528F64FE25F2C51300021C64 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 528F64FD25F2C51300021C64 /* GoogleService-Info.plist */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
 		529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */; };
 		529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89B125D4F16C004CD9B4 /* HomeViewController.m */; };
@@ -77,7 +72,7 @@
 		52739D8125F1C9310097561B /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
 		52739D8225F1C9310097561B /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
 		52739D8325F1C9310097561B /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
-		5296526125F1974200AEEA01 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		528F64FD25F2C51300021C64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		529E89AB25D4F16C004CD9B4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -177,12 +172,12 @@
 				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
 				529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */,
 				529E89B025D4F16C004CD9B4 /* HomeViewController.h */,
+				528F64FD25F2C51300021C64 /* GoogleService-Info.plist */,
 				529E89B125D4F16C004CD9B4 /* HomeViewController.m */,
 				529E89B325D4F16C004CD9B4 /* Main.storyboard */,
 				529E89B625D4F16E004CD9B4 /* Assets.xcassets */,
 				529E89B825D4F16E004CD9B4 /* LaunchScreen.storyboard */,
 				529E89BB25D4F16E004CD9B4 /* Info.plist */,
-				5296526125F1974200AEEA01 /* GoogleService-Info.plist */,
 				529E89BC25D4F16E004CD9B4 /* main.m */,
 				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
@@ -274,7 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				529E89BA25D4F16E004CD9B4 /* LaunchScreen.storyboard in Resources */,
-				5296526225F1974200AEEA01 /* GoogleService-Info.plist in Resources */,
+				528F64FE25F2C51300021C64 /* GoogleService-Info.plist in Resources */,
 				529E89B725D4F16E004CD9B4 /* Assets.xcassets in Resources */,
 				529E89B525D4F16C004CD9B4 /* Main.storyboard in Resources */,
 			);
