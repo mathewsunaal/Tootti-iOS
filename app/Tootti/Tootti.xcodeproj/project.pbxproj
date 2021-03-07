@@ -7,17 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D86E8C525F2C6EE00A70623 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BB25F2C6EE00A70623 /* Session.m */; };
+		4D86E8C625F2C6EE00A70623 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BC25F2C6EE00A70623 /* User.m */; };
+		4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */; };
+		4D86E8C825F2C6EE00A70623 /* GuestUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */; };
+		4D86E8C925F2C6EE00A70623 /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C425F2C6EE00A70623 /* Audio.m */; };
+		4D86E8CB25F2C70C00A70623 /* HostUserDecorator.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */; };
+		4D86E8CC25F2C70C00A70623 /* Audio.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BE25F2C6EE00A70623 /* Audio.h */; };
+		4D86E8CD25F2C70C00A70623 /* GuestUserDecorator.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */; };
+		4D86E8CE25F2C70C00A70623 /* Session.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C025F2C6EE00A70623 /* Session.h */; };
+		4D86E8CF25F2C70C00A70623 /* User.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C125F2C6EE00A70623 /* User.h */; };
 		4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */; };
 		4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5A25EC68E700907574 /* HomeSessionVC.m */; };
 		4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5B25EC68E700907574 /* RecordingSessionVC.m */; };
 		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
-		4DB7994225F183D3004C1C8B /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993825F183D3004C1C8B /* Session.m */; };
-		4DB7994325F183D3004C1C8B /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993925F183D3004C1C8B /* User.m */; };
-		4DB7994425F183D3004C1C8B /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */; };
-		4DB7994525F183D3004C1C8B /* GuestUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */; };
-		4DB7994625F183D3004C1C8B /* Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994125F183D3004C1C8B /* Audio.m */; };
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
@@ -34,6 +39,16 @@
 
 /* Begin PBXFileReference section */
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
+		4D86E8BB25F2C6EE00A70623 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
+		4D86E8BC25F2C6EE00A70623 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
+		4D86E8BE25F2C6EE00A70623 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestUserDecorator.h; sourceTree = "<group>"; };
+		4D86E8C025F2C6EE00A70623 /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
+		4D86E8C125F2C6EE00A70623 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
+		4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
+		4D86E8C425F2C6EE00A70623 /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
 		4D925A5525EC68E600907574 /* RecordingSessionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingSessionVC.h; sourceTree = "<group>"; };
 		4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSessionDetailVC.h; sourceTree = "<group>"; };
 		4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSessionDetailVC.m; sourceTree = "<group>"; };
@@ -47,31 +62,11 @@
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		4DB7993825F183D3004C1C8B /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
-		4DB7993925F183D3004C1C8B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		4DB7993A25F183D3004C1C8B /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
-		4DB7993B25F183D3004C1C8B /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
-		4DB7993C25F183D3004C1C8B /* GuestUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestUserDecorator.h; sourceTree = "<group>"; };
-		4DB7993D25F183D3004C1C8B /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
-		4DB7993E25F183D3004C1C8B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
-		4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
-		4DB7994125F183D3004C1C8B /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
 		4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeSessionVC.h; sourceTree = "<group>"; };
 		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		52739D7A25F1C9310097561B /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
-		52739D7B25F1C9310097561B /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		52739D7C25F1C9310097561B /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
-		52739D7D25F1C9310097561B /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
-		52739D7E25F1C9310097561B /* GuestUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestUserDecorator.h; sourceTree = "<group>"; };
-		52739D7F25F1C9310097561B /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
-		52739D8025F1C9310097561B /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		52739D8125F1C9310097561B /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
-		52739D8225F1C9310097561B /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
-		52739D8325F1C9310097561B /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
 		528F64FD25F2C51300021C64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,36 +97,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4DB7993725F183D3004C1C8B /* Utilities */ = {
+		4D86E8BA25F2C6EE00A70623 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				4DB7993825F183D3004C1C8B /* Session.m */,
-				4DB7993925F183D3004C1C8B /* User.m */,
-				4DB7993A25F183D3004C1C8B /* HostUserDecorator.h */,
-				4DB7993B25F183D3004C1C8B /* Audio.h */,
-				4DB7993C25F183D3004C1C8B /* GuestUserDecorator.h */,
-				4DB7993D25F183D3004C1C8B /* Session.h */,
-				4DB7993E25F183D3004C1C8B /* User.h */,
-				4DB7993F25F183D3004C1C8B /* HostUserDecorator.m */,
-				4DB7994025F183D3004C1C8B /* GuestUserDecorator.m */,
-				4DB7994125F183D3004C1C8B /* Audio.m */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		52739D7925F1C9310097561B /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				52739D7A25F1C9310097561B /* Session.m */,
-				52739D7B25F1C9310097561B /* User.m */,
-				52739D7C25F1C9310097561B /* HostUserDecorator.h */,
-				52739D7D25F1C9310097561B /* Audio.h */,
-				52739D7E25F1C9310097561B /* GuestUserDecorator.h */,
-				52739D7F25F1C9310097561B /* Session.h */,
-				52739D8025F1C9310097561B /* User.h */,
-				52739D8125F1C9310097561B /* HostUserDecorator.m */,
-				52739D8225F1C9310097561B /* GuestUserDecorator.m */,
-				52739D8325F1C9310097561B /* Audio.m */,
+				4D86E8BB25F2C6EE00A70623 /* Session.m */,
+				4D86E8BC25F2C6EE00A70623 /* User.m */,
+				4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */,
+				4D86E8BE25F2C6EE00A70623 /* Audio.h */,
+				4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */,
+				4D86E8C025F2C6EE00A70623 /* Session.h */,
+				4D86E8C125F2C6EE00A70623 /* User.h */,
+				4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */,
+				4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */,
+				4D86E8C425F2C6EE00A70623 /* Audio.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -139,7 +117,6 @@
 		529E899E25D4F16C004CD9B4 = {
 			isa = PBXGroup;
 			children = (
-				4DB7993725F183D3004C1C8B /* Utilities */,
 				529E89A925D4F16C004CD9B4 /* Tootti */,
 				529E89A825D4F16C004CD9B4 /* Products */,
 				B42353C5FEE36A87AA02E0C0 /* Pods */,
@@ -158,7 +135,7 @@
 		529E89A925D4F16C004CD9B4 /* Tootti */ = {
 			isa = PBXGroup;
 			children = (
-				52739D7925F1C9310097561B /* Utilities */,
+				4D86E8BA25F2C6EE00A70623 /* Utilities */,
 				4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */,
 				4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */,
 				4D925A5925EC68E700907574 /* HomeSessionVC.h */,
@@ -324,23 +301,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D86E8CB25F2C70C00A70623 /* HostUserDecorator.h in Sources */,
+				4D86E8CC25F2C70C00A70623 /* Audio.h in Sources */,
+				4D86E8CD25F2C70C00A70623 /* GuestUserDecorator.h in Sources */,
+				4D86E8CE25F2C70C00A70623 /* Session.h in Sources */,
+				4D86E8CF25F2C70C00A70623 /* User.h in Sources */,
 				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
-				4DB7994525F183D3004C1C8B /* GuestUserDecorator.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
+				4D86E8C525F2C6EE00A70623 /* Session.m in Sources */,
+				4D86E8C925F2C6EE00A70623 /* Audio.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
-				4DB7994225F183D3004C1C8B /* Session.m in Sources */,
-				4DB7994625F183D3004C1C8B /* Audio.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
 				4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
+				4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */,
+				4D86E8C825F2C6EE00A70623 /* GuestUserDecorator.m in Sources */,
+				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
-				4DB7994325F183D3004C1C8B /* User.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
 				4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */,
-				4DB7994425F183D3004C1C8B /* HostUserDecorator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
