@@ -13,9 +13,11 @@
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
+@property (nonatomic, retain) NSMutableArray *players;
 @property (nonatomic, retain) NSTimer *recordTimer;
 @property (nonatomic) int timerMinutes;
 @property (nonatomic) int timerSeconds;
+
 
 @end
 
@@ -25,8 +27,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    if(self.players == nil) {
+        self.players = [[NSMutableArray alloc] init];
+    }
     [self setupViews];
-    [self setupAVSessionwithSpeaker:NO];
+    [self setupAVSessionwithSpeaker:YES];
 }
 
 - (void) setupViews {
@@ -143,20 +148,42 @@
 
 - (IBAction)playAudio:(UIButton *)sender {
     NSLog(@"Audio playback initiated");
-    if (self.audioRecorder.recording)
-        return;
     
+//    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"click-track" ofType:@".wav"]];
+//    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
+//    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
+//
+//    AVAudioPlayer *lastPlayer = self.players.lastObject;
+//    NSTimeInterval timeOffset = lastPlayer.deviceCurrentTime + 0.01;
+//    for( AVAudioPlayer *player in self.players) {
+//        [player playAtTime:timeOffset];
+//    }
+
     if (!self.audioPlayer.isPlaying){
         self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.audioRecorder.url error:nil];
         [self.audioPlayer setDelegate:self];
         [self.audioPlayer play];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
-        
+
     }
     else {
         [self.audioPlayer pause];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
     }
+
+}
+
+- (void) addPlayerForPath: (NSString *) path {
+    NSError *error;
+    NSURL *url= [NSURL fileURLWithPath:path];
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    if(error) {
+        NSLog(@"Error detected for setting up AVPlayer: %@",error.localizedDescription);
+    }
+    
+    [player setDelegate:self];
+    [self.players addObject:player];
+    
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {

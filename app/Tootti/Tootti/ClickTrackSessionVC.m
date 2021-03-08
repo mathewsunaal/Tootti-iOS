@@ -6,8 +6,10 @@
 //
 
 #import "ClickTrackSessionVC.h"
+#import "ToottiDefinitions.h"
 
 @interface ClickTrackSessionVC ()
+
 
 @end
 
@@ -16,6 +18,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self setupViews];
+}
+
+- (void) setupViews {
+    // Set background colour of view controller
+    [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
 }
 
 /*

@@ -26,6 +26,9 @@
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
+		4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2B25F592BA00BD7444 /* click-track.wav */; };
+		4DE2DA3025F592C900BD7444 /* Flute-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2E25F592C800BD7444 /* Flute-1.wav */; };
+		4DE2DA3125F592C900BD7444 /* Flute-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2F25F592C900BD7444 /* Flute-2.wav */; };
 		528F64FE25F2C51300021C64 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 528F64FD25F2C51300021C64 /* GoogleService-Info.plist */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
 		529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */; };
@@ -67,6 +70,9 @@
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4DE2DA2B25F592BA00BD7444 /* click-track.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-track.wav"; sourceTree = "<group>"; };
+		4DE2DA2E25F592C800BD7444 /* Flute-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-1.wav"; sourceTree = "<group>"; };
+		4DE2DA2F25F592C900BD7444 /* Flute-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-2.wav"; sourceTree = "<group>"; };
 		528F64FD25F2C51300021C64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -114,9 +120,20 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		4DE2DA2A25F5924600BD7444 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4DE2DA2B25F592BA00BD7444 /* click-track.wav */,
+				4DE2DA2E25F592C800BD7444 /* Flute-1.wav */,
+				4DE2DA2F25F592C900BD7444 /* Flute-2.wav */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		529E899E25D4F16C004CD9B4 = {
 			isa = PBXGroup;
 			children = (
+				4DE2DA2A25F5924600BD7444 /* Assets */,
 				529E89A925D4F16C004CD9B4 /* Tootti */,
 				529E89A825D4F16C004CD9B4 /* Products */,
 				B42353C5FEE36A87AA02E0C0 /* Pods */,
@@ -245,9 +262,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DE2DA3125F592C900BD7444 /* Flute-2.wav in Resources */,
 				529E89BA25D4F16E004CD9B4 /* LaunchScreen.storyboard in Resources */,
 				528F64FE25F2C51300021C64 /* GoogleService-Info.plist in Resources */,
+				4DE2DA3025F592C900BD7444 /* Flute-1.wav in Resources */,
 				529E89B725D4F16E004CD9B4 /* Assets.xcassets in Resources */,
+				4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */,
 				529E89B525D4F16C004CD9B4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

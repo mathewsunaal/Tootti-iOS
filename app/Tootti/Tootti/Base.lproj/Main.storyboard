@@ -190,14 +190,61 @@
                     <view key="view" contentMode="scaleToFill" id="Gfk-Na-gl2">
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRw-eW-csT">
+                                <rect key="frame" x="270" y="79" width="126" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play Flute track #1"/>
+                                <connections>
+                                    <action selector="playTrack1:" destination="duj-Z9-s1M" eventType="touchUpInside" id="U67-mg-9h6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hh7-V9-73a">
+                                <rect key="frame" x="269" y="130" width="128" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play Flute track #2"/>
+                                <connections>
+                                    <action selector="playTrack2:" destination="duj-Z9-s1M" eventType="touchUpInside" id="mzy-zI-dqV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esd-Ke-eFZ">
+                                <rect key="frame" x="273" y="180" width="124" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play merged track"/>
+                                <connections>
+                                    <action selector="playMergedTracks:" destination="duj-Z9-s1M" eventType="touchUpInside" id="rmf-RT-9Lh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="idv-1W-ZAH">
+                                <rect key="frame" x="275" y="252" width="117" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Stop all playback"/>
+                                <connections>
+                                    <action selector="stopAllPlayers:" destination="duj-Z9-s1M" eventType="touchUpInside" id="LyZ-yO-Djz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hSK-jb-zNo">
+                                <rect key="frame" x="540" y="79" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Reset players"/>
+                                <connections>
+                                    <action selector="resetPlayers:" destination="duj-Z9-s1M" eventType="touchUpInside" id="TAI-gm-kXo"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="zYK-b4-dOE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Merge" id="pmc-wD-ZP1"/>
+                    <connections>
+                        <outlet property="playButton1" destination="gRw-eW-csT" id="oDE-X2-Mle"/>
+                        <outlet property="playButton2" destination="Hh7-V9-73a" id="KqJ-c5-onY"/>
+                        <outlet property="playMergedButton" destination="esd-Ke-eFZ" id="Hys-c3-ChW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEi-8Z-iI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3057" y="950"/>
+            <point key="canvasLocation" x="3055.3223388305851" y="949.60000000000002"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="WWq-mJ-V4X">
