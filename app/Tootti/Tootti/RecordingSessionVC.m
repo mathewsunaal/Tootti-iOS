@@ -31,7 +31,7 @@
         self.players = [[NSMutableArray alloc] init];
     }
     [self setupViews];
-    [self setupAVSessionwithSpeaker:YES];
+    [self setupAVSessionwithSpeaker:NO];
 }
 
 - (void) setupViews {
@@ -233,4 +233,97 @@
     [self.recordTimerLabel setText:[NSString stringWithFormat:@"%@:%@",formatMinutes,formatSeconds]];
 }
 
+
+//waveform code
+/*int _playTime = 0;
+//NSTimeInterval waveUpdateFrequency;
+#define SOUND_METER_COUNT 40
+int _soundMeters[40];
+int _waveUpdateFrequency;
+int _playTime;
+NSTimer* _timer;
+
+
+- (void)startForFilePath:(NSString *)filePath
+{
+    self.audioPlayer.meteringEnabled = YES;
+
+    NSTimeInterval duration = self.audioPlayer.duration;
+    _waveUpdateFrequency = duration/(SOUND_METER_COUNT/2);
+
+    _timer = [NSTimer scheduledTimerWithTimeInterval:_waveUpdateFrequency target:self selector:@selector(updateMeters) userInfo:nil repeats:YES];
+}
+
+
+- (void)updateMeters
+{
+    [self.audioPlayer updateMeters];
+    if ((![self.audioPlayer isPlaying]) || (_playTime >= 60.0f)) { //60s
+        [self.audioPlayer stop];
+        return;
+    }
+    _playTime = self.audioPlayer.currentTime;
+
+    [self addSoundMeterItem:[self.audioPlayer averagePowerForChannel:0]];
+}
+
+#pragma mark - Sound meter operations
+
+- (void)shiftSoundMeterLeft
+{
+    for(int i = 0; i < SOUND_METER_COUNT - 1; i++) {
+        _soundMeters[i] = _soundMeters[i+1];
+    }
+}
+
+
+- (void)shiftSoundMeterRight
+{
+    for(int i = SOUND_METER_COUNT - 1; i >= 0 ; i--) {
+        _soundMeters[i] = _soundMeters[i-1];
+    }
+}
+
+- (void)addSoundMeterItem:(int)lastValue
+{
+    [self shiftSoundMeterLeft];
+    [self shiftSoundMeterLeft];
+    _soundMeters[SOUND_METER_COUNT - 1] = lastValue;
+    _soundMeters[SOUND_METER_COUNT - 2] = lastValue;
+    [self.view setNeedsDisplay];
+}
+
+#define MAX_LENGTH_OF_WAVE 100
+
+#pragma mark - Drawing operations
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    // Draw sound meter wave
+
+    CGContextSetLineWidth(context, 1.0);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+
+    int baseLine = self.view.frame.size.height/2;
+    int multiplier = 1;
+    int maxValueOfMeter = self.view.frame.size.height/2 - 5;
+    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--)
+    {
+        multiplier = ((int)x % 2) == 0 ? 1 : -1;
+
+        CGFloat y = baseLine + ((maxValueOfMeter * (MAX_LENGTH_OF_WAVE - abs(_soundMeters[(int)x]))) / MAX_LENGTH_OF_WAVE) * multiplier;
+
+        if(x == SOUND_METER_COUNT - 1) {
+            CGContextMoveToPoint(context, x * (self.view.frame.size.width / SOUND_METER_COUNT), y);
+            //CGContextAddLineToPoint(context, x * (_frameRect.size.width / SOUND_METER_COUNT) + 1, y);
+        }
+        else {
+            CGContextAddLineToPoint(context, x * (self.view.frame.size.width / SOUND_METER_COUNT), y);
+            //CGContextAddLineToPoint(context, x * (_frameRect.size.width / SOUND_METER_COUNT) + 1, y);
+        }
+    }
+
+    CGContextStrokePath(context);
+}
+*/
 @end

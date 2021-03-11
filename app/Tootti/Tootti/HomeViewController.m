@@ -180,7 +180,10 @@ bool isUp= false;
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
         if([segue.identifier isEqualToString:@"loginUser"]){
             //UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
-            HomeSessionVC *controller = [segue destinationViewController];
+            //HomeSessionVC *controller = [segue destinationViewController];
+            UITabBarController *tabar=(UITabBarController*)segue.destinationViewController;
+            HomeSessionVC *controller = (HomeSessionVC *) [tabar.viewControllers objectAtIndex:0];;
+            
             controller.user = user;
         }
     }
