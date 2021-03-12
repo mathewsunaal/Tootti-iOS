@@ -25,6 +25,7 @@
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
+		4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
 		4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2B25F592BA00BD7444 /* click-track.wav */; };
 		4DE2DA3025F592C900BD7444 /* Flute-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2E25F592C800BD7444 /* Flute-1.wav */; };
@@ -69,6 +70,7 @@
 		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
+		4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4DE2DA2B25F592BA00BD7444 /* click-track.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-track.wav"; sourceTree = "<group>"; };
 		4DE2DA2E25F592C800BD7444 /* Flute-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-1.wav"; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */,
 				4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */,
 				A39C211AFE463C2C1B788317 /* Pods_Tootti.framework in Frameworks */,
 			);
@@ -189,6 +192,7 @@
 		B29FDD0DAAC9EAF0FA864A51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */,
 				4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */,
 				D0E77DCA928637F698535D99 /* Pods_Tootti.framework */,
 			);

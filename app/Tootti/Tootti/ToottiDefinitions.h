@@ -19,6 +19,10 @@
 #define NORMAL_BUTTON_FONT_TYPE @"HelveticaNeue"
 #define NORMAL_BUTTON_FONT_SIZE 17
 
+// VIEW INFO
+#define SCREEN_WIDTH self.view.bounds.size.width
+#define SCREEN_HEIGHT self.view.bounds.size.height
+
 
 
 
