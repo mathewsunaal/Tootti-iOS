@@ -8,9 +8,13 @@
 #import "ClickTrackSessionVC.h"
 #import "ToottiDefinitions.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ClickTrackSessionVC () <MPMediaPickerControllerDelegate>
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
+@property (nonatomic,retain) AVAudioPlayer *audioPlayer;
+
+@property (nonatomic,retain) NSURL *clickTrackURL; // need to connect this to utilities at some point, or leave as URL for optimization
 //@property (nonatomic,retain)
 @end
 
@@ -57,7 +61,15 @@
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection {
     NSLog(@"Did pick audio track: %@",mediaItemCollection);
+    MPMediaItem *item = [[mediaItemCollection items] objectAtIndex:0];
+    NSURL *url = [item valueForProperty:MPMediaItemPropertyAssetURL];
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
+    
+    // Test player
+    NSLog(@"url of click trac: %@",url.absoluteString);
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    [self.audioPlayer play];
+    
 }
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker {
