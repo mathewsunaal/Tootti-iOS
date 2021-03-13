@@ -43,21 +43,21 @@
     self.logoImageView.image = [UIImage imageNamed:@"app-logo"];
     
     // Setup buttons
-    self.createSessionButton.backgroundColor = BUTTON_DARK_TEAL;
-    self.createSessionButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
-    self.createSessionButton.clipsToBounds = YES;
-    [self.createSessionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.createSessionButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
-    
-    self.joinSessionButton.backgroundColor = BUTTON_DARK_TEAL;
-    self.joinSessionButton.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
-    self.joinSessionButton.clipsToBounds = YES;
-    [self.joinSessionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.joinSessionButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+    [self setupButton:self.createSessionButton];
+    [self setupButton:self.joinSessionButton];
+    [self setupButton:self.viewSessionsButton];
     
 }
 
+-(void)setupButton:(UIButton *)button {
+    button.backgroundColor = BUTTON_DARK_TEAL;
+    button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    button.clipsToBounds = YES;
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+}
 
+#pragma mark - Button Action Methods
 - (IBAction)createSession:(UIButton *)sender {
     [self performSegueWithIdentifier:@"createSession" sender:self];
 }
@@ -65,6 +65,11 @@
 - (IBAction)joinSession:(UIButton *)sender {
     [self performSegueWithIdentifier:@"joinSession" sender:self];
 }
+
+- (IBAction)viewPastSessions:(UIButton *)sender {
+    NSLog(@"View Past Sessions button pressed");
+}
+
 - (IBAction)logOutTapped:(id)sender {
     //[[FIRAuth auth] removeAuthStateDidChangeListener: userHandle];
     NSLog(@"tapppppppppped");

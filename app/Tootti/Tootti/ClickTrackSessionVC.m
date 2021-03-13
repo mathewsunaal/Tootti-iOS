@@ -36,25 +36,27 @@
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    [button setTitle:@"Upload clicktrack" forState:UIControlStateNormal];
-    [button sizeToFit];
-    button.center = CGPointMake(SCREEN_WIDTH/2,SCREEN_HEIGHT-80);
-    NSLog(@"%f",self.view.bounds.size.width);
-    [button addTarget:self action:@selector(uploadClickTrack:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-    self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
+    [self setupButton:self.uploadTrackButton];
 }
 
-- (void)uploadClickTrack:(UIButton *)button {
-     NSLog(@"Button Pressed");
-    
-    self.pickerVC.allowsPickingMultipleItems = NO;
-    self.pickerVC.popoverPresentationController.sourceView = button;
-    self.pickerVC.delegate = self;
-    //[self.pickerVC setModalPresentationCapturesStatusBarAppearance:UIModalPresentationCurrentContext];
-    [self presentViewController:self.pickerVC animated:YES completion:nil];
+-(void)setupButton:(UIButton *)button {
+    button.backgroundColor = BUTTON_DARK_TEAL;
+    button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    button.clipsToBounds = YES;
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+}
+
+#pragma mark - Button Action methods
+
+- (IBAction)uploadClickTrack:(UIButton *)sender {
+    NSLog(@"Button Pressed");
+   
+   self.pickerVC.allowsPickingMultipleItems = NO;
+   self.pickerVC.popoverPresentationController.sourceView = self.uploadTrackButton;
+   self.pickerVC.delegate = self;
+   //[self.pickerVC setModalPresentationCapturesStatusBarAppearance:UIModalPresentationCurrentContext];
+   [self presentViewController:self.pickerVC animated:YES completion:nil];
 }
 
 #pragma mark - MPMediaPickerControllerDelegate methods
@@ -62,7 +64,7 @@
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection {
     NSLog(@"Did pick audio track: %@",mediaItemCollection);
     MPMediaItem *item = [[mediaItemCollection items] objectAtIndex:0];
-    NSURL *url = [item valueForProperty:MPMediaItemPropertyAssetURL];
+    NSURL *url = [item  valueForProperty:MPMediaItemPropertyAssetURL];
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
     
     // Test player
