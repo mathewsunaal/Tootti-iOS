@@ -7,6 +7,7 @@
 
 #import "RecordingSessionVC.h"
 #import "ToottiDefinitions.h"
+#import "WaveView.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
@@ -17,7 +18,9 @@
 @property (nonatomic, retain) NSTimer *recordTimer;
 @property (nonatomic) int timerMinutes;
 @property (nonatomic) int timerSeconds;
-
+//Waveform property
+@property (nonatomic, retain) WaveView *wv;
+@property (nonatomic, retain) NSTimer *waveformTimer;
 
 @end
 
@@ -32,15 +35,16 @@
     }
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
+    self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 - (void) setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
-    
     // Hide recording timestamp
     self.recordTimerLabel.hidden = YES;
-    
+    //Waveform Start
+    //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 // Get path for storage
@@ -92,6 +96,13 @@
     self.audioRecorder.delegate = self;
     self.audioRecorder.meteringEnabled = YES;
     [self.audioRecorder prepareToRecord];
+    
+    //waveform code
+    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(10.0f, 100.0f, 300.0f, 100.0f)];
+    [self.wv setBackgroundColor:[UIColor lightGrayColor]];
+    [self.view addSubview: self.wv];
+        
+        //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 
@@ -121,6 +132,9 @@
         [self startTimer];
         self.playButton.userInteractionEnabled = NO;
         self.playButton.alpha = 0.5;
+        //Waveform Start
+        
+        //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
     }
     else {
             
@@ -136,12 +150,18 @@
         else {
              NSLog(@"AudioSession inactive");
         }
-        
         // Update UI
         [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
         [self resetTimer];
         self.playButton.userInteractionEnabled = YES;
         self.playButton.alpha = 1.0;
+        //Stop Waveform
+        //Stop
+        if ([self.waveformTimer isValid]){
+            NSLog(@"###################################");
+            [self.waveformTimer invalidate];
+            self.waveformTimer = nil;
+        }
     }
 }
 
@@ -203,6 +223,7 @@
                                                       selector:@selector(timerDidFire)
                                                       userInfo:nil
                                                        repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 - (void) resetTimer {
@@ -233,97 +254,23 @@
     [self.recordTimerLabel setText:[NSString stringWithFormat:@"%@:%@",formatMinutes,formatSeconds]];
 }
 
-
-//waveform code
-/*int _playTime = 0;
-//NSTimeInterval waveUpdateFrequency;
-#define SOUND_METER_COUNT 40
-int _soundMeters[40];
-int _waveUpdateFrequency;
-int _playTime;
-NSTimer* _timer;
-
-
-- (void)startForFilePath:(NSString *)filePath
-{
-    self.audioPlayer.meteringEnabled = YES;
-
-    NSTimeInterval duration = self.audioPlayer.duration;
-    _waveUpdateFrequency = duration/(SOUND_METER_COUNT/2);
-
-    _timer = [NSTimer scheduledTimerWithTimeInterval:_waveUpdateFrequency target:self selector:@selector(updateMeters) userInfo:nil repeats:YES];
+#define XMAX    20.0f
+- (void) refreshWaveView:(id) arg{
+    [self.audioRecorder  updateMeters];
+#if 0
+    // 通知audioPlayer 说我们要去平均波形和最大波形
+    float a = [self.audioRecorder averagePowerForChannel:0];
+    float p = [self.audioRecorder  peakPowerForChannel:0];
+    NSLog(@"average is %f peak %f", a, p);
+    a = (fabsf(a)+XMAX)/XMAX;
+    p = (fabsf(p)+XMAX)/XMAX;
+    [self.wv addAveragePoint:a*50 andPeakPoint:p*50];
+#else
+    float aa = pow(10, (0.05 * [self.audioRecorder averagePowerForChannel:0]));
+    float pp = pow(10, (0.05 * [self.audioRecorder peakPowerForChannel:0]));
+    
+    NSLog(@"average is %f peak %f", aa, pp);
+    [self.wv addAveragePoint:aa andPeakPoint:pp];
+#endif
 }
-
-
-- (void)updateMeters
-{
-    [self.audioPlayer updateMeters];
-    if ((![self.audioPlayer isPlaying]) || (_playTime >= 60.0f)) { //60s
-        [self.audioPlayer stop];
-        return;
-    }
-    _playTime = self.audioPlayer.currentTime;
-
-    [self addSoundMeterItem:[self.audioPlayer averagePowerForChannel:0]];
-}
-
-#pragma mark - Sound meter operations
-
-- (void)shiftSoundMeterLeft
-{
-    for(int i = 0; i < SOUND_METER_COUNT - 1; i++) {
-        _soundMeters[i] = _soundMeters[i+1];
-    }
-}
-
-
-- (void)shiftSoundMeterRight
-{
-    for(int i = SOUND_METER_COUNT - 1; i >= 0 ; i--) {
-        _soundMeters[i] = _soundMeters[i-1];
-    }
-}
-
-- (void)addSoundMeterItem:(int)lastValue
-{
-    [self shiftSoundMeterLeft];
-    [self shiftSoundMeterLeft];
-    _soundMeters[SOUND_METER_COUNT - 1] = lastValue;
-    _soundMeters[SOUND_METER_COUNT - 2] = lastValue;
-    [self.view setNeedsDisplay];
-}
-
-#define MAX_LENGTH_OF_WAVE 100
-
-#pragma mark - Drawing operations
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    // Draw sound meter wave
-
-    CGContextSetLineWidth(context, 1.0);
-    CGContextSetLineJoin(context, kCGLineJoinRound);
-
-    int baseLine = self.view.frame.size.height/2;
-    int multiplier = 1;
-    int maxValueOfMeter = self.view.frame.size.height/2 - 5;
-    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--)
-    {
-        multiplier = ((int)x % 2) == 0 ? 1 : -1;
-
-        CGFloat y = baseLine + ((maxValueOfMeter * (MAX_LENGTH_OF_WAVE - abs(_soundMeters[(int)x]))) / MAX_LENGTH_OF_WAVE) * multiplier;
-
-        if(x == SOUND_METER_COUNT - 1) {
-            CGContextMoveToPoint(context, x * (self.view.frame.size.width / SOUND_METER_COUNT), y);
-            //CGContextAddLineToPoint(context, x * (_frameRect.size.width / SOUND_METER_COUNT) + 1, y);
-        }
-        else {
-            CGContextAddLineToPoint(context, x * (self.view.frame.size.width / SOUND_METER_COUNT), y);
-            //CGContextAddLineToPoint(context, x * (_frameRect.size.width / SOUND_METER_COUNT) + 1, y);
-        }
-    }
-
-    CGContextStrokePath(context);
-}
-*/
 @end

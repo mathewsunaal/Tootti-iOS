@@ -30,6 +30,10 @@
 		4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2B25F592BA00BD7444 /* click-track.wav */; };
 		4DE2DA3025F592C900BD7444 /* Flute-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2E25F592C800BD7444 /* Flute-1.wav */; };
 		4DE2DA3125F592C900BD7444 /* Flute-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2F25F592C900BD7444 /* Flute-2.wav */; };
+		52671A0725FDF850001E9856 /* WaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0125FDF850001E9856 /* WaveView.m */; };
+		52671A0825FDF850001E9856 /* MOAudioSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0325FDF850001E9856 /* MOAudioSliderView.m */; };
+		52671A0925FDF850001E9856 /* MOWaveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0525FDF850001E9856 /* MOWaveTableView.m */; };
+		52671A0A25FDF850001E9856 /* MOTimeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0625FDF850001E9856 /* MOTimeTableView.m */; };
 		528F64FE25F2C51300021C64 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 528F64FD25F2C51300021C64 /* GoogleService-Info.plist */; };
 		529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AB25D4F16C004CD9B4 /* AppDelegate.m */; };
 		529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */; };
@@ -75,6 +79,14 @@
 		4DE2DA2B25F592BA00BD7444 /* click-track.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-track.wav"; sourceTree = "<group>"; };
 		4DE2DA2E25F592C800BD7444 /* Flute-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-1.wav"; sourceTree = "<group>"; };
 		4DE2DA2F25F592C900BD7444 /* Flute-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-2.wav"; sourceTree = "<group>"; };
+		526719FF25FDF850001E9856 /* MOAudioSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioSliderView.h; sourceTree = "<group>"; };
+		52671A0025FDF850001E9856 /* MOTimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOTimeTableView.h; sourceTree = "<group>"; };
+		52671A0125FDF850001E9856 /* WaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveView.m; sourceTree = "<group>"; };
+		52671A0225FDF850001E9856 /* MOWaveTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOWaveTableView.h; sourceTree = "<group>"; };
+		52671A0325FDF850001E9856 /* MOAudioSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOAudioSliderView.m; sourceTree = "<group>"; };
+		52671A0425FDF850001E9856 /* WaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveView.h; sourceTree = "<group>"; };
+		52671A0525FDF850001E9856 /* MOWaveTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOWaveTableView.m; sourceTree = "<group>"; };
+		52671A0625FDF850001E9856 /* MOTimeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOTimeTableView.m; sourceTree = "<group>"; };
 		528F64FD25F2C51300021C64 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		529E89A725D4F16C004CD9B4 /* Tootti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tootti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		529E89AA25D4F16C004CD9B4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -109,6 +121,14 @@
 		4D86E8BA25F2C6EE00A70623 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				526719FF25FDF850001E9856 /* MOAudioSliderView.h */,
+				52671A0325FDF850001E9856 /* MOAudioSliderView.m */,
+				52671A0025FDF850001E9856 /* MOTimeTableView.h */,
+				52671A0625FDF850001E9856 /* MOTimeTableView.m */,
+				52671A0225FDF850001E9856 /* MOWaveTableView.h */,
+				52671A0525FDF850001E9856 /* MOWaveTableView.m */,
+				52671A0425FDF850001E9856 /* WaveView.h */,
+				52671A0125FDF850001E9856 /* WaveView.m */,
 				4D86E8BB25F2C6EE00A70623 /* Session.m */,
 				4D86E8BC25F2C6EE00A70623 /* User.m */,
 				4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */,
@@ -327,10 +347,13 @@
 			files = (
 				4D86E8CB25F2C70C00A70623 /* HostUserDecorator.h in Sources */,
 				4D86E8CC25F2C70C00A70623 /* Audio.h in Sources */,
+				52671A0825FDF850001E9856 /* MOAudioSliderView.m in Sources */,
 				4D86E8CD25F2C70C00A70623 /* GuestUserDecorator.h in Sources */,
 				4D86E8CE25F2C70C00A70623 /* Session.h in Sources */,
 				4D86E8CF25F2C70C00A70623 /* User.h in Sources */,
+				52671A0925FDF850001E9856 /* MOWaveTableView.m in Sources */,
 				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
+				52671A0A25FDF850001E9856 /* MOTimeTableView.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
 				4D86E8C525F2C6EE00A70623 /* Session.m in Sources */,
@@ -344,6 +367,7 @@
 				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
+				52671A0725FDF850001E9856 /* WaveView.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
 				4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */,

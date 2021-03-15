@@ -8,14 +8,17 @@
 #import "MergeSessionVC.h"
 #import "ToottiDefinitions.h"
 #import <AVFoundation/AVFoundation.h>
+#import "MOAudioSliderView.h"
+#import "Audio.h"
 
 @interface MergeSessionVC () <AVAudioPlayerDelegate>
 
 @property(nonatomic,retain) NSMutableArray *players;
-
 @end
-
 @implementation MergeSessionVC
+//Objects
+MOAudioSliderView *_sliderView;
+Audio *_audio;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -57,17 +60,20 @@
 }
 
 - (IBAction)playTrack1:(UIButton *)sender {
-    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
-    
-    AVAudioPlayer *lastPlayer = self.players.lastObject;
-    [lastPlayer play];
+    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
+    //AVAudioPlayer *lastPlayer = self.players.lastObject;
+    //[lastPlayer play];
+    //Get the waveform
+    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-1.wav?alt=media&token=8a961143-ea85-42ad-bb78-65768e1907e8";
+    [self drawWaveForm: urlStr];
 }
 
 - (IBAction)playTrack2:(UIButton *)sender {
-    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
-    
-    AVAudioPlayer *lastPlayer = self.players.lastObject;
-    [lastPlayer play];
+    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
+    //AVAudioPlayer *lastPlayer = self.players.lastObject;
+    //[lastPlayer play];
+    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-2.wav?alt=media&token=d32be550-1e8a-4a31-871e-b2abb6469d53";
+    [self drawWaveForm: urlStr];
 }
 
 - (IBAction)playMergedTracks:(UIButton *)sender {
@@ -82,10 +88,18 @@
     for( AVAudioPlayer *player in self.players) {
         [player playAtTime:timeOffset];
     }
+    
 }
-
-
-
+- (void) drawWaveForm:(NSString *) audioURL{
+    _audio = [[Audio alloc] initWithAudioName:@"THISSONG" audioURL:audioURL];
+    NSArray *samplePoints = [_audio convertAVToArr];
+    NSURL *playUrl = [NSURL URLWithString:audioURL];
+    _sliderView = [[MOAudioSliderView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 85)
+                                                    playUrl:playUrl
+                                                      points:samplePoints];
+    _sliderView.frame = CGRectMake(0, 100, self.view.frame.size.width, 85);
+    [self.view addSubview:_sliderView];
+}
 
 /*
 #pragma mark - Navigation
