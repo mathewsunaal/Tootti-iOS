@@ -11,6 +11,7 @@
 @property (readonly) NSString *uid;
 @property (strong, nonatomic) NSString *audioSound;
 @property (strong, nonatomic) NSString *audioName;
+@property (strong, nonatomic) NSString *audioURL;
 @property (strong, nonatomic) NSString *performer;
 @property (strong, nonatomic) NSDictionary *configDictionary;
 @property (strong, nonatomic) NSString *sessionId;
@@ -24,9 +25,9 @@
                          audioType: (NSString *)audioType
                                uid: (NSString *)uid;
 
-
+- (instancetype) initWithAudioName:(NSString *)audioName
+                          audioURL:(NSString *)audioURL;
 - (AVAudioPlayer* ) getAudioSound;
 - (void) uploadAudioSound;
-
-
+- (NSArray *) convertAVToArr;
 @end
