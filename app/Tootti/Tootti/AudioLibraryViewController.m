@@ -7,8 +7,9 @@
 
 #import "AudioLibraryViewController.h"
 #import "ToottiDefinitions.h"
+#import "AudioCell.h"
 
-@interface AudioLibraryViewController ()
+@interface AudioLibraryViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
@@ -18,10 +19,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    if(self.audioRecordings == nil){
+        self.audioRecordings = [[NSMutableArray alloc] init];
+    }
+    
+    //Set delegates
+    self.audioLibTableView.delegate = self;
+    self.audioLibTableView.dataSource = self;
     [self setupViews];
 }
 
-
+- (void)viewWillAppear:(BOOL)animated {
+    [self.audioLibTableView reloadData];
+}
 
 - (void)setupViews {
     // Set background colour of view controller
@@ -49,5 +59,28 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - IBAction methods
+
+- (IBAction)refresh:(UIButton *)sender {
+    NSLog(@"Refresh Audio Library");
+    [self.audioLibTableView reloadData];
+}
+
+#pragma mark - AudioLibTableView methods
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    AudioCell *cell = [tableView dequeueReusableCellWithIdentifier:@"audioCell" forIndexPath:indexPath];
+    
+    Audio* audio = self.audioRecordings[indexPath.row];
+    cell.audio = audio;
+    cell.audioNameLabel.text = audio.audioName;
+
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section { 
+    return self.audioRecordings.count;
+}
+
 
 @end

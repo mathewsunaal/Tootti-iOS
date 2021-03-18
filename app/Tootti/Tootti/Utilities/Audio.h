@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSDictionary *configDictionary;
 @property (strong, nonatomic) NSString *sessionId;
 @property (strong, nonatomic) NSString *audioType;
+@property (retain, nonatomic) AVAudioPlayer *player;
 
 - (instancetype) initWithAudioName: (NSString *)audioName
                         audioSound: (NSString *)audioSound
@@ -27,6 +28,8 @@
 
 - (instancetype) initWithAudioName:(NSString *)audioName
                           audioURL:(NSString *)audioURL;
+- (BOOL) playAudio;
+- (void)stopAudio;
 - (AVAudioPlayer* ) getAudioSound;
 - (void) uploadAudioSound;
 - (NSArray *) convertAVToArr;

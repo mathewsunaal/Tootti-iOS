@@ -8,6 +8,9 @@
 #import <Foundation/Foundation.h>
 #import "Audio.h"
 
+@interface Audio() <AVAudioPlayerDelegate>
+
+@end
 @implementation Audio
 //Constructor
 - (instancetype) initWithAudioName: (NSString *)audioName
@@ -37,7 +40,18 @@
         _audioName = audioName;
         _audioURL = audioURL;
     }
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:audioURL]
+                                                         error:nil];
+    [self.player setDelegate:self];
     return self;
+}
+
+- (BOOL)playAudio {
+    return  [self.player play];
+}
+
+- (void)stopAudio {
+    [self.player stop];
 }
     
 - (AVAudioPlayer* ) getAudioSound{

@@ -30,6 +30,8 @@
 		4DB5B18E2602D25700583C54 /* AudioLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */; };
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
+		4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423122603BD5A0027DCDC /* AudioCell.m */; };
+		4DD423172603F4F30027DCDC /* MergeAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423162603F4F30027DCDC /* MergeAudioCell.m */; };
 		4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */; };
 		4DE0F89525E6A66E0015C4CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */; };
 		4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2B25F592BA00BD7444 /* click-track.wav */; };
@@ -81,6 +83,10 @@
 		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
+		4DD423112603BD5A0027DCDC /* AudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioCell.h; sourceTree = "<group>"; };
+		4DD423122603BD5A0027DCDC /* AudioCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioCell.m; sourceTree = "<group>"; };
+		4DD423152603F4F30027DCDC /* MergeAudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeAudioCell.h; sourceTree = "<group>"; };
+		4DD423162603F4F30027DCDC /* MergeAudioCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeAudioCell.m; sourceTree = "<group>"; };
 		4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4DE0F89425E6A66E0015C4CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4DE2DA2B25F592BA00BD7444 /* click-track.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-track.wav"; sourceTree = "<group>"; };
@@ -214,6 +220,10 @@
 				4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */,
 				4DB5B18C2602D25700583C54 /* AudioLibraryViewController.h */,
 				4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */,
+				4DD423112603BD5A0027DCDC /* AudioCell.h */,
+				4DD423122603BD5A0027DCDC /* AudioCell.m */,
+				4DD423152603F4F30027DCDC /* MergeAudioCell.h */,
+				4DD423162603F4F30027DCDC /* MergeAudioCell.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -377,7 +387,9 @@
 				4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
 				4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */,
+				4DD423172603F4F30027DCDC /* MergeAudioCell.m in Sources */,
 				4D86E8C825F2C6EE00A70623 /* GuestUserDecorator.m in Sources */,
+				4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */,
 				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
