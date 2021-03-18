@@ -11,7 +11,7 @@
 #import "MOAudioSliderView.h"
 #import "Audio.h"
 
-@interface MergeSessionVC () <AVAudioPlayerDelegate>
+@interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic,retain) NSMutableArray *players;
 @end
@@ -26,6 +26,10 @@ Audio *_audio;
     if(self.players == nil) {
         self.players = [[NSMutableArray alloc] init];
     }
+    
+    self.mergeTableView.delegate = self;
+    self.mergeTableView.dataSource = self;
+    
     [self setupViews];
 }
 
@@ -34,6 +38,8 @@ Audio *_audio;
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
 }
+
+#pragma mark - Audio Players
 
 - (void) addPlayerForPath: (NSString *) path {
     NSError *error;
@@ -45,38 +51,8 @@ Audio *_audio;
     
     [player setDelegate:self];
     [self.players addObject:player];
-    
 }
-- (IBAction)resetPlayers:(UIButton *)sender {
-    [self.players removeAllObjects];
-}
-
-- (IBAction)stopAllPlayers:(UIButton *)sender {
-    
-    for( AVAudioPlayer *player in self.players) {
-        [player stop];
-    }
-    
-}
-
-- (IBAction)playTrack1:(UIButton *)sender {
-    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
-    //AVAudioPlayer *lastPlayer = self.players.lastObject;
-    //[lastPlayer play];
-    //Get the waveform
-    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-1.wav?alt=media&token=8a961143-ea85-42ad-bb78-65768e1907e8";
-    [self drawWaveForm: urlStr];
-}
-
-- (IBAction)playTrack2:(UIButton *)sender {
-    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
-    //AVAudioPlayer *lastPlayer = self.players.lastObject;
-    //[lastPlayer play];
-    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-2.wav?alt=media&token=d32be550-1e8a-4a31-871e-b2abb6469d53";
-    [self drawWaveForm: urlStr];
-}
-
-- (IBAction)playMergedTracks:(UIButton *)sender {
+- (void)playMergedTracks {
     [self.players removeAllObjects];
     
     [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"click-track" ofType:@".wav"]];
@@ -88,8 +64,36 @@ Audio *_audio;
     for( AVAudioPlayer *player in self.players) {
         [player playAtTime:timeOffset];
     }
-    
 }
+
+- (void)resetPlayers {
+    [self.players removeAllObjects];
+}
+
+- (void)stopAllPlayers {
+    for( AVAudioPlayer *player in self.players) {
+        [player stop];
+    }
+}
+
+//- (IBAction)playTrack1:(UIButton *)sender {
+//    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
+//    //AVAudioPlayer *lastPlayer = self.players.lastObject;
+//    //[lastPlayer play];
+//    //Get the waveform
+//    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-1.wav?alt=media&token=8a961143-ea85-42ad-bb78-65768e1907e8";
+//    [self drawWaveForm: urlStr];
+//}
+//
+//- (IBAction)playTrack2:(UIButton *)sender {
+//    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
+//    //AVAudioPlayer *lastPlayer = self.players.lastObject;
+//    //[lastPlayer play];
+//    NSString *urlStr =@"https://firebasestorage.googleapis.com/v0/b/ece1778tooti.appspot.com/o/Flute-2.wav?alt=media&token=d32be550-1e8a-4a31-871e-b2abb6469d53";
+//    [self drawWaveForm: urlStr];
+//}
+
+
 - (void) drawWaveForm:(NSString *) audioURL{
     _audio = [[Audio alloc] initWithAudioName:@"THISSONG" audioURL:audioURL];
     NSArray *samplePoints = [_audio convertAVToArr];
@@ -100,6 +104,19 @@ Audio *_audio;
     _sliderView.frame = CGRectMake(0, 100, self.view.frame.size.width, 85);
     [self.view addSubview:_sliderView];
 }
+
+
+
+#pragma mark - TableView methods
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 0;
+}
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return nil;
+}
+
 
 /*
 #pragma mark - Navigation
