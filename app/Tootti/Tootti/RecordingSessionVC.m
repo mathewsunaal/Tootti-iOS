@@ -99,7 +99,7 @@
     
     //waveform code
     self.wv = [[WaveView alloc] initWithFrame:CGRectMake(10.0f, 100.0f, 300.0f, 100.0f)];
-    [self.wv setBackgroundColor:[UIColor lightGrayColor]];
+    [self.wv setBackgroundColor:[UIColor colorWithRed:64.0/255.0 green:224.0/255.0 blue:208.0/255.0 alpha:1]];
     [self.view addSubview: self.wv];
         
         //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
@@ -257,8 +257,8 @@
 #define XMAX    20.0f
 - (void) refreshWaveView:(id) arg{
     [self.audioRecorder  updateMeters];
+// different conditions
 #if 0
-    // 通知audioPlayer 说我们要去平均波形和最大波形
     float a = [self.audioRecorder averagePowerForChannel:0];
     float p = [self.audioRecorder  peakPowerForChannel:0];
     NSLog(@"average is %f peak %f", a, p);
