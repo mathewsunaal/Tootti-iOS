@@ -95,10 +95,10 @@
 }
 
 - (IBAction)confirmTrack:(id)sender {
-    RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[1];
+    RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
     recordingVC.clickTrack = self.clickTrackAudio;
-    
-    [self.tabBarController setSelectedIndex:1]; // move to record page
+    NSLog(@"Click track stored as %@",recordingVC.clickTrack);
+    [self.tabBarController setSelectedIndex:2]; // move to record page
     
 }
 

@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MOAudioSliderView.h"
 #import "Audio.h"
+#import "MergeAudioCell.h"
 
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -27,6 +28,9 @@ Audio *_audio;
         self.players = [[NSMutableArray alloc] init];
     }
     
+    if(self.mergeTracks == nil) {
+        self.mergeTracks = [[NSMutableArray alloc] init];
+    }
     self.mergeTableView.delegate = self;
     self.mergeTableView.dataSource = self;
     
@@ -105,16 +109,28 @@ Audio *_audio;
     [self.view addSubview:_sliderView];
 }
 
+#pragma mark - IBAction methods
+
+- (IBAction)refresh:(UIButton *)sender {
+    NSLog(@"Reresh merge tracks");
+    [self.mergeTableView reloadData];
+}
 
 
 #pragma mark - TableView methods
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return self.mergeTracks.count;
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return nil;
+    MergeAudioCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mergeAudioCell" forIndexPath:indexPath];
+    
+    Audio* audio = self.mergeTracks[indexPath.row];
+    cell.audio = audio;
+    cell.audioNameLabel.text = audio.audioName;
+
+    return cell;
 }
 
 

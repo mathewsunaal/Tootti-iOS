@@ -6,6 +6,7 @@
 //
 
 #import "RecordingSessionVC.h"
+#import "AudioLibraryViewController.h"
 #import "ToottiDefinitions.h"
 #import "WaveView.h"
 #import "Audio.h"
@@ -19,6 +20,7 @@
 @property (nonatomic, retain) NSTimer *recordTimer;
 @property (nonatomic) int timerMinutes;
 @property (nonatomic) int timerSeconds;
+@property (nonatomic, retain) NSDictionary *recordingSettings;
 //Waveform property
 @property (nonatomic, retain) WaveView *wv;
 @property (nonatomic, retain) NSTimer *waveformTimer;
@@ -31,21 +33,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self updateSessionData];
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
     self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 
 }
 
--(void) updateSessionData {
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    
+    [self updateSessionData];
+}
+
+-(void)updateSessionData {
     if (self.clickTrack != nil) {
         self.clickTrackPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:self.clickTrack.audioURL] error:nil];
         [self.clickTrackPlayer setDelegate:self];
     }
 }
 
-- (void) setupViews {
+- (void)setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     // Hide recording timestamp
@@ -54,23 +61,39 @@
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
-// Get path for storage
--(NSString *) getAudioPathwithFormat: (NSString *)audioFormat  {
-    // return a formatted string for a file name
-    //NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    //formatter.dateFormat = @"ddMMMYY_hhmmssa";
-    
-    return [NSString stringWithFormat:@"%f%@", [[NSDate date] timeIntervalSince1970],audioFormat];
-}
 
--(void) setupAVSessionwithSpeaker:(BOOL) speaker {
-    BOOL success; NSError *error;
-    // Set the audio file
+-(BOOL) renameRecordedFile: (NSString *)newFileName {
+    NSError * err = NULL;
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               [self getAudioPathwithFormat:@".m4a"],
+                               [self getAudioPathwithName:newFileName fileFormat:@".m4a"],
                                nil];
-    NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.audioRecorder.url error:nil];
+    [self.audioPlayer setDelegate:self];
+    [self.audioPlayer play];
+    NSURL *newPathURL = [NSURL fileURLWithPathComponents:pathComponents];
+    BOOL result;
+    result = [[NSFileManager defaultManager] fileExistsAtPath:self.audioRecorder.url.absoluteString];
+    NSLog(@"FIle exists at %@? %d",self.audioRecorder.url,result);
+//    result = [[NSFileManager defaultManager] moveItemAtPath:self.audioRecorder.url.absoluteString
+//                                                        toPath:newPathURL
+//                                                         error:&err];
+    if(!result) {
+        NSLog(@"Error: %@", err);
+    }
+    
+    return result;
+}
+
+
+// Get path for storage
+-(NSString *) getAudioPathwithName:(NSString *)name fileFormat: (NSString *)audioFormat  {
+    return [NSString stringWithFormat:@"%@%@", name,audioFormat];
+}
+
+// Setup AVAudioSession and properties
+-(void) setupAVSessionwithSpeaker:(BOOL) speaker {
+    BOOL success; NSError *error;
     
     // Setup AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -78,14 +101,6 @@
     if (!success) {
         NSLog(@"AVAudioSession error setting category:%@",error.description);
     }
-//    success = [session setCategory:AVAudioSessionCategoryPlayback
-//                       withOptions:AVAudioSessionCategoryOptionAllowBluetooth
-//                             error:&error];
-    if (!success) {
-        NSLog(@"AVAudioSession error setting AVAudioSessionCategoryPlayback:%@",error.localizedDescription);
-    }
-   
-
     if (speaker) {
         // Set the audioSession override
         success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
@@ -95,20 +110,13 @@
     }
     
     // Define AVAudioRecorder settings (PCM,44100,2xchannels)
-    NSDictionary * recordSettings;
-    recordSettings = [[NSMutableDictionary alloc] init];
-    [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
-    [recordSettings setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSettings setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
-    [recordSettings setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    [recordSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
-    [recordSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
-    
-    // Initiate and prepare the recorder
-    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSettings error:NULL];
-    self.audioRecorder.delegate = self;
-    self.audioRecorder.meteringEnabled = YES;
-    [self.audioRecorder prepareToRecord];
+    self.recordingSettings = [[NSMutableDictionary alloc] init];
+    [self.recordingSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+    [self.recordingSettings setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
+    [self.recordingSettings setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    [self.recordingSettings setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     //waveform code
     self.wv = [[WaveView alloc] initWithFrame:CGRectMake(10.0f, 100.0f, 300.0f, 100.0f)];
@@ -118,12 +126,38 @@
         //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
+- (IBAction)testButton:(UIButton *)sender {
+    
+    //TODO: remove after alertview implemented
+    [self renameRecordedFile:@"test-track"];
+}
+
+-(void)prepareForNewRecording {
+    NSArray *pathComponents = [NSArray arrayWithObjects:
+                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                               [self getAudioPathwithName:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]]
+                                               fileFormat:@".m4a"],
+                               nil];
+    NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+    
+    // Initiate and prepare the recorder
+    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:self.recordingSettings error:NULL];
+    self.audioRecorder.delegate = self;
+    self.audioRecorder.meteringEnabled = YES;
+    [self.audioRecorder prepareToRecord];
+}
+
 
 // Button action methods
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording pressed");
     NSError *error;
     
+    if(self.audioPlayer.isPlaying) {
+        [self.audioPlayer stop];
+    }
+    
+    // Start Recording
     if (!self.audioRecorder.recording) {
         // Activate AVAudioSession
         AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -134,6 +168,8 @@
         else {
              NSLog(@"AudioSession active");
         }
+        // Setup recording
+        [self prepareForNewRecording];
         // Start recording
         BOOL result = [self.audioRecorder record];
         if(result) {
@@ -144,14 +180,13 @@
         [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
         [self startTimer];
         //Waveform Start
-        
         //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
     }
+    // Stop Recording
     else {
-            
-        // Stop recording
         [self.audioRecorder stop];
         [self.clickTrackPlayer stop];
+        
         // Deactivate audio session
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         BOOL success = [audioSession setActive:NO error:&error];
@@ -160,17 +195,73 @@
         } else {
              NSLog(@"AudioSession inactive");
         }
+        
         // Update UI
         [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
         [self resetTimer];
         //Stop Waveform
-        //Stop
         if ([self.waveformTimer isValid]){
             NSLog(@"###################################");
             [self.waveformTimer invalidate];
             self.waveformTimer = nil;
         }
+        
+        //Show alert to name recording or cancel
+        [self showAlertForRecordingName];
+        
     }
+}
+
+-(void) updateLocalRecordingsWith:(Audio *)newRecordingAudio {
+    // Add new audio object to library VC
+    AudioLibraryViewController *libraryVC = self.tabBarController.viewControllers[3];
+    if(libraryVC.audioRecordings == nil){
+        libraryVC.audioRecordings = [[NSMutableArray alloc] init];
+    }
+    NSLog(@"New audio recording added: Name = %@, \n URL = %@",newRecordingAudio.audioName,newRecordingAudio.audioURL);
+    [libraryVC.audioRecordings addObject:newRecordingAudio];
+   
+}
+
+-(void) clearRecording {
+    
+}
+
+-(void) showAlertForRecordingName {
+    UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Recording Done!"
+                                                                    message:@"Please name this recording"
+                                                             preferredStyle:UIAlertControllerStyleAlert];
+
+    //Add Buttons
+    UIAlertAction* saveButton = [UIAlertAction
+                                actionWithTitle:@"Save"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    //Update name
+                                    Audio *newRecordingAudio = [[Audio alloc] initWithAudioName:alertVC.textFields[0].text
+                                                                                       audioURL:self.audioRecorder.url.absoluteString];
+                                    [self updateLocalRecordingsWith:newRecordingAudio];
+                               }];
+
+    UIAlertAction* cancelButton = [UIAlertAction
+                               actionWithTitle:@"Cancel"
+                               style:UIAlertActionStyleCancel
+                               handler:^(UIAlertAction * action) {
+                                    //Clear recording
+                                    [self clearRecording];
+                               }];
+
+    //Add textfield
+    [alertVC addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Recording name";
+        
+    }];
+
+    //Add your buttons to alert controller
+    [alertVC addAction:saveButton];
+    [alertVC addAction:cancelButton];
+
+    [self presentViewController:alertVC animated:YES completion:nil];
 }
 
 //- (void) addPlayerForPath: (NSString *) path {
