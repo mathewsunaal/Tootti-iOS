@@ -23,6 +23,11 @@
 		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
+		4DB5B1872602828C00583C54 /* MOAudioSliderView.h in Sources */ = {isa = PBXBuildFile; fileRef = 526719FF25FDF850001E9856 /* MOAudioSliderView.h */; };
+		4DB5B1882602828C00583C54 /* MOTimeTableView.h in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0025FDF850001E9856 /* MOTimeTableView.h */; };
+		4DB5B1892602828C00583C54 /* MOWaveTableView.h in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0225FDF850001E9856 /* MOWaveTableView.h */; };
+		4DB5B18A2602828C00583C54 /* WaveView.h in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0425FDF850001E9856 /* WaveView.h */; };
+		4DB5B18E2602D25700583C54 /* AudioLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */; };
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */; };
@@ -70,6 +75,8 @@
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4DB3246225E56614006B09B4 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		4DB5B18C2602D25700583C54 /* AudioLibraryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioLibraryViewController.h; sourceTree = "<group>"; };
+		4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioLibraryViewController.m; sourceTree = "<group>"; };
 		4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeSessionVC.h; sourceTree = "<group>"; };
 		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
@@ -205,6 +212,8 @@
 				4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */,
 				4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */,
 				4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */,
+				4DB5B18C2602D25700583C54 /* AudioLibraryViewController.h */,
+				4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -345,6 +354,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DB5B1872602828C00583C54 /* MOAudioSliderView.h in Sources */,
+				4DB5B1882602828C00583C54 /* MOTimeTableView.h in Sources */,
+				4DB5B1892602828C00583C54 /* MOWaveTableView.h in Sources */,
+				4DB5B18A2602828C00583C54 /* WaveView.h in Sources */,
 				4D86E8CB25F2C70C00A70623 /* HostUserDecorator.h in Sources */,
 				4D86E8CC25F2C70C00A70623 /* Audio.h in Sources */,
 				52671A0825FDF850001E9856 /* MOAudioSliderView.m in Sources */,
@@ -359,6 +372,7 @@
 				4D86E8C525F2C6EE00A70623 /* Session.m in Sources */,
 				4D86E8C925F2C6EE00A70623 /* Audio.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
+				4DB5B18E2602D25700583C54 /* AudioLibraryViewController.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
 				4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,

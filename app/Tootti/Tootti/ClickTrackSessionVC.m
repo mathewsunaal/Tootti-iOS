@@ -6,6 +6,8 @@
 //
 
 #import "ClickTrackSessionVC.h"
+#import "RecordingSessionVC.h"
+#import "Audio.h"
 #import "ToottiDefinitions.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
@@ -24,6 +26,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
     [self setupViews];
     
 }
@@ -37,6 +40,8 @@
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
     [self setupButton:self.uploadTrackButton];
+    [self setupButton:self.playTrackButton];
+    [self setupButton:self.confirmTrackButton];
 }
 
 -(void)setupButton:(UIButton *)button {
@@ -55,7 +60,6 @@
    self.pickerVC.allowsPickingMultipleItems = NO;
    self.pickerVC.popoverPresentationController.sourceView = self.uploadTrackButton;
    self.pickerVC.delegate = self;
-   //[self.pickerVC setModalPresentationCapturesStatusBarAppearance:UIModalPresentationCurrentContext];
    [self presentViewController:self.pickerVC animated:YES completion:nil];
 }
 
@@ -70,14 +74,33 @@
     // Test player
     NSLog(@"url of click trac: %@",url.absoluteString);
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    [self.audioPlayer play];
-    
+    self.clickTrackAudio = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL:url.absoluteString];
+
 }
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker {
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - IBAction Methods
+
+- (IBAction)playTrack:(UIButton *)sender {
+    if(self.audioPlayer.isPlaying) {
+        [self.audioPlayer stop];
+        [self.playTrackButton setTitle:@"Play track" forState:UIControlStateNormal];
+    } else {
+        [self.audioPlayer play];
+        [self.playTrackButton setTitle:@"Stop playback" forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)confirmTrack:(id)sender {
+    RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[1];
+    recordingVC.clickTrack = self.clickTrackAudio;
+    
+    [self.tabBarController setSelectedIndex:1]; // move to record page
+    
+}
 
 #pragma mark - Navigation
 
