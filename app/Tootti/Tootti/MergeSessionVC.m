@@ -40,7 +40,16 @@ Audio *_audio;
 - (void) setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
-    
+    [self setupButton:self.mergeButton];
+    [self setupButton:self.doneButton];
+}
+
+-(void)setupButton:(UIButton *)button {
+    button.backgroundColor = BUTTON_DARK_TEAL;
+    button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    button.clipsToBounds = YES;
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
 
 #pragma mark - Audio Players
@@ -116,6 +125,20 @@ Audio *_audio;
     [self.mergeTableView reloadData];
 }
 
+- (IBAction)mergeTracks:(UIButton *)sender {
+}
+
+- (IBAction)completeSession:(UIButton *)sender {
+}
+
+- (IBAction)play:(UIButton *)sender {
+}
+
+- (IBAction)rewind:(UIButton *)sender {
+}
+
+- (IBAction)forward:(UIButton *)sender {
+}
 
 #pragma mark - TableView methods
 

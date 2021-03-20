@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) Audio *clickTrackAudio;
 @property (weak, nonatomic) IBOutlet UIButton *playTrackButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmTrackButton;
+@property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
 
 @end
 

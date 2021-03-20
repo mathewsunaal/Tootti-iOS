@@ -24,7 +24,9 @@
 //Waveform property
 @property (nonatomic, retain) WaveView *wv;
 @property (nonatomic, retain) NSTimer *waveformTimer;
+@property (weak, nonatomic) IBOutlet UIView *waveFormView;
 
+@property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
 
 @end
 
@@ -119,9 +121,9 @@
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     //waveform code
-    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(10.0f, 100.0f, 300.0f, 100.0f)];
+    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height-20)];
     [self.wv setBackgroundColor:[UIColor lightGrayColor]];
-    [self.view addSubview: self.wv];
+    [self.waveFormView addSubview: self.wv];
         
         //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }

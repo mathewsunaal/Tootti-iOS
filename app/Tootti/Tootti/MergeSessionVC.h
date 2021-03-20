@@ -11,8 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MergeSessionVC : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *mergeTableView;
-@property (weak, nonatomic) IBOutlet UIButton *mergeButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *mergeButton;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UIButton *rewindButton;
+@property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 
 @property (nonatomic, retain) NSMutableArray *mergeTracks;
 

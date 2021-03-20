@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,retain) NSMutableArray *audioRecordings;
 @property (weak, nonatomic) IBOutlet UITableView *audioLibTableView;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sendToMergeButton;
 @end
 
 NS_ASSUME_NONNULL_END

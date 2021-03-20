@@ -37,9 +37,7 @@
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
-//    [self setupButton:self.uploadTrackButton];
-//    [self setupButton:self.playTrackButton];
-//    [self setupButton:self.confirmTrackButton];
+    [self setupButton:self.sendToMergeButton];
 }
 
 -(void)setupButton:(UIButton *)button {
@@ -64,6 +62,8 @@
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Refresh Audio Library");
     [self.audioLibTableView reloadData];
+}
+- (IBAction)sendToMerge:(UIButton *)sender {
 }
 
 #pragma mark - AudioLibTableView methods
