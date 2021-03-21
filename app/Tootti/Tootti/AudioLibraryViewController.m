@@ -6,6 +6,7 @@
 //
 
 #import "AudioLibraryViewController.h"
+#import "MergeSessionVC.h"
 #import "ToottiDefinitions.h"
 #import "AudioCell.h"
 
@@ -30,6 +31,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [self.audioLibTableView reloadData];
 }
 
@@ -64,6 +66,16 @@
     [self.audioLibTableView reloadData];
 }
 - (IBAction)sendToMerge:(UIButton *)sender {
+    NSLog(@"Send library tracks to merge");
+    // Add new audio object to library VC
+    MergeSessionVC *mergeVC = self.tabBarController.viewControllers[4];
+    if(mergeVC.audioTracks == nil){
+        mergeVC.audioTracks = [[NSMutableArray alloc] init];
+    }
+    [mergeVC.audioTracks addObjectsFromArray:self.audioRecordings];
+    
+    //Navigate to merge tracks now
+    [self.tabBarController setSelectedIndex:4];
 }
 
 #pragma mark - AudioLibTableView methods

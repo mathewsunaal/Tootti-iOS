@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *rewindButton;
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 
-@property (nonatomic, retain) NSMutableArray *mergeTracks;
+@property (nonatomic, retain) NSMutableArray *audioTracks;
 
 @end
 

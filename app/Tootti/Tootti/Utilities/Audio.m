@@ -50,8 +50,16 @@
     return  [self.player play];
 }
 
+-(BOOL)playAudioAtTime:(NSTimeInterval)time {
+    return [self.player playAtTime:time];
+}
+
+- (void)pauseAudio {
+    return [self.player pause];
+}
+
 - (void)stopAudio {
-    [self.player stop];
+    return [self.player stop];
 }
     
 - (AVAudioPlayer* ) getAudioSound{

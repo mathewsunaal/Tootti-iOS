@@ -29,7 +29,9 @@
 - (instancetype) initWithAudioName:(NSString *)audioName
                           audioURL:(NSString *)audioURL;
 - (BOOL) playAudio;
-- (void)stopAudio;
+- (BOOL) playAudioAtTime:(NSTimeInterval)time;
+- (void) pauseAudio;
+- (void) stopAudio;
 - (AVAudioPlayer* ) getAudioSound;
 - (void) uploadAudioSound;
 - (NSArray *) convertAVToArr;

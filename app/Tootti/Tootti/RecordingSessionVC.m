@@ -121,7 +121,7 @@
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     //waveform code
-    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height-20)];
+    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height/2)];
     [self.wv setBackgroundColor:[UIColor lightGrayColor]];
     [self.waveFormView addSubview: self.wv];
         

@@ -13,8 +13,8 @@
 #import "MergeAudioCell.h"
 
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
-
-@property(nonatomic,retain) NSMutableArray *players;
+@property (nonatomic) BOOL mergeIsPlaying;
+@property (nonatomic,retain) NSMutableArray *players;
 @end
 @implementation MergeSessionVC
 //Objects
@@ -28,13 +28,18 @@ Audio *_audio;
         self.players = [[NSMutableArray alloc] init];
     }
     
-    if(self.mergeTracks == nil) {
-        self.mergeTracks = [[NSMutableArray alloc] init];
+    if(self.audioTracks == nil) {
+        self.audioTracks = [[NSMutableArray alloc] init];
     }
     self.mergeTableView.delegate = self;
     self.mergeTableView.dataSource = self;
     
     [self setupViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];    
+    [self.mergeTableView reloadData];
 }
 
 - (void) setupViews {
@@ -54,40 +59,40 @@ Audio *_audio;
 
 #pragma mark - Audio Players
 
-- (void) addPlayerForPath: (NSString *) path {
-    NSError *error;
-    NSURL *url= [NSURL fileURLWithPath:path];
-    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-    if(error) {
-        NSLog(@"Error detected for setting up AVPlayer: %@",error.localizedDescription);
-    }
-    
-    [player setDelegate:self];
-    [self.players addObject:player];
-}
-- (void)playMergedTracks {
-    [self.players removeAllObjects];
-    
-    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"click-track" ofType:@".wav"]];
-    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
-    [self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
-    
-    AVAudioPlayer *lastPlayer = self.players.lastObject;
-    NSTimeInterval timeOffset = lastPlayer.deviceCurrentTime + 0.01;
-    for( AVAudioPlayer *player in self.players) {
-        [player playAtTime:timeOffset];
-    }
-}
+//- (void) addPlayerForPath: (NSString *) path {
+//    NSError *error;
+//    NSURL *url= [NSURL fileURLWithPath:path];
+//    if(self.players == nil){
+//        self.players = [[NSMutableArray alloc] init];
+//    }
+//    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+//    if(error) {
+//        NSLog(@"Error detected for setting up AVPlayer: %@",error.localizedDescription);
+//    }
+//    
+//    [player setDelegate:self];
+//    [self.players addObject:player];
+//}
 
-- (void)resetPlayers {
-    [self.players removeAllObjects];
-}
+//- (void)updatePlayers {
+//    [self resetPlayers]; // remove all players
+//    for(Audio *track in self.audioTracks) {
+//        [self addPlayerForPath:track.audioURL]; // add players based on tableview datasource
+//    }
+//}
 
-- (void)stopAllPlayers {
-    for( AVAudioPlayer *player in self.players) {
-        [player stop];
-    }
-}
+//- (void)resetPlayers {
+//    [self.players removeAllObjects];
+//}
+
+//- (void)pauseAllPlayers {
+//    for(Audio *track in self.players) {
+//        [track pauseAudio];
+//    }
+////    for( AVAudioPlayer *player in self.players) {
+////        [player stop];
+////    }
+//}
 
 //- (IBAction)playTrack1:(UIButton *)sender {
 //    //[self addPlayerForPath: [[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
@@ -118,6 +123,30 @@ Audio *_audio;
     [self.view addSubview:_sliderView];
 }
 
+- (void)playAllTracks {
+    Audio *lastTrack = [self.audioTracks lastObject];
+    AVAudioPlayer *lastPlayer = lastTrack.player; // get last player added
+    NSTimeInterval timeOffset = lastPlayer.deviceCurrentTime + MERGE_PLAYBACK_TIME_BUFFER; // get current device time from lastPlayer
+    for(Audio *track in self.audioTracks) {
+        [track stopAudio];
+        track.player.currentTime = 0;
+        [track playAudioAtTime:timeOffset]; // for playback synchronization
+    }
+}
+
+- (void)pauseAllTracks {
+    for(Audio *track in self.audioTracks) {
+        [track pauseAudio];
+    }
+}
+
+- (void)adjustAllTracks:(float)delta {
+    for(Audio *track in self.audioTracks) {
+        [track pauseAudio];
+        track.player.currentTime += delta;
+    }
+}
+
 #pragma mark - IBAction methods
 
 - (IBAction)refresh:(UIButton *)sender {
@@ -126,30 +155,47 @@ Audio *_audio;
 }
 
 - (IBAction)mergeTracks:(UIButton *)sender {
+    NSLog(@"Merge and render all tracks");
 }
 
 - (IBAction)completeSession:(UIButton *)sender {
+    NSLog(@"Session completed");
 }
 
 - (IBAction)play:(UIButton *)sender {
+    if(!self.mergeIsPlaying) {
+        NSLog(@"Play merged tracks");
+        self.mergeIsPlaying = YES;
+        [self playAllTracks];
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
+    } else {
+        NSLog(@"Pause merged tracks");
+        self.mergeIsPlaying = NO;
+        [self pauseAllTracks];
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)rewind:(UIButton *)sender {
+    [self adjustAllTracks:-10];
+    [self playAllTracks];
 }
 
 - (IBAction)forward:(UIButton *)sender {
+    [self adjustAllTracks:+10];
+    [self playAllTracks];
 }
 
 #pragma mark - TableView methods
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.mergeTracks.count;
+    return self.audioTracks.count;
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MergeAudioCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mergeAudioCell" forIndexPath:indexPath];
     
-    Audio* audio = self.mergeTracks[indexPath.row];
+    Audio* audio = self.audioTracks[indexPath.row];
     cell.audio = audio;
     cell.audioNameLabel.text = audio.audioName;
 
