@@ -7,31 +7,13 @@
 
 #import <Foundation/Foundation.h>
 #import "Audio.h"
-
+#import "User.h"
+@import Firebase;
 @interface Audio() <AVAudioPlayerDelegate>
 
 @end
 @implementation Audio
 //Constructor
-- (instancetype) initWithAudioName: (NSString *)audioName
-                        audioSound: (NSString *)audioSound
-                         performer: (NSString *)performer
-                  configDictionary: (NSDictionary *)configDictionary
-                         sessionId: (NSString *)sessionId
-                         audioType: (NSString *)audioType
-                               uid: (NSString *)uid {
-    self = [super init];
-    if (self) {
-        _uid = uid;
-        _audioName= audioName;
-        _performer = performer;
-        _configDictionary = configDictionary;
-        _audioSound= audioSound;
-        _audioType = audioType;
-        _audioType = audioType;
-    }
-    return self;
-}
 
 - (instancetype) initWithAudioName:(NSString *)audioName
                                 audioURL:(NSString *)audioURL{
@@ -57,7 +39,44 @@
 - (AVAudioPlayer* ) getAudioSound{
     return [AVAudioPlayer alloc];
 }
-- (void) uploadAudioSound {
+- (void) uploadAudioSound: (NSString *) userUid
+               sessionUid: (NSString *) sessionUid {
+    //upload the audio sound to fire storage
+    FIRStorage *storage = [FIRStorage storage];
+    FIRFirestore *db =  [FIRFirestore firestore];
+    //FIRStorageReference *storageRef = [storage reference];
+    FIRStorageMetadata *metadata = [[FIRStorageMetadata alloc] init];
+    metadata.contentType = @"audio/wav";
+    NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@.wav", userUid, sessionUid, self.audioName];
+    NSLog(@"%@", audioFilePath);
+    NSLog(@"%@", self.audioURL);
+    NSURL *dataFile =  [NSURL URLWithString:self.audioURL];
+    //NSData *data = [NSData dataWithContentsOfFile:self.audioURL];
+    FIRStorageReference *audioRef = [storage referenceForURL: audioFilePath];
+    FIRStorageUploadTask *uploadTask = [audioRef putFile: dataFile metadata:metadata completion:^(FIRStorageMetadata *metadata, NSError *error) {
+      if (error != nil) {
+        // Uh-oh, an error occurred!
+      } else {
+        // You can also access to download URL after upload.
+        [audioRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+          if (error != nil) {
+              NSLog(@"%@", error.localizedDescription);
+          } else {
+            NSURL *downloadURL = URL;
+              //save the downloadURL to firestorage
+              FIRDocumentReference *sessionRef =
+                  [[db collectionWithPath:@"session"] documentWithPath:sessionUid];
+              [sessionRef updateData:@{
+                  @"guestPlayerList": [FIRFieldValue fieldValueForArrayUnion:@[audioFilePath]]
+              } completion:^(NSError * _Nullable error) {
+                  //Save the audioFile to firestore
+                  NSLog(@"yaaaassssssssss");
+                  NSLog(@"%@", downloadURL);
+              }];
+          }
+        }];
+      }
+    }];
     return;
 }
 - (NSArray *) convertAVToArr{
@@ -67,7 +86,7 @@
     */
     //Use remoteURL
     NSData *audioBytesData = [self readSoundFileSamplesHelper];
-    NSURL *playUrl = [NSURL URLWithString: self.audioURL];
+    NSURL *playUrl = [ NSURL URLWithString: self.audioURL ];
     
     NSLog(@"%@", playUrl);
     AVURLAsset* audioAsset = [self getAVAssetFromRemoteUrl: playUrl];

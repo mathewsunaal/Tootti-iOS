@@ -75,12 +75,12 @@ bool isUp= false;
                                              selector:@selector(textFieldDidEndEditing)
                                              name:UIKeyboardWillHideNotification
                                            object:self.view.window];
-         
-    NSLog(@"!!!!!!!!!!!!!!!!!");
+    
     NSString *savedUid = [[NSUserDefaults standardUserDefaults]
         stringForKey:@"uid"];
     NSString *savedEmail = [[NSUserDefaults standardUserDefaults]
         stringForKey:@"email"];
+    
     //Fetch all user information from database and initialize the user instance
     if ( savedUid != nil){
     [[[self.db collectionWithPath:@"user"] queryWhereField:@"email" isEqualTo: savedEmail]

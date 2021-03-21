@@ -15,20 +15,19 @@
 @interface ClickTrackSessionVC () <MPMediaPickerControllerDelegate>
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
 @property (nonatomic,retain) AVAudioPlayer *audioPlayer;
-
 @property (nonatomic,retain) NSURL *clickTrackURL; // need to connect this to utilities at some point, or leave as URL for optimization
-//@property (nonatomic,retain)
+
 @end
 
 @implementation ClickTrackSessionVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"from here %@", self.cachedSession);
     // Do any additional setup after loading the view.
-    
     self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
     [self setupViews];
-    
+    [self setupSessionStatus];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -38,10 +37,30 @@
 - (void)setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
-    
     [self setupButton:self.uploadTrackButton];
     [self setupButton:self.playTrackButton];
     [self setupButton:self.confirmTrackButton];
+}
+
+- (void) setupSessionStatus {
+    // Notification receiver
+    //Check if you are in the session
+    UILabel *myLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
+    [myLabel setBackgroundColor:[UIColor clearColor]];
+    [[self view] addSubview:myLabel];
+    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"%@", currentUserId);
+    NSLog(@"%@", _cachedSession);
+    if (self.cachedSession != 0){
+        if (currentUserId == self.cachedSession.hostUid){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSession.sessionName];
+        }
+        else{
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSession.sessionName];
+        }
+    }
+    [myLabel setText: message];
 }
 
 -(void)setupButton:(UIButton *)button {
@@ -109,6 +128,4 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-
-
 @end
