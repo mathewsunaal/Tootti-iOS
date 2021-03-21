@@ -18,13 +18,6 @@
 @property (strong, nonatomic) NSString *audioType;
 @property (retain, nonatomic) AVAudioPlayer *player;
 
-- (instancetype) initWithAudioName: (NSString *)audioName
-                        audioSound: (NSString *)audioSound
-                         performer: (NSString *)performer
-                  configDictionary: (NSDictionary *)configDictionary
-                         sessionId: (NSString *)sessionId
-                         audioType: (NSString *)audioType
-                               uid: (NSString *)uid;
 
 - (instancetype) initWithAudioName:(NSString *)audioName
                           audioURL:(NSString *)audioURL;
@@ -32,7 +25,8 @@
 - (BOOL) playAudioAtTime:(NSTimeInterval)time;
 - (void) pauseAudio;
 - (void) stopAudio;
+- (void) uploadAudioSound: (NSString *) userUid
+               sessionUid: (NSString *) sessionUid;
 - (AVAudioPlayer* ) getAudioSound;
-- (void) uploadAudioSound;
 - (NSArray *) convertAVToArr;
 @end

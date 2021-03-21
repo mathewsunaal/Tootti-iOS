@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *sessionCodeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *joinSessionButton;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessage;
 
 @end
 

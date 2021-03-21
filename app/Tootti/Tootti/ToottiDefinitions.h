@@ -23,6 +23,14 @@
 #define SCREEN_WIDTH self.view.bounds.size.width
 #define SCREEN_HEIGHT self.view.bounds.size.height
 
+//custom let & var
+#ifndef let
+#define let __auto_type const
+#endif
+
+#ifndef var
+#define var __auto_type
+#endif
 
 // PLAYBACK SETTINGS
 #define MERGE_PLAYBACK_TIME_BUFFER 0.01 // 10ms time delay from current device_time

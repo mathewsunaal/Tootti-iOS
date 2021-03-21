@@ -11,7 +11,7 @@
 #import "WaveView.h"
 #import "Audio.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import "Session.h"
 @interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
@@ -25,15 +25,17 @@
 @property (nonatomic, retain) WaveView *wv;
 @property (nonatomic, retain) NSTimer *waveformTimer;
 @property (weak, nonatomic) IBOutlet UIView *waveFormView;
-
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
-
 @implementation RecordingSessionVC
+
+Session *cachedSessionRecordingVC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.db =  [FIRFirestore firestore];
     // Do any additional setup after loading the view.
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
@@ -43,9 +45,38 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
+    [self setupSessionStatus];
     [self updateSessionData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
+    //LISTENING ON FIREBASE
+    //test start
+    NSString *sessionId = cachedSessionRecordingVC.uid;
+    NSLog(@"SessionID: %@", sessionId );
+    if (sessionId != 0){
+        [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
+            addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+              if (snapshot == nil) {
+                NSLog(@"Error fetching document: %@", error);
+                return;
+              }
+              NSLog(@"Current data: %@", snapshot.data);
+            NSDictionary *ds = snapshot.data;
+            NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+            NSLog(@"%@", [ds class]);
+            NSLog(@"%@", [ds[@"hostStartRecording"] class]);
+            if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES){
+                // Start recording
+                [self recordAudio: nil];
+                NSLog(@"HEYYYYYYYY");
+                //TODO: Update the recording for host and guest
+            }
+            }];
+    }
+    // test ends
+
 }
+
+
 
 -(void)updateSessionData {
     if (self.clickTrack != nil) {
@@ -63,12 +94,33 @@
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
+- (void) setupSessionStatus {
+    // Notification receiver
+    //Check if you are in the session
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
+    [statusLabel setBackgroundColor:[UIColor clearColor]];
+    [[self view] addSubview:statusLabel];
+    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"%@", currentUserId);
+    NSLog(@"%@", cachedSessionRecordingVC.hostUid);
+    if (cachedSessionRecordingVC != 0){
+        if (currentUserId == cachedSessionRecordingVC.hostUid){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", cachedSessionRecordingVC.sessionName];
+        }
+        else{
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", cachedSessionRecordingVC.sessionName];
+            }
+    }
+    [statusLabel setText: message];
+}
+
 
 -(BOOL) renameRecordedFile: (NSString *)newFileName {
     NSError * err = NULL;
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               [self getAudioPathwithName:newFileName fileFormat:@".m4a"],
+                               [self getAudioPathwithName:newFileName fileFormat:@".wav"],
                                nil];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.audioRecorder.url error:nil];
     [self.audioPlayer setDelegate:self];
@@ -122,7 +174,7 @@
     
     //waveform code
     self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height/2)];
-    [self.wv setBackgroundColor:[UIColor lightGrayColor]];
+    [self.wv setBackgroundColor:[UIColor colorWithRed:64.0/255.0 green:224.0/255.0 blue:208.0/255.0 alpha:1]];
     [self.waveFormView addSubview: self.wv];
         
         //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
@@ -138,7 +190,7 @@
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
                                [self getAudioPathwithName:[NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970]]
-                                               fileFormat:@".m4a"],
+                                               fileFormat:@".wav"],
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
     
@@ -149,6 +201,11 @@
     [self.audioRecorder prepareToRecord];
 }
 
+- (void)receiveSessionInfoFromNotification:(NSNotification *) notification
+{
+    NSDictionary *dict = notification.userInfo;
+    cachedSessionRecordingVC = [dict valueForKey:@"currentSession"];
+}
 
 // Button action methods
 - (IBAction)recordAudio:(UIButton *)sender {
@@ -207,10 +264,8 @@
             [self.waveformTimer invalidate];
             self.waveformTimer = nil;
         }
-        
         //Show alert to name recording or cancel
         [self showAlertForRecordingName];
-        
     }
 }
 
@@ -243,6 +298,12 @@
                                     Audio *newRecordingAudio = [[Audio alloc] initWithAudioName:alertVC.textFields[0].text
                                                                                        audioURL:self.audioRecorder.url.absoluteString];
                                     [self updateLocalRecordingsWith:newRecordingAudio];
+        NSLog(@"%@", cachedSessionRecordingVC.uid);
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]);
+        NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+        NSString *sessionID = cachedSessionRecordingVC.uid;
+        [newRecordingAudio uploadAudioSound: userID sessionUid: sessionID];
+        
                                }];
 
     UIAlertAction* cancelButton = [UIAlertAction
@@ -329,8 +390,8 @@
 #define XMAX    20.0f
 - (void) refreshWaveView:(id) arg{
     [self.audioRecorder  updateMeters];
+// different conditions
 #if 0
-    // 通知audioPlayer 说我们要去平均波形和最大波形
     float a = [self.audioRecorder averagePowerForChannel:0];
     float p = [self.audioRecorder  peakPowerForChannel:0];
     //NSLog(@"average is %f peak %f", a, p);

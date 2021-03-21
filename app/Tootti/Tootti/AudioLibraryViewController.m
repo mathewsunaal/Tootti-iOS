@@ -9,12 +9,14 @@
 #import "MergeSessionVC.h"
 #import "ToottiDefinitions.h"
 #import "AudioCell.h"
-
+#import "Session.h"
 @interface AudioLibraryViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @end
 
 @implementation AudioLibraryViewController
+
+Session *cachedSessionLibraryVC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,6 +38,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.audioLibTableView reloadData];
+    [self setupSessionStatus];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 }
 
 - (void)setupViews {
@@ -45,7 +49,7 @@
     [self setupButton:self.confirmButton];
 }
 
--(void)setupButton:(UIButton *)button {
+- (void)setupButton:(UIButton *)button {
     button.backgroundColor = BUTTON_DARK_TEAL;
     button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
     button.clipsToBounds = YES;
@@ -53,6 +57,32 @@
     [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
 
+- (void)setupSessionStatus {
+    // Notification receiver
+    //Check if you are in the session
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
+    [statusLabel setBackgroundColor:[UIColor clearColor]];
+    [[self view] addSubview:statusLabel];
+    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"%@", currentUserId);
+    NSLog(@"%@", cachedSessionLibraryVC.hostUid);
+    if (cachedSessionLibraryVC != 0){
+        if (currentUserId == cachedSessionLibraryVC.hostUid){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", cachedSessionLibraryVC.sessionName];
+        }
+        else{
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", cachedSessionLibraryVC.sessionName];
+        }
+    }
+    [statusLabel setText: message];
+}
+
+- (void)receiveSessionInfoFromNotification:(NSNotification *) notification
+{
+    NSDictionary *dict = notification.userInfo;
+    cachedSessionLibraryVC = [dict valueForKey:@"currentSession"];
+}
 
 
 /*

@@ -7,7 +7,7 @@
 
 #import "CreateSessionDetailVC.h"
 #import "ToottiDefinitions.h"
-
+#import "Session.h"
 @interface CreateSessionDetailVC ()
 
 @end
@@ -37,9 +37,23 @@
 }
 
 - (IBAction)createNewSession:(UIButton *)sender {
-    [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+    //create the Session uid
+    NSUUID *uuid = [NSUUID UUID];
+    NSString *sessionUid = [uuid UUIDString];
+    NSString *sessionName = self.nameTextField.text;
+    NSString *hostUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSArray *emptyGuestPlayerList  = [[NSMutableArray alloc] init];
+    NSMutableDictionary *recordedAudioDict = [[NSMutableDictionary alloc] init];
+    Session *sn = [[Session alloc] initWithUid:sessionUid sessionName: sessionName hostUid:hostUid guestPlayerList:emptyGuestPlayerList clickTrack:[[Audio alloc] init] recordedAudioDict:recordedAudioDict finalMergedResult:[[Audio alloc] init] hostStartRecording: NO];
+    [sn saveSessionToDatabase: ^(BOOL success) {
+        NSLog(@"!!!!!!!!!!!!!!!");
+        if (success){
+            [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+        }
+    }];
+    //save the new session
+    //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
 }
-
 
 #pragma mark - Navigation
 

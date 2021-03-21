@@ -33,7 +33,8 @@
 
 - (void)drawInContext:(CGContextRef)context
 {
-    CGColorRef colorRef = [[UIColor redColor] CGColor];
+    NSLog(@"!!!!!!!!!!!!!!!!!!!");
+    CGColorRef colorRef = [[UIColor colorWithRed:240.0/255.0 green:20.0/255.0 blue:20.0/255.0 alpha:1] CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
     CGContextSetLineWidth(context, 1.0f);
 
@@ -75,12 +76,11 @@
     [self drawInContext2:context];
 }
 - (void)drawInContext2:(CGContextRef)context
+
 {
-    CGColorRef colorRef = [[UIColor redColor] CGColor];
-    // [UIColor redColor] red OC red
-    // convert to red color
+    CGColorRef colorRef = [[UIColor cyanColor] CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
-    CGContextSetLineWidth(context, 1.0f);
+    CGContextSetLineWidth(context, 2.0f);
     CGContextClearRect(context, self.bounds);
 
     

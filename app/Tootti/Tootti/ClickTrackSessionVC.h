@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Audio.h"
+#import "Session.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *playTrackButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmTrackButton;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (nonatomic, assign) Session *cachedSession;
 
 @end
 

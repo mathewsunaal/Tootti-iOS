@@ -7,12 +7,18 @@
 
 #import "JoinSessionDetailVC.h"
 #import "ToottiDefinitions.h"
+#import "Session.h"
+#import "ClickTrackSessionVC.h"
+@import Firebase;
 
 @interface JoinSessionDetailVC ()
-
+@property (nonatomic, readwrite) FIRFirestore *db;
+@property (nonatomic,retain) Session *session;
 @end
 
 @implementation JoinSessionDetailVC
+
+ClickTrackSessionVC *vc;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,20 +38,46 @@
     self.joinSessionButton.clipsToBounds = YES;
     [self.joinSessionButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.joinSessionButton.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+    // Error message
+    self.errorMessage.hidden = YES;
 }
 
 - (IBAction)joinSession:(UIButton *)sender {
-    [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+    self.db =  [FIRFirestore firestore];
+    NSString *sessionName = self.sessionCodeTextField.text;
+    NSString *hostUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
+        getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+          if (error != nil) {
+            NSLog(@"Error getting documents: %@", error);
+              self.errorMessage.hidden = NO;
+              self.errorMessage.text = @"The session name doesn't exist";
+          } else {
+              FIRDocumentSnapshot *document  = snapshot.documents[0];
+              NSLog(@"%@ => %@", document.documentID, document.data);
+                //Will replace the Audio file
+              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:hostUid guestPlayerList:document.data[@"guestPlayerList"] clickTrack: [[Audio alloc] init] recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: [[Audio alloc] init] hostStartRecording: NO];
+              self.session = sn;
+             NSDictionary *dict = [NSDictionary dictionaryWithObject:sn forKey:@"currentSession"];
+              //Sending the notification
+              [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionNotification" object:nil userInfo: dict];
+              //segue
+              [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+              //[self prepareForSegue: @"joinSessionRecording" sender:self];
+          }
+        }];
 }
 
 
-#pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UITabBarController *tabBarVC = [segue destinationViewController];
-    [tabBarVC setSelectedIndex:1];
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"joinSessionRecording"]) {
+        UITabBarController *tabBarVC = [segue destinationViewController];
+        ClickTrackSessionVC *vc = (ClickTrackSessionVC *) [tabBarVC.viewControllers objectAtIndex:1];
+        [vc setCachedSession:self.session];
+        [tabBarVC setSelectedIndex:1];
+        }
 }
 
 
