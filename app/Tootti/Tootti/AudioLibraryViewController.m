@@ -23,6 +23,9 @@
     if(self.audioRecordings == nil){
         self.audioRecordings = [[NSMutableArray alloc] init];
     }
+    if(self.selectedRecordings == nil){
+        self.selectedRecordings = [[NSMutableArray alloc] init];
+    }
     
     //Set delegates
     self.audioLibTableView.delegate = self;
@@ -39,7 +42,7 @@
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
-    [self setupButton:self.sendToMergeButton];
+    [self setupButton:self.confirmButton];
 }
 
 -(void)setupButton:(UIButton *)button {
@@ -49,6 +52,8 @@
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
+
+
 
 /*
 #pragma mark - Navigation
@@ -65,14 +70,27 @@
     NSLog(@"Refresh Audio Library");
     [self.audioLibTableView reloadData];
 }
-- (IBAction)sendToMerge:(UIButton *)sender {
+
+- (IBAction)deleteSelectedTracks:(UIButton *)sender {
+    [self.audioRecordings removeObjectsInArray:self.selectedRecordings];
+    [self.selectedRecordings removeAllObjects];
+    [self.audioLibTableView reloadData];
+}
+
+- (IBAction)confirmTracks:(UIButton *)sender {
     NSLog(@"Send library tracks to merge");
+    //TODO: add case to handle no selection
+    if([self.selectedRecordings count] == 0) {
+        NSLog(@"No tracks selected!");
+    }
     // Add new audio object to library VC
     MergeSessionVC *mergeVC = self.tabBarController.viewControllers[4];
     if(mergeVC.audioTracks == nil){
         mergeVC.audioTracks = [[NSMutableArray alloc] init];
     }
-    [mergeVC.audioTracks addObjectsFromArray:self.audioRecordings];
+    // TODO: figure out how we want to handle going back to library and changing tracks included
+    [mergeVC.audioTracks removeAllObjects];
+    [mergeVC.audioTracks addObjectsFromArray:self.selectedRecordings];
     
     //Navigate to merge tracks now
     [self.tabBarController setSelectedIndex:4];
@@ -94,5 +112,17 @@
     return self.audioRecordings.count;
 }
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Audio *selectedTrack = self.audioRecordings[indexPath.row];
+    //NSLog(@"Selected track:%@",selectedTrack.audioName);
+    [self.selectedRecordings addObject:self.audioRecordings[indexPath.row]];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //Audio *deSelectedTrack = self.audioRecordings[indexPath.row];
+    //NSLog(@"deSelected track:%@",deSelectedTrack.audioName);
+    [self.selectedRecordings removeObject:self.audioRecordings[indexPath.row]];
+}
 
 @end
