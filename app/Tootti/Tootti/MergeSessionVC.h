@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
 
 @property (nonatomic, retain) NSMutableArray *audioTracks;
+@property (nonatomic, retain) NSMutableArray *selectedTracks;
 
 @end
 

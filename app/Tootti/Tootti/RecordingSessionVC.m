@@ -173,7 +173,7 @@ Session *cachedSessionRecordingVC;
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     //waveform code
-    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height/2)];
+    self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, self.waveFormView.bounds.size.width, self.waveFormView.bounds.size.height)];
     [self.wv setBackgroundColor:[UIColor colorWithRed:64.0/255.0 green:224.0/255.0 blue:208.0/255.0 alpha:1]];
     [self.waveFormView addSubview: self.wv];
         

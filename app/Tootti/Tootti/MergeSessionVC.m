@@ -27,9 +27,11 @@ Audio *_audio;
     if(self.players == nil) {
         self.players = [[NSMutableArray alloc] init];
     }
-    
     if(self.audioTracks == nil) {
         self.audioTracks = [[NSMutableArray alloc] init];
+    }
+    if(self.selectedTracks == nil) {
+        self.selectedTracks = [[NSMutableArray alloc] init];
     }
     self.mergeTableView.delegate = self;
     self.mergeTableView.dataSource = self;
@@ -124,10 +126,14 @@ Audio *_audio;
 }
 
 - (void)playAllTracks {
-    Audio *lastTrack = [self.audioTracks lastObject];
+    if([self.selectedTracks count] == 0){
+        NSLog(@"No tracks selected to play!");
+        return;
+    }
+    Audio *lastTrack = [self.selectedTracks lastObject];
     AVAudioPlayer *lastPlayer = lastTrack.player; // get last player added
     NSTimeInterval timeOffset = lastPlayer.deviceCurrentTime + MERGE_PLAYBACK_TIME_BUFFER; // get current device time from lastPlayer
-    for(Audio *track in self.audioTracks) {
+    for(Audio *track in self.selectedTracks) {
         [track stopAudio];
         track.player.currentTime = 0;
         [track playAudioAtTime:timeOffset]; // for playback synchronization
@@ -135,13 +141,13 @@ Audio *_audio;
 }
 
 - (void)pauseAllTracks {
-    for(Audio *track in self.audioTracks) {
+    for(Audio *track in self.selectedTracks) {
         [track pauseAudio];
     }
 }
 
 - (void)adjustAllTracks:(float)delta {
-    for(Audio *track in self.audioTracks) {
+    for(Audio *track in self.selectedTracks) {
         [track pauseAudio];
         track.player.currentTime += delta;
     }
@@ -198,8 +204,45 @@ Audio *_audio;
     Audio* audio = self.audioTracks[indexPath.row];
     cell.audio = audio;
     cell.audioNameLabel.text = audio.audioName;
+    
+    UIView *backgroundColorView = [[UIView alloc] init];
+    backgroundColorView.backgroundColor = LOGO_GOLDEN_YELLOW;
+    [cell setSelectedBackgroundView:backgroundColorView];
 
     return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Audio *selectedTrack = self.audioRecordings[indexPath.row];
+    //NSLog(@"Selected track:%@",selectedTrack.audioName);
+    [self.selectedTracks addObject:self.audioTracks[indexPath.row]];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //Audio *deSelectedTrack = self.audioRecordings[indexPath.row];
+    //NSLog(@"deSelected track:%@",deSelectedTrack.audioName);
+    [self.selectedTracks removeObject:self.audioTracks[indexPath.row]];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //remove the deleted object from your data source.
+        //If your data source is an NSMutableArray, do this
+        Audio *trackToDelete = [self.audioTracks objectAtIndex:indexPath.row];
+        if([self.selectedTracks containsObject:trackToDelete]) {
+            [self.selectedTracks removeObject:trackToDelete];
+        }
+        [self.audioTracks removeObjectAtIndex:indexPath.row];
+        //TODO: FIREBASE DELETE function call here
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [tableView reloadData]; // tell table to refresh now
+    }
+    
 }
 
 

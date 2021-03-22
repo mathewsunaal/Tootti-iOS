@@ -12,6 +12,8 @@
 #define BACKGROUND_LIGHT_TEAL [UIColor colorWithRed:141/255.0f green:167/255.0f blue:179/255.0f alpha:1.0f]
 // Button dark teal (#306376)
 #define BUTTON_DARK_TEAL [UIColor colorWithRed:48/255.0f green:99/255.0f blue:118/255.0f alpha:1.0f]
+// Logo and icon yellow (#F8C257)
+#define LOGO_GOLDEN_YELLOW [UIColor colorWithRed:100/255.0f green:87/255.0f blue:0/255.0f alpha:0.2f]
 
 
 // BUTTON INFO

@@ -101,11 +101,11 @@ Session *cachedSessionLibraryVC;
     [self.audioLibTableView reloadData];
 }
 
-- (IBAction)deleteSelectedTracks:(UIButton *)sender {
-    [self.audioRecordings removeObjectsInArray:self.selectedRecordings];
-    [self.selectedRecordings removeAllObjects];
-    [self.audioLibTableView reloadData];
-}
+//- (IBAction)deleteSelectedTracks:(UIButton *)sender {
+//    [self.audioRecordings removeObjectsInArray:self.selectedRecordings];
+//    [self.selectedRecordings removeAllObjects];
+//    [self.audioLibTableView reloadData];
+//}
 
 - (IBAction)confirmTracks:(UIButton *)sender {
     NSLog(@"Send library tracks to merge");
@@ -134,6 +134,10 @@ Session *cachedSessionLibraryVC;
     Audio* audio = self.audioRecordings[indexPath.row];
     cell.audio = audio;
     cell.audioNameLabel.text = audio.audioName;
+    
+    UIView *backgroundColorView = [[UIView alloc] init];
+    backgroundColorView.backgroundColor = LOGO_GOLDEN_YELLOW;
+    [cell setSelectedBackgroundView:backgroundColorView];
 
     return cell;
 }
@@ -153,6 +157,24 @@ Session *cachedSessionLibraryVC;
     //Audio *deSelectedTrack = self.audioRecordings[indexPath.row];
     //NSLog(@"deSelected track:%@",deSelectedTrack.audioName);
     [self.selectedRecordings removeObject:self.audioRecordings[indexPath.row]];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //remove the deleted object from your data source.
+        //If your data source is an NSMutableArray, do this
+        Audio *trackToDelete = [self.audioRecordings objectAtIndex:indexPath.row];
+        if([self.selectedRecordings containsObject:trackToDelete]) {
+            [self.selectedRecordings removeObject:trackToDelete];
+        }
+        [self.audioRecordings removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [tableView reloadData]; // tell table to refresh now
+    }
 }
 
 @end

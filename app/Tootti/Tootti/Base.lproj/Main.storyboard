@@ -386,23 +386,23 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="UuY-Wd-h6y"/>
-                                <exclude reference="XpX-Cy-r5W"/>
                                 <exclude reference="WCW-2O-Yzc"/>
                                 <exclude reference="rOd-Jl-811"/>
+                                <exclude reference="UuY-Wd-h6y"/>
+                                <exclude reference="XpX-Cy-r5W"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="jhc-NE-7IV"/>
                                 <exclude reference="oEN-zB-DY8"/>
-                                <include reference="UuY-Wd-h6y"/>
-                                <include reference="XpX-Cy-r5W"/>
                                 <exclude reference="F67-de-ZuH"/>
                                 <exclude reference="VSm-w0-pGi"/>
                                 <include reference="WCW-2O-Yzc"/>
                                 <exclude reference="nLl-nq-Lan"/>
                                 <include reference="rOd-Jl-811"/>
+                                <include reference="UuY-Wd-h6y"/>
+                                <include reference="XpX-Cy-r5W"/>
                             </mask>
                         </variation>
                     </view>
@@ -610,7 +610,7 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="trI-Ao-8mI"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="audioCell" editingAccessoryType="checkmark" rowHeight="60" id="JRQ-mF-GGt" customClass="AudioCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="audioCell" editingAccessoryType="checkmark" rowHeight="60" id="JRQ-mF-GGt" customClass="AudioCell">
                                         <rect key="frame" x="0.0" y="28" width="335" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JRQ-mF-GGt" id="c5J-0a-Lrk">
@@ -665,18 +665,6 @@
                                     <constraint firstAttribute="height" constant="40" id="sMJ-QE-KIM"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5eJ-ab-edq">
-                                <rect key="frame" x="330" y="552" width="25" height="25.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="DrV-v0-kHe"/>
-                                    <constraint firstAttribute="height" constant="25" id="F4I-jF-xV4"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="systemRedColor"/>
-                                <state key="normal" backgroundImage="trash.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="deleteSelectedTracks:" destination="OgD-47-90g" eventType="touchUpInside" id="Wuf-qa-0RD"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QMR-rB-zYs">
                                 <rect key="frame" x="137.5" y="548" width="100" height="35"/>
                                 <constraints>
@@ -694,11 +682,9 @@
                         <constraints>
                             <constraint firstItem="aca-fX-JUX" firstAttribute="centerX" secondItem="kIP-sE-m96" secondAttribute="centerX" id="19s-Qk-8ol"/>
                             <constraint firstItem="QMR-rB-zYs" firstAttribute="top" secondItem="aca-fX-JUX" secondAttribute="bottom" constant="15" id="IyR-VU-IHj"/>
-                            <constraint firstItem="5eJ-ab-edq" firstAttribute="centerY" secondItem="QMR-rB-zYs" secondAttribute="centerY" id="MU3-Gw-EiF"/>
                             <constraint firstItem="bhc-vg-AAr" firstAttribute="top" secondItem="ZTP-TX-Wbi" secondAttribute="top" constant="25" id="N4l-6L-6qg"/>
                             <constraint firstItem="ZTP-TX-Wbi" firstAttribute="trailing" secondItem="esh-HD-85X" secondAttribute="trailing" constant="20" id="Nkd-iV-Jkx"/>
                             <constraint firstItem="xBU-SU-Ece" firstAttribute="top" secondItem="ZTP-TX-Wbi" secondAttribute="top" constant="20" id="SC3-x5-1Pz"/>
-                            <constraint firstItem="5eJ-ab-edq" firstAttribute="trailing" secondItem="aca-fX-JUX" secondAttribute="trailing" id="Smu-51-CeF"/>
                             <constraint firstItem="aca-fX-JUX" firstAttribute="leading" secondItem="ZTP-TX-Wbi" secondAttribute="leading" constant="20" id="UEA-03-8P4"/>
                             <constraint firstItem="gkE-tV-6gp" firstAttribute="top" secondItem="bhc-vg-AAr" secondAttribute="bottom" constant="1" id="Z29-wk-aD0"/>
                             <constraint firstItem="esh-HD-85X" firstAttribute="top" secondItem="ZTP-TX-Wbi" secondAttribute="top" constant="25" id="Z9b-NB-egK"/>
@@ -715,7 +701,6 @@
                     <connections>
                         <outlet property="audioLibTableView" destination="aca-fX-JUX" id="mgh-bC-1fG"/>
                         <outlet property="confirmButton" destination="QMR-rB-zYs" id="K94-py-CXD"/>
-                        <outlet property="deleteButton" destination="5eJ-ab-edq" id="FAj-6L-jSe"/>
                         <outlet property="refreshButton" destination="esh-HD-85X" id="93Q-31-M6r"/>
                         <outlet property="sessionCodeLabel" destination="bhc-vg-AAr" id="CnB-FO-ux4"/>
                     </connections>
@@ -732,7 +717,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nS0-Nv-uMb">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nS0-Nv-uMb">
                                 <rect key="frame" x="20" y="84" width="335" height="449"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -1272,17 +1257,6 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK4-NK-fx0">
-                                <rect key="frame" x="77.5" y="265" width="220" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="3C1-17-9wA"/>
-                                    <constraint firstAttribute="height" constant="35" id="iYo-bc-dMe"/>
-                                </constraints>
-                                <state key="normal" title="Join Session"/>
-                                <connections>
-                                    <action selector="joinSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="57f-Kr-3Tn"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="previous-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vrx-hI-K87">
                                 <rect key="frame" x="77.5" y="130" width="220" height="120"/>
                                 <constraints>
@@ -1312,6 +1286,17 @@
                                 <state key="normal" title="View Past Sessions"/>
                                 <connections>
                                     <action selector="viewPastSessions:" destination="RRD-8W-4Su" eventType="touchUpInside" id="snV-vW-sq1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK4-NK-fx0">
+                                <rect key="frame" x="77.5" y="265" width="220" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="3C1-17-9wA"/>
+                                    <constraint firstAttribute="height" constant="35" id="iYo-bc-dMe"/>
+                                </constraints>
+                                <state key="normal" title="Join Session"/>
+                                <connections>
+                                    <action selector="joinSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="57f-Kr-3Tn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1364,17 +1349,17 @@
                             <mask key="constraints">
                                 <exclude reference="GUT-tU-LXc"/>
                                 <exclude reference="3jh-oZ-SF0"/>
+                                <exclude reference="815-49-HP2"/>
+                                <exclude reference="b2k-i9-xJs"/>
                                 <exclude reference="UwX-Nr-Cdd"/>
                                 <exclude reference="f54-5k-wEs"/>
                                 <exclude reference="nqd-0l-xy6"/>
                                 <exclude reference="x4H-qd-WKG"/>
-                                <exclude reference="eri-Ml-xvp"/>
                                 <exclude reference="34U-Aw-USr"/>
                                 <exclude reference="drk-EX-YMy"/>
                                 <exclude reference="pB3-Uw-Q4V"/>
                                 <exclude reference="skh-iH-Tdv"/>
-                                <exclude reference="815-49-HP2"/>
-                                <exclude reference="b2k-i9-xJs"/>
+                                <exclude reference="eri-Ml-xvp"/>
                                 <exclude reference="pEI-Wr-yZM"/>
                             </mask>
                         </variation>
@@ -1384,6 +1369,9 @@
                                 <exclude reference="ctf-nQ-EtR"/>
                                 <include reference="3jh-oZ-SF0"/>
                                 <exclude reference="gpd-Tn-zf6"/>
+                                <include reference="815-49-HP2"/>
+                                <include reference="b2k-i9-xJs"/>
+                                <exclude reference="mxO-49-bx8"/>
                                 <exclude reference="0hs-8b-FB6"/>
                                 <include reference="UwX-Nr-Cdd"/>
                                 <include reference="f54-5k-wEs"/>
@@ -1391,7 +1379,6 @@
                                 <exclude reference="8c6-F9-9J4"/>
                                 <include reference="nqd-0l-xy6"/>
                                 <include reference="x4H-qd-WKG"/>
-                                <include reference="eri-Ml-xvp"/>
                                 <include reference="34U-Aw-USr"/>
                                 <exclude reference="PRN-i3-sTl"/>
                                 <exclude reference="Pbt-Ie-NSS"/>
@@ -1399,9 +1386,7 @@
                                 <include reference="pB3-Uw-Q4V"/>
                                 <include reference="skh-iH-Tdv"/>
                                 <exclude reference="z6t-zR-pDr"/>
-                                <include reference="815-49-HP2"/>
-                                <include reference="b2k-i9-xJs"/>
-                                <exclude reference="mxO-49-bx8"/>
+                                <include reference="eri-Ml-xvp"/>
                                 <exclude reference="K1T-4v-rZ8"/>
                                 <include reference="pEI-Wr-yZM"/>
                             </mask>
@@ -1570,7 +1555,6 @@
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="previous-session-icon" width="512" height="512"/>
         <image name="record.circle" catalog="system" width="128" height="121"/>
-        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
