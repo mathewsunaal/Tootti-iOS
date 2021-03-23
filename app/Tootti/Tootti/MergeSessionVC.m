@@ -185,6 +185,8 @@ Audio *_audio;
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Reresh merge tracks");
     NSLog(@"%@",self.cachedSessionMerged.uid );
+    //TODO: for now, we are clearing all audio tracks in merge
+    [self.audioTracks removeAllObjects];
     FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
     [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         NSLog(@"%@", snapshot);
@@ -203,7 +205,7 @@ Audio *_audio;
               NSString *currAudioName = [arr lastObject];
               NSLog(@"The audio name is %@ . URL is %@", currAudioName, url) ;
               Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: url];
-              //refresh the table
+              // Update tableview data source
               [self.audioTracks addObject:newAudioObj] ;
           }
           NSLog(@"The audiotracks array %@", self.audioTracks);

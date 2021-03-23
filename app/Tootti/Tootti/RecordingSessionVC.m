@@ -173,7 +173,7 @@
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
     //waveform initial image
-    self.waveFormView.backgroundColor =  [UIColor yellowColor];
+    self.waveFormView.backgroundColor =  [UIColor grayColor];
 }
 
 - (void) startWaveform{
