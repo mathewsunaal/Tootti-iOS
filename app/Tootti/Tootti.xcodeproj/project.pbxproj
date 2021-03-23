@@ -137,26 +137,26 @@
 		4D86E8BA25F2C6EE00A70623 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5211E63A26097D0800EB9A10 /* ApplicationState.h */,
+				5211E63C26097D6800EB9A10 /* ApplicationState.m */,
+				4D86E8BE25F2C6EE00A70623 /* Audio.h */,
+				4D86E8C425F2C6EE00A70623 /* Audio.m */,
+				4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */,
+				4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */,
+				4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */,
+				4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */,
 				526719FF25FDF850001E9856 /* MOAudioSliderView.h */,
 				52671A0325FDF850001E9856 /* MOAudioSliderView.m */,
 				52671A0025FDF850001E9856 /* MOTimeTableView.h */,
 				52671A0625FDF850001E9856 /* MOTimeTableView.m */,
 				52671A0225FDF850001E9856 /* MOWaveTableView.h */,
 				52671A0525FDF850001E9856 /* MOWaveTableView.m */,
+				4D86E8C025F2C6EE00A70623 /* Session.h */,
+				4D86E8BB25F2C6EE00A70623 /* Session.m */,
+				4D86E8C125F2C6EE00A70623 /* User.h */,
+				4D86E8BC25F2C6EE00A70623 /* User.m */,
 				52671A0425FDF850001E9856 /* WaveView.h */,
 				52671A0125FDF850001E9856 /* WaveView.m */,
-				4D86E8BB25F2C6EE00A70623 /* Session.m */,
-				4D86E8BC25F2C6EE00A70623 /* User.m */,
-				4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */,
-				4D86E8BE25F2C6EE00A70623 /* Audio.h */,
-				4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */,
-				4D86E8C025F2C6EE00A70623 /* Session.h */,
-				4D86E8C125F2C6EE00A70623 /* User.h */,
-				4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */,
-				4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */,
-				4D86E8C425F2C6EE00A70623 /* Audio.m */,
-				5211E63A26097D0800EB9A10 /* ApplicationState.h */,
-				5211E63C26097D6800EB9A10 /* ApplicationState.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";

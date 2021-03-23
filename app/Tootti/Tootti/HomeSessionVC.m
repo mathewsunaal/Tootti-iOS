@@ -77,7 +77,7 @@
     self.cachedSessionHomeVC = [[ApplicationState sharedInstance] currentSession];
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
     [statusLabel setBackgroundColor:[UIColor clearColor]];
-    [[self view] addSubview:statusLabel];
+    //[[self view] addSubview:statusLabel];
     NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"%@", currentUserId);

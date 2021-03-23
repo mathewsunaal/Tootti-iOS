@@ -6,6 +6,7 @@
 //
 
 #import "WaveView.h"
+#import "ToottiDefinitions.h"
 
 @implementation WaveView
 
@@ -34,13 +35,13 @@
 - (void)drawInContext:(CGContextRef)context
 {
     //Line color and size starts
-    CGColorRef colorRef = [[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:20.0/255.0 alpha:1] CGColor];
+    CGColorRef colorRef = [LOGO_GOLDEN_YELLOW CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
     CGContextSetLineWidth(context, 3.0f);
     //Line color and size stops
     CGContextClearRect(context, self.bounds);
     //Background color start
-    CGContextSetRGBFillColor(context, 64.0f/255.0f, 224.0f/255.0f, 208.0f/255.0f, 1.0f);
+    CGContextSetRGBFillColor(context, 128.0f/255.0f, 128.0f/255.0f, 128/255.0f, 1.0f);
     CGContextFillRect(context, self.bounds);
     //Background color stop
     CGPoint firstPoint = CGPointMake(0.0f, [[averagePointArray objectAtIndex:0] floatValue]);
@@ -85,13 +86,13 @@
 
 {
     //Line color and size start
-    CGColorRef colorRef = [[UIColor cyanColor] CGColor];
+    CGColorRef colorRef = [[UIColor grayColor] CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
     CGContextSetLineWidth(context, 2.0f);
     //Line color and size stop
     CGContextClearRect(context, self.bounds);
     //Background color start
-    CGContextSetRGBFillColor(context, 64.0f/255.0f, 224.0f/255.0f, 208.0f/255.0f, 1.0f);
+    CGContextSetRGBFillColor(context, 128.0f/255.0f, 128.0f/255.0f, 128/255.0f, 1.0f);
     CGContextFillRect(context, self.bounds);
     //Background color stop
 

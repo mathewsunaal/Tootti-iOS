@@ -44,27 +44,27 @@
     [self setupButton:self.confirmTrackButton];
 }
 
-- (void) setupSessionStatus {
+- (void)setupSessionStatus {
     self.cachedSessionClickTrackVC = [[ApplicationState sharedInstance] currentSession];
-    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
-    [statusLabel setBackgroundColor:[UIColor clearColor]];
-    [[self view] addSubview:statusLabel];
-    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *session_title= [NSString stringWithFormat:@"No session active"];
+    NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionClickTrackVC.hostUid);
     if (self.cachedSessionClickTrackVC != 0){
+        session_title = [NSString stringWithFormat:@"%@", self.cachedSessionClickTrackVC.sessionName];
         if ([currentUserId isEqual:self.cachedSessionClickTrackVC.hostUid]){
-            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSessionClickTrackVC.sessionName];
-        }
-        else{
-            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSessionClickTrackVC.sessionName];
+            user_type = [NSString stringWithFormat:@"Host user"];
+        } else {
+            user_type = [NSString stringWithFormat:@"Guest user"];
         }
     }
-    [statusLabel setText: message];
+    // Update labels
+    [self.sessionCodeLabel setText:session_title];
+    [self.userTypeLabel setText:user_type];
+    [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
+    [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
-
-
 
 -(void)setupButton:(UIButton *)button {
     button.backgroundColor = BUTTON_DARK_TEAL;

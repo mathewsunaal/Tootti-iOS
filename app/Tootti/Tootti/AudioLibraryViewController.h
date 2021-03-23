@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITableView *audioLibTableView;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 //@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @end

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *playTrackButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmTrackButton;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
 @property (nonatomic, assign) Session *cachedSession;
 
 @end

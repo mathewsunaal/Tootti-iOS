@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIView *waveFormView;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
 
 @end
 @implementation RecordingSessionVC
@@ -95,26 +96,27 @@
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
-- (void) setupSessionStatus {
-    // Notification receiver
-    //Check if you are in the session
+- (void)setupSessionStatus {
     self.cachedSessionRecordingVC = [[ApplicationState sharedInstance] currentSession];
-    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
-    [statusLabel setBackgroundColor:[UIColor clearColor]];
-    [[self view] addSubview:statusLabel];
-    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *session_title= [NSString stringWithFormat:@"No session active"];
+    NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"%@", currentUserId);
+    NSLog(@"%@", self.cachedSessionRecordingVC.hostUid);
     if (self.cachedSessionRecordingVC != 0){
-        if ([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid] ){
-            message = [NSString stringWithFormat:@"Session: %@ UserType: HOST",self.cachedSessionRecordingVC.sessionName];
+        session_title = [NSString stringWithFormat:@"%@", self.cachedSessionRecordingVC.sessionName];
+        if ([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
+            user_type = [NSString stringWithFormat:@"Host user"];
+        } else {
+            user_type = [NSString stringWithFormat:@"Guest user"];
         }
-        else{
-            message = [NSString stringWithFormat:@"Session: %@ UserType: GUEST", self.cachedSessionRecordingVC.sessionName];
-            }
     }
-    [statusLabel setText: message];
+    // Update labels
+    [self.sessionCodeLabel setText:session_title];
+    [self.userTypeLabel setText:user_type];
+    [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
+    [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
-
 
 -(BOOL) renameRecordedFile: (NSString *)newFileName {
     NSError * err = NULL;

@@ -57,24 +57,26 @@ Audio *_audio;
     [self setupButton:self.doneButton];
 }
 
-- (void) setupSessionStatus {
+- (void)setupSessionStatus {
     self.cachedSessionMerged = [[ApplicationState sharedInstance] currentSession];
-    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
-    [statusLabel setBackgroundColor:[UIColor clearColor]];
-    [[self view] addSubview:statusLabel];
-    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *session_title= [NSString stringWithFormat:@"No session active"];
+    NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionMerged.hostUid);
     if (self.cachedSessionMerged != 0){
+        session_title = [NSString stringWithFormat:@"%@", self.cachedSessionMerged.sessionName];
         if ([currentUserId isEqual:self.cachedSessionMerged.hostUid]){
-            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSessionMerged.sessionName];
-        }
-        else{
-            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSessionMerged.sessionName];
+            user_type = [NSString stringWithFormat:@"Host user"];
+        } else {
+            user_type = [NSString stringWithFormat:@"Guest user"];
         }
     }
-    [statusLabel setText: message];
+    // Update labels
+    [self.sessionCodeLabel setText:session_title];
+    [self.userTypeLabel setText:user_type];
+    [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
+    [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
 
 
