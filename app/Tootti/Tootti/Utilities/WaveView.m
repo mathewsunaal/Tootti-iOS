@@ -33,12 +33,16 @@
 
 - (void)drawInContext:(CGContextRef)context
 {
-    NSLog(@"!!!!!!!!!!!!!!!!!!!");
-    CGColorRef colorRef = [[UIColor colorWithRed:240.0/255.0 green:20.0/255.0 blue:20.0/255.0 alpha:1] CGColor];
+    //Line color and size starts
+    CGColorRef colorRef = [[UIColor colorWithRed:120.0/255.0 green:120.0/255.0 blue:20.0/255.0 alpha:1] CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
-    CGContextSetLineWidth(context, 1.0f);
-
+    CGContextSetLineWidth(context, 3.0f);
+    //Line color and size stops
     CGContextClearRect(context, self.bounds);
+    //Background color start
+    CGContextSetRGBFillColor(context, 64.0f/255.0f, 224.0f/255.0f, 208.0f/255.0f, 1.0f);
+    CGContextFillRect(context, self.bounds);
+    //Background color stop
     CGPoint firstPoint = CGPointMake(0.0f, [[averagePointArray objectAtIndex:0] floatValue]);
 
     CGContextMoveToPoint(context, firstPoint.x, firstPoint.y);
@@ -53,13 +57,15 @@
     CGContextStrokePath(context);
 }
 // rect = current view height
--(void) drawRect2:(CGRect)rect{
+-(void) drawRect:(CGRect)rect{
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+    //CGRect drawRect = CGRectMake(rect.origin.x, rect.origin.y,rect.size.width, rect.size.height);
+    //CGContextFillRect(context, drawRect);
     [self drawInContext:context];
 }
 
--(void) drawRect:(CGRect)rect{
+-(void) drawRect2:(CGRect)rect{
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     /* CTM Context Transform Matrix */
@@ -78,10 +84,16 @@
 - (void)drawInContext2:(CGContextRef)context
 
 {
+    //Line color and size start
     CGColorRef colorRef = [[UIColor cyanColor] CGColor];
     CGContextSetStrokeColorWithColor(context, colorRef);
     CGContextSetLineWidth(context, 2.0f);
+    //Line color and size stop
     CGContextClearRect(context, self.bounds);
+    //Background color start
+    CGContextSetRGBFillColor(context, 64.0f/255.0f, 224.0f/255.0f, 208.0f/255.0f, 1.0f);
+    CGContextFillRect(context, self.bounds);
+    //Background color stop
 
     
     CGPoint firstPoint = CGPointMake(0.0f, [[averagePointArray objectAtIndex:0] floatValue]);

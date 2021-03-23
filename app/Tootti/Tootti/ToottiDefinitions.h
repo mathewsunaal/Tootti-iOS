@@ -37,7 +37,8 @@
 // PLAYBACK SETTINGS
 #define MERGE_PLAYBACK_TIME_BUFFER 0.01 // 10ms time delay from current device_time
 
-
+//recording waveform offset for iPhone 8plus
+#define WAVEFORM_RECORDING_OFFSET_IPHONE8  40
 
 
 

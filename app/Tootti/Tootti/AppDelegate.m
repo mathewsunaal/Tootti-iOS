@@ -21,6 +21,7 @@
     [FIRApp configure];
     FIRFirestore *defaultFirestore = [FIRFirestore firestore];
     FIRStorage *storage = [FIRStorage storage];
+    
     return YES;
 }
 

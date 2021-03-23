@@ -9,6 +9,8 @@
 #import "ToottiDefinitions.h"
 #import "Session.h"
 #import "ClickTrackSessionVC.h"
+#import "ApplicationState.h"
+
 @import Firebase;
 
 @interface JoinSessionDetailVC ()
@@ -45,7 +47,6 @@ ClickTrackSessionVC *vc;
 - (IBAction)joinSession:(UIButton *)sender {
     self.db =  [FIRFirestore firestore];
     NSString *sessionName = self.sessionCodeTextField.text;
-    NSString *hostUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
         getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
           if (error != nil) {
@@ -56,12 +57,13 @@ ClickTrackSessionVC *vc;
               FIRDocumentSnapshot *document  = snapshot.documents[0];
               NSLog(@"%@ => %@", document.documentID, document.data);
                 //Will replace the Audio file
-              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:hostUid guestPlayerList:document.data[@"guestPlayerList"] clickTrack: [[Audio alloc] init] recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: [[Audio alloc] init] hostStartRecording: NO];
+              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: [[Audio alloc] init] recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: [[Audio alloc] init] hostStartRecording: NO];
               self.session = sn;
-             NSDictionary *dict = [NSDictionary dictionaryWithObject:sn forKey:@"currentSession"];
+              //NSDictionary *dict = [NSDictionary dictionaryWithObject:sn forKey:@"currentSession"];
               //Sending the notification
-              [[NSNotificationCenter defaultCenter] postNotificationName: @"sessionNotification" object:nil userInfo: dict];
+              //[[NSNotificationCenter defaultCenter] postNotificationName: @"sessionNotification" object:nil userInfo: dict];
               //segue
+              [[ApplicationState sharedInstance] setCurrentSession:self.session ] ;
               [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
               //[self prepareForSegue: @"joinSessionRecording" sender:self];
           }
@@ -74,8 +76,8 @@ ClickTrackSessionVC *vc;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"joinSessionRecording"]) {
         UITabBarController *tabBarVC = [segue destinationViewController];
-        ClickTrackSessionVC *vc = (ClickTrackSessionVC *) [tabBarVC.viewControllers objectAtIndex:1];
-        [vc setCachedSession:self.session];
+        //ClickTrackSessionVC *vc = (ClickTrackSessionVC *) [tabBarVC.viewControllers objectAtIndex:1];
+        //[vc setCachedSession:self.session];
         [tabBarVC setSelectedIndex:1];
         }
 }

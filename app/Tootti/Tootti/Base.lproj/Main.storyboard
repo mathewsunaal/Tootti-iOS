@@ -1503,7 +1503,7 @@
                         <outlet property="joinSessionButton" destination="WpL-R4-KWQ" id="UXU-3n-Gvt"/>
                         <outlet property="logoImageView" destination="w3Q-Aw-XRw" id="uh0-XP-Yhq"/>
                         <outlet property="sessionCodeTextField" destination="MWB-Sz-C2Y" id="wmA-Nq-3pw"/>
-                        <segue destination="zWa-5m-fIB" kind="show" identifier="joinSessionRecording" id="Xbx-20-0tr"/>
+                        <segue destination="zWa-5m-fIB" kind="push" identifier="joinSessionRecording" id="Xbx-20-0tr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sQ3-UL-eif" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1535,7 +1535,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gVd-1P-bPn"/>
+        <segue reference="Xbx-20-0tr"/>
         <segue reference="137-yG-boL"/>
     </inferredMetricsTieBreakers>
     <resources>

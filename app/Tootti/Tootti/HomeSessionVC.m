@@ -11,16 +11,15 @@
 #import "User.h"
 @import Firebase;
 #import "Session.h"
-
+#import "ApplicationState.h"
 
 @interface HomeSessionVC ()
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (nonatomic, retain) Session *cachedSessionHomeVC;
 //@property(nonatomic,retain) User *user;
 @end
 
 @implementation HomeSessionVC
-//global var
-Session *cachedSessionHomeVC;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,12 +38,12 @@ Session *cachedSessionHomeVC;
     [super viewWillAppear:YES];
     self.pageIndex = 0;
     [self.tabBarController setSelectedIndex:self.pageIndex];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 
 
     //LISTENING ON FIREBASE
     //test start
-    NSString *sessionId = cachedSessionHomeVC.uid;
+    NSString *sessionId = self.cachedSessionHomeVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
         [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
@@ -75,21 +74,20 @@ Session *cachedSessionHomeVC;
 }
 
 - (void) setupSessionStatus {
-    // Notification receiver
-    //Check if you are in the session
+    self.cachedSessionHomeVC = [[ApplicationState sharedInstance] currentSession];
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
     [statusLabel setBackgroundColor:[UIColor clearColor]];
     [[self view] addSubview:statusLabel];
     NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"%@", currentUserId);
-    NSLog(@"%@", cachedSessionHomeVC.hostUid);
-    if (cachedSessionHomeVC != 0){
-        if (currentUserId == cachedSessionHomeVC.hostUid){
-            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", cachedSessionHomeVC.sessionName];
+    NSLog(@"%@", self.cachedSessionHomeVC.hostUid);
+    if (self.cachedSessionHomeVC != 0){
+        if ([currentUserId isEqual:self.cachedSessionHomeVC.hostUid]){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSessionHomeVC.sessionName];
         }
         else{
-            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", cachedSessionHomeVC.sessionName];
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSessionHomeVC.sessionName];
         }
     }
     [statusLabel setText: message];
@@ -121,18 +119,19 @@ Session *cachedSessionHomeVC;
     NSLog(@"tapppppppppped");
     self.user = nil;
     //destroy all global instances
-    cachedSessionHomeVC = nil;
+    self.cachedSessionHomeVC = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
     [self performSegueWithIdentifier:@"logoutSegue" sender:self];
     
 }
-
+/*
 - (void)receiveSessionInfoFromNotification:(NSNotification *) notification
 {
     NSDictionary *dict = notification.userInfo;
     cachedSessionHomeVC= [dict valueForKey:@"currentSession"];
 }
+*/
 /*
 #pragma mark - Navigation
 

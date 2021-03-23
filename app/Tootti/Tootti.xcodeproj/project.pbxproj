@@ -37,6 +37,7 @@
 		4DE2DA2C25F592BA00BD7444 /* click-track.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2B25F592BA00BD7444 /* click-track.wav */; };
 		4DE2DA3025F592C900BD7444 /* Flute-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2E25F592C800BD7444 /* Flute-1.wav */; };
 		4DE2DA3125F592C900BD7444 /* Flute-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4DE2DA2F25F592C900BD7444 /* Flute-2.wav */; };
+		5211E63D26097D6800EB9A10 /* ApplicationState.m in Sources */ = {isa = PBXBuildFile; fileRef = 5211E63C26097D6800EB9A10 /* ApplicationState.m */; };
 		52671A0725FDF850001E9856 /* WaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0125FDF850001E9856 /* WaveView.m */; };
 		52671A0825FDF850001E9856 /* MOAudioSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0325FDF850001E9856 /* MOAudioSliderView.m */; };
 		52671A0925FDF850001E9856 /* MOWaveTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52671A0525FDF850001E9856 /* MOWaveTableView.m */; };
@@ -92,6 +93,8 @@
 		4DE2DA2B25F592BA00BD7444 /* click-track.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-track.wav"; sourceTree = "<group>"; };
 		4DE2DA2E25F592C800BD7444 /* Flute-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-1.wav"; sourceTree = "<group>"; };
 		4DE2DA2F25F592C900BD7444 /* Flute-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Flute-2.wav"; sourceTree = "<group>"; };
+		5211E63A26097D0800EB9A10 /* ApplicationState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationState.h; sourceTree = "<group>"; };
+		5211E63C26097D6800EB9A10 /* ApplicationState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplicationState.m; sourceTree = "<group>"; };
 		526719FF25FDF850001E9856 /* MOAudioSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAudioSliderView.h; sourceTree = "<group>"; };
 		52671A0025FDF850001E9856 /* MOTimeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOTimeTableView.h; sourceTree = "<group>"; };
 		52671A0125FDF850001E9856 /* WaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveView.m; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */,
 				4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */,
 				4D86E8C425F2C6EE00A70623 /* Audio.m */,
+				5211E63A26097D0800EB9A10 /* ApplicationState.h */,
+				5211E63C26097D6800EB9A10 /* ApplicationState.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DB5B1872602828C00583C54 /* MOAudioSliderView.h in Sources */,
+				5211E63D26097D6800EB9A10 /* ApplicationState.m in Sources */,
 				4DB5B1882602828C00583C54 /* MOTimeTableView.h in Sources */,
 				4DB5B1892602828C00583C54 /* MOWaveTableView.h in Sources */,
 				4DB5B18A2602828C00583C54 /* WaveView.h in Sources */,

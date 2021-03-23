@@ -21,6 +21,10 @@
 
 - (instancetype) initWithAudioName:(NSString *)audioName
                           audioURL:(NSString *)audioURL;
+
+- (instancetype) initWithRemoteAudioName:(NSString *)audioName
+                          audioURL:(NSString *)audioURL;
+
 - (BOOL) playAudio;
 - (BOOL) playAudioAtTime:(NSTimeInterval)time;
 - (void) pauseAudio;

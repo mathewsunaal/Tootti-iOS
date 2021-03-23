@@ -11,11 +11,13 @@
 #import "ToottiDefinitions.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "ApplicationState.h"
 
 @interface ClickTrackSessionVC () <MPMediaPickerControllerDelegate>
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
 @property (nonatomic,retain) AVAudioPlayer *audioPlayer;
 @property (nonatomic,retain) NSURL *clickTrackURL; // need to connect this to utilities at some point, or leave as URL for optimization
+@property (nonatomic, retain) Session *cachedSessionClickTrackVC;
 
 @end
 
@@ -43,25 +45,26 @@
 }
 
 - (void) setupSessionStatus {
-    // Notification receiver
-    //Check if you are in the session
-    UILabel *myLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
-    [myLabel setBackgroundColor:[UIColor clearColor]];
-    [[self view] addSubview:myLabel];
+    self.cachedSessionClickTrackVC = [[ApplicationState sharedInstance] currentSession];
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
+    [statusLabel setBackgroundColor:[UIColor clearColor]];
+    [[self view] addSubview:statusLabel];
     NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"%@", currentUserId);
-    NSLog(@"%@", _cachedSession);
-    if (self.cachedSession != 0){
-        if (currentUserId == self.cachedSession.hostUid){
-            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSession.sessionName];
+    NSLog(@"%@", self.cachedSessionClickTrackVC.hostUid);
+    if (self.cachedSessionClickTrackVC != 0){
+        if ([currentUserId isEqual:self.cachedSessionClickTrackVC.hostUid]){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSessionClickTrackVC.sessionName];
         }
         else{
-            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSession.sessionName];
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSessionClickTrackVC.sessionName];
         }
     }
-    [myLabel setText: message];
+    [statusLabel setText: message];
 }
+
+
 
 -(void)setupButton:(UIButton *)button {
     button.backgroundColor = BUTTON_DARK_TEAL;

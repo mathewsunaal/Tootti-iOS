@@ -11,10 +11,14 @@
 #import "MOAudioSliderView.h"
 #import "Audio.h"
 #import "MergeAudioCell.h"
-
+#import "ApplicationState.h"
+#import "AppDelegate.h"
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic) BOOL mergeIsPlaying;
 @property (nonatomic,retain) NSMutableArray *players;
+@property (nonatomic, retain) Session *cachedSessionMerged;
+@property (nonatomic, readwrite) FIRFirestore *db;
+
 @end
 @implementation MergeSessionVC
 //Objects
@@ -22,6 +26,7 @@ MOAudioSliderView *_sliderView;
 Audio *_audio;
 
 - (void)viewDidLoad {
+    self.db =  [FIRFirestore firestore];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     if(self.players == nil) {
@@ -37,6 +42,7 @@ Audio *_audio;
     self.mergeTableView.dataSource = self;
     
     [self setupViews];
+    [self setupSessionStatus];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -50,6 +56,27 @@ Audio *_audio;
     [self setupButton:self.mergeButton];
     [self setupButton:self.doneButton];
 }
+
+- (void) setupSessionStatus {
+    self.cachedSessionMerged = [[ApplicationState sharedInstance] currentSession];
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 500, 40)];
+    [statusLabel setBackgroundColor:[UIColor clearColor]];
+    [[self view] addSubview:statusLabel];
+    NSString *message= [NSString stringWithFormat:@"Not in any sessions"];
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"%@", currentUserId);
+    NSLog(@"%@", self.cachedSessionMerged.hostUid);
+    if (self.cachedSessionMerged != 0){
+        if ([currentUserId isEqual:self.cachedSessionMerged.hostUid]){
+            message = [NSString stringWithFormat:@"Session: %@. UserType: HOST", self.cachedSessionMerged.sessionName];
+        }
+        else{
+            message = [NSString stringWithFormat:@"Session: %@. UserType: GUEST", self.cachedSessionMerged.sessionName];
+        }
+    }
+    [statusLabel setText: message];
+}
+
 
 -(void)setupButton:(UIButton *)button {
     button.backgroundColor = BUTTON_DARK_TEAL;
@@ -157,7 +184,38 @@ Audio *_audio;
 
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Reresh merge tracks");
-    [self.mergeTableView reloadData];
+    NSLog(@"%@",self.cachedSessionMerged.uid );
+    FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
+    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+        NSLog(@"%@", snapshot);
+      if (snapshot.exists) {
+        // Document data may be nil if the document exists but has no keys or values.
+        NSLog(@"Document data: %@", snapshot.data);
+        // updates the guestpplayerlist
+          Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
+          self.cachedSessionMerged = sn;
+          [[ApplicationState sharedInstance] setCurrentSession:sn] ;
+          for (int i=0; i < [ sn.guestPlayerList count]; i++){
+              NSString *url = (NSString *) sn.guestPlayerList[i] ;
+              NSLog(@"%@", url);
+              //initialize the new instance
+              NSArray *arr = [url componentsSeparatedByString:@"/"];
+              NSString *currAudioName = [arr lastObject];
+              NSLog(@"The audio name is %@ . URL is %@", currAudioName, url) ;
+              Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: url];
+              //refresh the table
+              [self.audioTracks addObject:newAudioObj] ;
+          }
+          NSLog(@"The audiotracks array %@", self.audioTracks);
+          [self.mergeTableView reloadData];
+          
+      } else {
+        NSLog(@"Document does not exist");
+      }
+    }];
+
+    
+    //[self.mergeTableView reloadData];
 }
 
 - (IBAction)mergeTracks:(UIButton *)sender {
