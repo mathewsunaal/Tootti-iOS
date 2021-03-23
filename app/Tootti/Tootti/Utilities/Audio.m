@@ -29,20 +29,16 @@
 }
 
 - (instancetype) initWithRemoteAudioName:(NSString *)audioName
-                                audioURL:(NSString *)audioURL {
+                                audioURL:(NSURL *)audioURL {
     self = [super init];
     if (self) {
-        NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
-        NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"temp"] URLByAppendingPathComponent: audioName];
-        NSLog(@"fileURL: %@", [fileURL path]);
-        NSData *urlData = [NSData dataWithContentsOfURL:fileURL];
-        [urlData writeToURL:fileURL options:NSAtomicWrite error:nil];
-        _audioName = audioName;
-        _audioURL = [fileURL absoluteString];;
-    }
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_audioURL]
-                                                         error:nil];
+        //NSData *urlData = [NSData dataWithContentsOfURL:audioURL];
+    _audioName = audioName;
+    _audioURL = [audioURL absoluteString] ;
+    //self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_audioURL] error:nil];
+    self.player = [[AVAudioPlayer alloc]  initWithData: [NSData dataWithContentsOfURL:audioURL] error:nil];
     [self.player setDelegate:self];
+    }
     return self;
 }
 

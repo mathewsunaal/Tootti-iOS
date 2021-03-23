@@ -19,11 +19,12 @@
 @property (retain, nonatomic) AVAudioPlayer *player;
 
 
+
 - (instancetype) initWithAudioName:(NSString *)audioName
                           audioURL:(NSString *)audioURL;
 
 - (instancetype) initWithRemoteAudioName:(NSString *)audioName
-                          audioURL:(NSString *)audioURL;
+                          audioURL:(NSURL *)audioURL;
 
 - (BOOL) playAudio;
 - (BOOL) playAudioAtTime:(NSTimeInterval)time;

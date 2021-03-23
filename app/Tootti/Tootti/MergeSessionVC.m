@@ -187,6 +187,7 @@ Audio *_audio;
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Reresh merge tracks");
     NSLog(@"%@",self.cachedSessionMerged.uid );
+    FIRStorage *storage = [FIRStorage storage];
     //TODO: for now, we are clearing all audio tracks in merge
     [self.audioTracks removeAllObjects];
     FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
@@ -197,21 +198,39 @@ Audio *_audio;
         NSLog(@"Document data: %@", snapshot.data);
         // updates the guestpplayerlist
           Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
-          self.cachedSessionMerged = sn;
+          self.cachedSessionMerged = sn ;
           [[ApplicationState sharedInstance] setCurrentSession:sn] ;
           for (int i=0; i < [ sn.guestPlayerList count]; i++){
-              NSString *url = (NSString *) sn.guestPlayerList[i] ;
-              NSLog(@"%@", url);
+              NSString *fireRefURL = (NSString *) sn.guestPlayerList[i] ;
+              NSLog(@"fireRefURL: %@", fireRefURL);
+              FIRStorageReference *gsReference = [storage referenceForURL:fireRefURL];
+              [gsReference downloadURLWithCompletion:^(NSURL *URL, NSError *error){
+                if (error != nil) {
+                  // Handle any errors
+                    NSLog(@"%@", error.localizedDescription);
+                    NSLog(@"Something is worng!! download the data");
+                } else {
+                    NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
+                    NSString *currAudioName = [arr lastObject];
+                    NSLog(@"The audio name is %@ . URL is %@", currAudioName, [URL absoluteString]) ;
+                    Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: URL];
+                    // Update tableview data source
+                    [self.audioTracks addObject:newAudioObj] ;
+                    if ([self.audioTracks count] == [sn.guestPlayerList count]){
+                        [self.mergeTableView reloadData];
+                    }
+                }
+              }];
               //initialize the new instance
-              NSArray *arr = [url componentsSeparatedByString:@"/"];
-              NSString *currAudioName = [arr lastObject];
-              NSLog(@"The audio name is %@ . URL is %@", currAudioName, url) ;
-              Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: url];
+              //NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
+              //NSString *currAudioName = [arr lastObject];
+              //NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
+              //Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: fireRefURL];
               // Update tableview data source
-              [self.audioTracks addObject:newAudioObj] ;
+              //[self.audioTracks addObject:newAudioObj] ;
           }
-          NSLog(@"The audiotracks array %@", self.audioTracks);
-          [self.mergeTableView reloadData];
+          //NSLog(@"The audiotracks array %@", self.audioTracks);
+          //[self.mergeTableView reloadData];
           
       } else {
         NSLog(@"Document does not exist");
