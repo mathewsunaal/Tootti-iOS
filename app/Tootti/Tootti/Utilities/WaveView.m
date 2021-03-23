@@ -44,8 +44,7 @@
     CGContextSetRGBFillColor(context, 128.0f/255.0f, 128.0f/255.0f, 128/255.0f, 1.0f);
     CGContextFillRect(context, self.bounds);
     //Background color stop
-    CGPoint firstPoint = CGPointMake(0.0f, [[averagePointArray objectAtIndex:0] floatValue]);
-
+    CGPoint firstPoint = CGPointMake(0-self.bounds.size.height, [[averagePointArray objectAtIndex:0] floatValue]);
     CGContextMoveToPoint(context, firstPoint.x, firstPoint.y);
     
     for (int i = 1; i < [peakPointArray count]; i++)

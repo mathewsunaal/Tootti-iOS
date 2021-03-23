@@ -43,7 +43,7 @@
     // Do any additional setup after loading the view.
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
-    self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
+    //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 
 }
 
@@ -182,11 +182,13 @@
     //waveform code
     self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, (float)self.waveFormView.bounds.size.width, (float)self.waveFormView.bounds.size.height)];
     [self.waveFormView addSubview: self.wv];
-    //[NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
+    [self.waveFormView reloadInputViews];
+    [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 - (void) resetWaveform {
     [self.wv removeFromSuperview];
+    [self.waveFormView reloadInputViews];
 }
 
 - (IBAction)testButton:(UIButton *)sender {
