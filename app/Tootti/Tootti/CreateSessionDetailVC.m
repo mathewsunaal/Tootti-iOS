@@ -8,7 +8,7 @@
 #import "CreateSessionDetailVC.h"
 #import "ToottiDefinitions.h"
 #import "Session.h"
-@interface CreateSessionDetailVC ()
+@interface CreateSessionDetailVC () <UITextFieldDelegate>
 
 @end
 
@@ -20,6 +20,9 @@
     // Do any additional setup after loading the view.
     
     [self setupViews];
+    [self.nameTextField setDelegate:self];
+    [self.instrumentsTextField setDelegate:self];
+    [self.musiciansTextField setDelegate:self];
 }
 
 - (void) setupViews {
@@ -62,6 +65,13 @@
     UITabBarController *tabBarVC = [segue destinationViewController];
     [tabBarVC setSelectedIndex:1];
     // Pass the selected object to the new view controller.
+}
+
+#pragma mark - Delegates
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end

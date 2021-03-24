@@ -183,10 +183,13 @@
     self.wv = [[WaveView alloc] initWithFrame:CGRectMake(0,0, (float)self.waveFormView.bounds.size.width, (float)self.waveFormView.bounds.size.height)];
     [self.waveFormView addSubview: self.wv];
     [self.waveFormView reloadInputViews];
-    [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
+    //TODO: attach this to waveform timer
+    self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
 
 - (void) resetWaveform {
+    [self.waveformTimer invalidate];
+    self.waveformTimer = nil;
     [self.wv removeFromSuperview];
     [self.waveFormView reloadInputViews];
 }
@@ -272,11 +275,11 @@
         [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
         [self resetTimer];
         //Stop Waveform
-        if ([self.waveformTimer isValid]){
-            NSLog(@"###################################");
-            [self.waveformTimer invalidate];
-            self.waveformTimer = nil;
-        }
+//        if ([self.waveformTimer isValid]){
+//            NSLog(@"###################################");
+//            [self.waveformTimer invalidate];
+//            self.waveformTimer = nil;
+//        }
         [self resetWaveform];
         //Show alert to name recording or cancel
         [self showAlertForRecordingName];

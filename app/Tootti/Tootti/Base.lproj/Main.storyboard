@@ -768,7 +768,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="audioNameLabel" destination="seX-yk-Gns" id="eT0-vf-4Ux"/>
-                                            <outlet property="playAudioButton" destination="NHm-Rr-Yaw" id="9Lp-0V-7uO"/>
+                                            <outlet property="playButton" destination="NHm-Rr-Yaw" id="9Lp-0V-7uO"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -937,11 +937,27 @@
                         <outlet property="rewindButton" destination="urc-WG-hO5" id="dKY-rE-Sic"/>
                         <outlet property="sessionCodeLabel" destination="JoX-K1-8Of" id="yWK-fu-VOs"/>
                         <outlet property="userTypeLabel" destination="6IE-SC-Rof" id="oi8-Vc-JBc"/>
+                        <segue destination="Fqr-ei-Hbm" kind="presentation" identifier="showShareLink" id="EaR-r4-k0o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEi-8Z-iI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4551.1999999999998" y="102.09895052473765"/>
+        </scene>
+        <!--Share LinkVC-->
+        <scene sceneID="tdE-JJ-v5L">
+            <objects>
+                <viewController id="Fqr-ei-Hbm" customClass="ShareLinkVC" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RV8-ft-4RL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="dBJ-ri-Si9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdh-HY-HOc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4551" y="823"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="WWq-mJ-V4X">
@@ -1082,7 +1098,7 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Link to Piece" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F8z-2a-zzC">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Instruments" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F8z-2a-zzC">
                                 <rect key="frame" x="22.5" y="250" width="330" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="adI-1s-ly1"/>
@@ -1183,10 +1199,10 @@
                     <navigationItem key="navigationItem" id="ddb-dM-Yfu"/>
                     <connections>
                         <outlet property="createSessionButton" destination="lBD-Pa-dQP" id="ylF-fA-ifs"/>
+                        <outlet property="instrumentsTextField" destination="F8z-2a-zzC" id="6vC-1N-ypf"/>
                         <outlet property="logoImageView" destination="9Jm-Ko-PSB" id="Xwj-W6-oXs"/>
                         <outlet property="musiciansTextField" destination="7Bl-Jg-gVd" id="1U1-6Z-VSi"/>
                         <outlet property="nameTextField" destination="aG5-9U-0EA" id="Vv9-jp-mTN"/>
-                        <outlet property="trackLinkTextField" destination="F8z-2a-zzC" id="6vC-1N-ypf"/>
                         <segue destination="zWa-5m-fIB" kind="show" identifier="createSessionRecording" id="gVd-1P-bPn"/>
                     </connections>
                 </viewController>
@@ -1557,7 +1573,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Xbx-20-0tr"/>
+        <segue reference="gVd-1P-bPn"/>
         <segue reference="137-yG-boL"/>
     </inferredMetricsTieBreakers>
     <resources>

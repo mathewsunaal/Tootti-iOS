@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *audioNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (nonatomic, retain) Audio *audio;
+@property (nonatomic, retain) AVAudioPlayer *cellPlayer;
 
 @end
 

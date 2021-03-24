@@ -34,6 +34,7 @@
     self.audioLibTableView.delegate = self;
     self.audioLibTableView.dataSource = self;
     [self setupViews];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -137,6 +138,8 @@
     Audio* audio = self.audioRecordings[indexPath.row];
     cell.audio = audio;
     cell.audioNameLabel.text = audio.audioName;
+    cell.cellPlayer = audio.player;
+    [cell.cellPlayer setDelegate:cell];
     
     UIView *backgroundColorView = [[UIView alloc] init];
     backgroundColorView.backgroundColor = LOGO_GOLDEN_YELLOW;

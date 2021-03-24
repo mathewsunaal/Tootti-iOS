@@ -14,10 +14,10 @@
 #import "ApplicationState.h"
 #import "AppDelegate.h"
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic) BOOL mergeIsPlaying;
 @property (nonatomic,retain) NSMutableArray *players;
 @property (nonatomic, retain) Session *cachedSessionMerged;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (nonatomic, retain) NSTimer *playbackTimer;
 
 @end
 @implementation MergeSessionVC
@@ -57,6 +57,14 @@ Audio *_audio;
     [self setupButton:self.doneButton];
 }
 
+-(void)setupButton:(UIButton *)button {
+    button.backgroundColor = BUTTON_DARK_TEAL;
+    button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
+    button.clipsToBounds = YES;
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
+}
+
 - (void)setupSessionStatus {
     self.cachedSessionMerged = [[ApplicationState sharedInstance] currentSession];
     NSString *session_title= [NSString stringWithFormat:@"No session active"];
@@ -77,15 +85,6 @@ Audio *_audio;
     [self.userTypeLabel setText:user_type];
     [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
-}
-
-
--(void)setupButton:(UIButton *)button {
-    button.backgroundColor = BUTTON_DARK_TEAL;
-    button.layer.cornerRadius = NORMAL_BUTTON_CORNER_RADIUS;
-    button.clipsToBounds = YES;
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button.titleLabel setFont:[UIFont fontWithName:NORMAL_BUTTON_FONT_TYPE size:NORMAL_BUTTON_FONT_SIZE]];
 }
 
 #pragma mark - Audio Players
@@ -154,9 +153,12 @@ Audio *_audio;
     [self.view addSubview:_sliderView];
 }
 
+
 - (void)playAllTracks {
     if([self.selectedTracks count] == 0){
         NSLog(@"No tracks selected to play!");
+        [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
+        self.isMergePlaying = NO;
         return;
     }
     Audio *lastTrack = [self.selectedTracks lastObject];
@@ -167,12 +169,31 @@ Audio *_audio;
         track.player.currentTime = 0;
         [track playAudioAtTime:timeOffset]; // for playback synchronization
     }
+    self.playbackTimer = [NSTimer scheduledTimerWithTimeInterval: 1.0
+                                                          target: self
+                                                        selector:@selector(checkPlayback)
+                                                        userInfo: nil repeats:YES];
+}
+
+- (void)checkPlayback {
+    NSLog(@"Playback merge timer fired");
+    for (Audio *audio in self.selectedTracks) {
+        if(audio.player.isPlaying) {
+            return;
+        }
+    }
+    // NO players are playing
+    [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
+    [self.playbackTimer invalidate];
+    self.isMergePlaying = NO;
 }
 
 - (void)pauseAllTracks {
     for(Audio *track in self.selectedTracks) {
         [track pauseAudio];
     }
+    self.isMergePlaying = NO;
+    [self.playbackTimer invalidate];
 }
 
 - (void)adjustAllTracks:(float)delta {
@@ -243,6 +264,7 @@ Audio *_audio;
 
 - (IBAction)mergeTracks:(UIButton *)sender {
     NSLog(@"Merge and render all tracks");
+    [self performSegueWithIdentifier:@"showShareLink" sender:self];
 }
 
 - (IBAction)completeSession:(UIButton *)sender {
@@ -250,16 +272,16 @@ Audio *_audio;
 }
 
 - (IBAction)play:(UIButton *)sender {
-    if(!self.mergeIsPlaying) {
+    if(!self.isMergePlaying) {
         NSLog(@"Play merged tracks");
-        self.mergeIsPlaying = YES;
+        self.isMergePlaying = YES;
+        [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
         [self playAllTracks];
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
     } else {
         NSLog(@"Pause merged tracks");
-        self.mergeIsPlaying = NO;
+        self.isMergePlaying = NO;
+        [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
         [self pauseAllTracks];
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
     }
 }
 
@@ -285,6 +307,8 @@ Audio *_audio;
     Audio* audio = self.audioTracks[indexPath.row];
     cell.audio = audio;
     cell.audioNameLabel.text = audio.audioName;
+    cell.cellPlayer = audio.player;
+    [cell.cellPlayer setDelegate:cell];
     
     UIView *backgroundColorView = [[UIView alloc] init];
     backgroundColorView.backgroundColor = LOGO_GOLDEN_YELLOW;

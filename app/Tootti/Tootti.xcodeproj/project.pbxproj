@@ -17,6 +17,7 @@
 		4D86E8CD25F2C70C00A70623 /* GuestUserDecorator.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BF25F2C6EE00A70623 /* GuestUserDecorator.h */; };
 		4D86E8CE25F2C70C00A70623 /* Session.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C025F2C6EE00A70623 /* Session.h */; };
 		4D86E8CF25F2C70C00A70623 /* User.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C125F2C6EE00A70623 /* User.h */; };
+		4D8B0122260B8891006659AC /* ShareLinkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8B0121260B8891006659AC /* ShareLinkVC.m */; };
 		4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */; };
 		4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5A25EC68E700907574 /* HomeSessionVC.m */; };
 		4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5B25EC68E700907574 /* RecordingSessionVC.m */; };
@@ -65,6 +66,8 @@
 		4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostUserDecorator.m; sourceTree = "<group>"; };
 		4D86E8C325F2C6EE00A70623 /* GuestUserDecorator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestUserDecorator.m; sourceTree = "<group>"; };
 		4D86E8C425F2C6EE00A70623 /* Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Audio.m; sourceTree = "<group>"; };
+		4D8B0120260B8891006659AC /* ShareLinkVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareLinkVC.h; sourceTree = "<group>"; };
+		4D8B0121260B8891006659AC /* ShareLinkVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareLinkVC.m; sourceTree = "<group>"; };
 		4D925A5525EC68E600907574 /* RecordingSessionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingSessionVC.h; sourceTree = "<group>"; };
 		4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateSessionDetailVC.h; sourceTree = "<group>"; };
 		4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateSessionDetailVC.m; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
 				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
 				4D86E8BA25F2C6EE00A70623 /* Utilities */,
+				4D8B0120260B8891006659AC /* ShareLinkVC.h */,
+				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
 				4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */,
 				4DD423172603F4F30027DCDC /* MergeAudioCell.m in Sources */,
+				4D8B0122260B8891006659AC /* ShareLinkVC.m in Sources */,
 				4D86E8C825F2C6EE00A70623 /* GuestUserDecorator.m in Sources */,
 				4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */,
 				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,

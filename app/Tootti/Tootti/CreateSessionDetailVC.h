@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CreateSessionDetailVC : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *trackLinkTextField;
+@property (weak, nonatomic) IBOutlet UITextField *instrumentsTextField;
 @property (weak, nonatomic) IBOutlet UITextField *musiciansTextField;
 @property (weak, nonatomic) IBOutlet UIButton *createSessionButton;
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;

@@ -13,7 +13,7 @@
 
 @import Firebase;
 
-@interface JoinSessionDetailVC ()
+@interface JoinSessionDetailVC () <UITextFieldDelegate>
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic,retain) Session *session;
 @end
@@ -26,6 +26,7 @@ ClickTrackSessionVC *vc;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setupViews];
+    [self.sessionCodeTextField setDelegate:self];
 }
 
 - (void) setupViews {
@@ -80,6 +81,13 @@ ClickTrackSessionVC *vc;
         //[vc setCachedSession:self.session];
         [tabBarVC setSelectedIndex:1];
         }
+}
+
+#pragma mark - Delegate methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 

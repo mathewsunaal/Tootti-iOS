@@ -8,6 +8,10 @@
 #import "MergeAudioCell.h"
 #import "Audio.h"
 
+@interface MergeAudioCell () <AVAudioPlayerDelegate>
+
+@end
+
 @implementation MergeAudioCell
 
 - (void)awakeFromNib {
@@ -15,13 +19,17 @@
     // Initialization code
 }
 - (IBAction)playAudio:(UIButton *)sender {
-    if(self.audio.player.isPlaying) {
-        [self.audio stopAudio];
+    if(self.cellPlayer.isPlaying) {
+        [self.cellPlayer stop];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"play.circle"] forState:UIControlStateNormal];
     } else {
-        [self.audio playAudio];
+        [self.cellPlayer play];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-    }
+    }    
+}
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playButton setBackgroundImage:[UIImage systemImageNamed:@"play.circle"] forState:UIControlStateNormal];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
