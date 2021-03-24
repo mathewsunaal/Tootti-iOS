@@ -15,11 +15,13 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app requires access to your media library to upload tracks</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Tootti needs access to your microhpone to record music</string>
 	<key>UIApplicationSceneManifest</key>
@@ -62,8 +64,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>This app requires access to your media library to upload tracks</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 </dict>
