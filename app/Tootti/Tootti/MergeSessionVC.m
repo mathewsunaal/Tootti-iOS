@@ -211,6 +211,7 @@ Audio *_audio;
     FIRStorage *storage = [FIRStorage storage];
     //TODO: for now, we are clearing all audio tracks in merge
     [self.audioTracks removeAllObjects];
+    [self.selectedTracks removeAllObjects];
     FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
     [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         NSLog(@"%@", snapshot);

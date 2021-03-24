@@ -315,12 +315,6 @@
                                     Audio *newRecordingAudio = [[Audio alloc] initWithAudioName:alertVC.textFields[0].text
                                                                                        audioURL:self.audioRecorder.url.absoluteString];
                                     [self updateLocalRecordingsWith:newRecordingAudio];
-        NSLog(@"%@", self.cachedSessionRecordingVC.uid);
-        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]);
-        NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
-        NSString *sessionID = self.cachedSessionRecordingVC.uid;
-        [newRecordingAudio uploadAudioSound: userID sessionUid: sessionID];
-        
                                }];
 
     UIAlertAction* cancelButton = [UIAlertAction

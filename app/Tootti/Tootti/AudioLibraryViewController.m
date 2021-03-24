@@ -126,6 +126,14 @@
     [mergeVC.audioTracks removeAllObjects];
     [mergeVC.audioTracks addObjectsFromArray:self.selectedRecordings];
     
+    NSLog(@"%@", self.cachedSessionLibraryVC.uid);
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]);
+    NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *sessionID = self.cachedSessionLibraryVC.uid;
+    for(Audio *track in self.selectedRecordings){
+        [track uploadAudioSound: userID sessionUid: sessionID];
+    }
+    
     //Navigate to merge tracks now
     [self.tabBarController setSelectedIndex:4];
 }

@@ -1121,11 +1121,11 @@
                                 <exclude reference="jbm-L8-cUl"/>
                                 <exclude reference="34f-iN-Q1K"/>
                                 <exclude reference="RNp-ab-Bsy"/>
+                                <exclude reference="CcF-uc-dEK"/>
+                                <exclude reference="rAP-iA-ZNX"/>
                                 <exclude reference="E5s-ao-2Wj"/>
                                 <exclude reference="bye-rP-oii"/>
                                 <exclude reference="raC-GG-qya"/>
-                                <exclude reference="CcF-uc-dEK"/>
-                                <exclude reference="rAP-iA-ZNX"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -1157,13 +1157,13 @@
                                 <include reference="34f-iN-Q1K"/>
                                 <include reference="RNp-ab-Bsy"/>
                                 <exclude reference="eta-gO-B8e"/>
-                                <include reference="E5s-ao-2Wj"/>
-                                <include reference="raC-GG-qya"/>
                                 <include reference="CcF-uc-dEK"/>
                                 <exclude reference="NmT-XK-Emj"/>
                                 <exclude reference="fLD-PP-1HP"/>
                                 <exclude reference="r4A-Cx-i5q"/>
                                 <include reference="rAP-iA-ZNX"/>
+                                <include reference="E5s-ao-2Wj"/>
+                                <include reference="raC-GG-qya"/>
                             </mask>
                         </variation>
                     </view>
@@ -1351,12 +1351,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app-logo" translatesAutoresizingMaskIntoConstraints="NO" id="10d-lb-BEi">
-                                <rect key="frame" x="82" y="30" width="250" height="70"/>
+                                <rect key="frame" x="147" y="20" width="120" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="6Z7-DG-uyN"/>
+                                    <constraint firstAttribute="height" constant="50" id="6Z7-DG-uyN"/>
                                     <constraint firstAttribute="width" constant="420" id="aq8-Ef-yLA"/>
                                     <constraint firstAttribute="width" constant="330" id="cQ7-C7-wfy">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="250"/>
+                                        <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                                     </constraint>
                                 </constraints>
                                 <variation key="default">
@@ -1371,8 +1371,8 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoL-9h-HyP">
-                                <rect key="frame" x="97" y="225" width="220" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LoL-9h-HyP">
+                                <rect key="frame" x="97" y="321" width="220" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="7UO-aq-oCl"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="kCY-JE-QSl"/>
@@ -1383,11 +1383,11 @@
                                     <action selector="createSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="StZ-Mi-J06"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="create-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-1Y-thL">
-                                <rect key="frame" x="97" y="110" width="220" height="100"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="create-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="fdw-1Y-thL">
+                                <rect key="frame" x="97" y="206" width="220" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="Img-JD-xb6"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="MVx-ff-r0P"/>
+                                    <constraint firstAttribute="height" constant="100" id="MVx-ff-r0P"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="TvK-22-gkm"/>
                                 </constraints>
                                 <variation key="default">
@@ -1402,11 +1402,53 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="join-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="j0f-jJ-AEB">
-                                <rect key="frame" x="97" y="275" width="220" height="100"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="previous-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vrx-hI-K87">
+                                <rect key="frame" x="97" y="536" width="220" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="9zJ-is-eVu">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="equ-0S-POY"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJi-Li-taH">
+                                <rect key="frame" x="359" y="30.333333333333332" width="35" height="34.333333333333343"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="bOs-U5-QnB"/>
+                                    <constraint firstAttribute="height" constant="35" id="gwh-1p-Rkz"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="gearshape.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="logOutTapped:" destination="RRD-8W-4Su" eventType="touchUpInside" id="Tzr-iK-HXR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rrz-wP-qyI">
+                                <rect key="frame" x="97" y="651" width="220" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="BcI-ti-KuI"/>
+                                    <constraint firstAttribute="height" constant="35" id="HPE-rZ-lkp"/>
+                                </constraints>
+                                <state key="normal" title="View Past Sessions"/>
+                                <connections>
+                                    <action selector="viewPastSessions:" destination="RRD-8W-4Su" eventType="touchUpInside" id="snV-vW-sq1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK4-NK-fx0">
+                                <rect key="frame" x="97" y="486" width="220" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="3C1-17-9wA"/>
+                                    <constraint firstAttribute="height" constant="35" id="iYo-bc-dMe"/>
+                                </constraints>
+                                <state key="normal" title="Join Session"/>
+                                <connections>
+                                    <action selector="joinSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="57f-Kr-3Tn"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="join-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="j0f-jJ-AEB">
+                                <rect key="frame" x="97" y="371" width="220" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="4fO-lG-9Hh"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="Mpu-ed-eIp"/>
+                                    <constraint firstAttribute="height" constant="100" id="Mpu-ed-eIp"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="b86-Nh-7vd">
                                         <variation key="heightClass=regular-widthClass=compact" constant="220"/>
                                     </constraint>
@@ -1427,48 +1469,6 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="previous-session-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Vrx-hI-K87">
-                                <rect key="frame" x="97" y="440" width="220" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="9zJ-is-eVu">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="100"/>
-                                    </constraint>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="equ-0S-POY"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJi-Li-taH">
-                                <rect key="frame" x="359" y="30.333333333333332" width="35" height="34.333333333333343"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="bOs-U5-QnB"/>
-                                    <constraint firstAttribute="height" constant="35" id="gwh-1p-Rkz"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="gearshape.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="logOutTapped:" destination="RRD-8W-4Su" eventType="touchUpInside" id="Tzr-iK-HXR"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rrz-wP-qyI">
-                                <rect key="frame" x="97" y="555" width="220" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="BcI-ti-KuI"/>
-                                    <constraint firstAttribute="height" constant="35" id="HPE-rZ-lkp"/>
-                                </constraints>
-                                <state key="normal" title="View Past Sessions"/>
-                                <connections>
-                                    <action selector="viewPastSessions:" destination="RRD-8W-4Su" eventType="touchUpInside" id="snV-vW-sq1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JK4-NK-fx0">
-                                <rect key="frame" x="97" y="390" width="220" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="3C1-17-9wA"/>
-                                    <constraint firstAttribute="height" constant="35" id="iYo-bc-dMe"/>
-                                </constraints>
-                                <state key="normal" title="Join Session"/>
-                                <connections>
-                                    <action selector="joinSession:" destination="RRD-8W-4Su" eventType="touchUpInside" id="57f-Kr-3Tn"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AtM-02-1Ky"/>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1476,7 +1476,7 @@
                             <constraint firstItem="fdw-1Y-thL" firstAttribute="top" secondItem="10d-lb-BEi" secondAttribute="bottom" constant="30" id="0hs-8b-FB6"/>
                             <constraint firstItem="JK4-NK-fx0" firstAttribute="leading" secondItem="j0f-jJ-AEB" secondAttribute="leading" id="34U-Aw-USr"/>
                             <constraint firstItem="10d-lb-BEi" firstAttribute="top" secondItem="AtM-02-1Ky" secondAttribute="top" constant="50" id="3jh-oZ-SF0">
-                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                             </constraint>
                             <constraint firstItem="Vrx-hI-K87" firstAttribute="top" secondItem="JK4-NK-fx0" secondAttribute="bottom" constant="15" id="815-49-HP2"/>
                             <constraint firstItem="j0f-jJ-AEB" firstAttribute="centerY" secondItem="fdw-1Y-thL" secondAttribute="centerY" id="8c6-F9-9J4"/>
@@ -1496,7 +1496,7 @@
                             <constraint firstItem="JK4-NK-fx0" firstAttribute="trailing" secondItem="j0f-jJ-AEB" secondAttribute="trailing" id="drk-EX-YMy"/>
                             <constraint firstItem="j0f-jJ-AEB" firstAttribute="centerX" secondItem="Yzo-MF-Skh" secondAttribute="centerX" id="dzJ-j7-IDu"/>
                             <constraint firstItem="LoL-9h-HyP" firstAttribute="centerX" secondItem="10d-lb-BEi" secondAttribute="centerX" id="eri-Ml-xvp"/>
-                            <constraint firstItem="fdw-1Y-thL" firstAttribute="top" secondItem="10d-lb-BEi" secondAttribute="bottom" constant="40" id="f54-5k-wEs">
+                            <constraint firstItem="fdw-1Y-thL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="10d-lb-BEi" secondAttribute="bottom" constant="40" id="f54-5k-wEs">
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstItem="10d-lb-BEi" firstAttribute="top" secondItem="AtM-02-1Ky" secondAttribute="top" constant="30" id="gpd-Tn-zf6"/>
@@ -1518,18 +1518,18 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="GUT-tU-LXc"/>
-                                <exclude reference="3jh-oZ-SF0"/>
-                                <exclude reference="815-49-HP2"/>
-                                <exclude reference="b2k-i9-xJs"/>
                                 <exclude reference="UwX-Nr-Cdd"/>
                                 <exclude reference="f54-5k-wEs"/>
+                                <exclude reference="3jh-oZ-SF0"/>
+                                <exclude reference="eri-Ml-xvp"/>
                                 <exclude reference="nqd-0l-xy6"/>
                                 <exclude reference="x4H-qd-WKG"/>
                                 <exclude reference="34U-Aw-USr"/>
                                 <exclude reference="drk-EX-YMy"/>
                                 <exclude reference="pB3-Uw-Q4V"/>
                                 <exclude reference="skh-iH-Tdv"/>
-                                <exclude reference="eri-Ml-xvp"/>
+                                <exclude reference="815-49-HP2"/>
+                                <exclude reference="b2k-i9-xJs"/>
                                 <exclude reference="pEI-Wr-yZM"/>
                             </mask>
                         </variation>
@@ -1537,15 +1537,13 @@
                             <mask key="constraints">
                                 <include reference="GUT-tU-LXc"/>
                                 <exclude reference="ctf-nQ-EtR"/>
-                                <include reference="3jh-oZ-SF0"/>
-                                <exclude reference="gpd-Tn-zf6"/>
-                                <include reference="815-49-HP2"/>
-                                <include reference="b2k-i9-xJs"/>
-                                <exclude reference="mxO-49-bx8"/>
                                 <exclude reference="0hs-8b-FB6"/>
                                 <include reference="UwX-Nr-Cdd"/>
                                 <include reference="f54-5k-wEs"/>
                                 <exclude reference="m8G-Bc-bRY"/>
+                                <include reference="3jh-oZ-SF0"/>
+                                <exclude reference="gpd-Tn-zf6"/>
+                                <include reference="eri-Ml-xvp"/>
                                 <exclude reference="8c6-F9-9J4"/>
                                 <include reference="nqd-0l-xy6"/>
                                 <include reference="x4H-qd-WKG"/>
@@ -1556,7 +1554,9 @@
                                 <include reference="pB3-Uw-Q4V"/>
                                 <include reference="skh-iH-Tdv"/>
                                 <exclude reference="z6t-zR-pDr"/>
-                                <include reference="eri-Ml-xvp"/>
+                                <include reference="815-49-HP2"/>
+                                <include reference="b2k-i9-xJs"/>
+                                <exclude reference="mxO-49-bx8"/>
                                 <exclude reference="K1T-4v-rZ8"/>
                                 <include reference="pEI-Wr-yZM"/>
                             </mask>
@@ -1706,7 +1706,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="8XD-dm-v49"/>
-        <segue reference="GBa-gi-Mz9"/>
+        <segue reference="137-yG-boL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="app-logo" width="419" height="140"/>
