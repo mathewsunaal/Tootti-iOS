@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D2D53FE260E3F6700DA7E32 /* Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D53FD260E3F6700DA7E32 /* Merge.m */; };
+		4D2D5402260E461000DA7E32 /* Merge.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D53FC260E3F6700DA7E32 /* Merge.h */; };
 		4D86E8C525F2C6EE00A70623 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BB25F2C6EE00A70623 /* Session.m */; };
 		4D86E8C625F2C6EE00A70623 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BC25F2C6EE00A70623 /* User.m */; };
 		4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */; };
@@ -56,6 +58,8 @@
 
 /* Begin PBXFileReference section */
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
+		4D2D53FC260E3F6700DA7E32 /* Merge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Merge.h; sourceTree = "<group>"; };
+		4D2D53FD260E3F6700DA7E32 /* Merge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Merge.m; sourceTree = "<group>"; };
 		4D86E8BB25F2C6EE00A70623 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		4D86E8BC25F2C6EE00A70623 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 				4D86E8BC25F2C6EE00A70623 /* User.m */,
 				52671A0425FDF850001E9856 /* WaveView.h */,
 				52671A0125FDF850001E9856 /* WaveView.m */,
+				4D2D53FC260E3F6700DA7E32 /* Merge.h */,
+				4D2D53FD260E3F6700DA7E32 /* Merge.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -374,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2D5402260E461000DA7E32 /* Merge.h in Sources */,
 				4DB5B1872602828C00583C54 /* MOAudioSliderView.h in Sources */,
 				5211E63D26097D6800EB9A10 /* ApplicationState.m in Sources */,
 				4DB5B1882602828C00583C54 /* MOTimeTableView.h in Sources */,
@@ -404,6 +411,7 @@
 				4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */,
 				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
+				4D2D53FE260E3F6700DA7E32 /* Merge.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
 				52671A0725FDF850001E9856 /* WaveView.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,

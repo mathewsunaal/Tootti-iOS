@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Merge.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) NSMutableArray *audioTracks;
 @property (nonatomic, retain) NSMutableArray *selectedTracks;
 @property (nonatomic)   BOOL isMergePlaying;
+
+@property (retain, nonatomic) Merge *merge;
 
 @end
 

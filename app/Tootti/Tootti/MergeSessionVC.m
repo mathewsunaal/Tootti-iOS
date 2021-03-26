@@ -13,6 +13,8 @@
 #import "MergeAudioCell.h"
 #import "ApplicationState.h"
 #import "AppDelegate.h"
+#import "Merge.h"
+
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic,retain) NSMutableArray *players;
 @property (nonatomic, retain) Session *cachedSessionMerged;
@@ -265,7 +267,18 @@ Audio *_audio;
 
 - (IBAction)mergeTracks:(UIButton *)sender {
     NSLog(@"Merge and render all tracks");
-    [self performSegueWithIdentifier:@"showShareLink" sender:self];
+    
+//    Audio *s1 = [[Audio alloc] initWithAudioName:@"Flute-1" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
+//    Audio *s2 = [[Audio alloc] initWithAudioName:@"Flute-2" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
+    
+    self.merge = [[Merge alloc] init];
+    for(Audio *selectedTrack in self.selectedTracks) {
+        [self.merge addAudio:selectedTrack];
+    }
+    [self.merge performMerge];
+    
+      // Move to confirmation share screen
+//    [self performSegueWithIdentifier:@"showShareLink" sender:self];
 }
 
 - (IBAction)completeSession:(UIButton *)sender {

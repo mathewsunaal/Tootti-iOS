@@ -33,12 +33,12 @@
     self = [super init];
     if (self) {
         //NSData *urlData = [NSData dataWithContentsOfURL:audioURL];
-    _audioName = audioName;
-    _audioURL = [audioURL absoluteString] ;
-    //self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_audioURL] error:nil];
-    self.player = [[AVAudioPlayer alloc]  initWithData: [NSData dataWithContentsOfURL:audioURL] error:nil];
-    [self.player setDelegate:self];
-    }
+        _audioName = audioName;
+        _audioURL = [audioURL absoluteString] ;
+        //self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_audioURL] error:nil];
+        self.player = [[AVAudioPlayer alloc]  initWithData: [NSData dataWithContentsOfURL:audioURL] error:nil];
+        [self.player setDelegate:self];
+        }
     return self;
 }
 
@@ -58,9 +58,6 @@
     return [self.player stop];
 }
     
-- (AVAudioPlayer* ) getAudioSound{
-    return [AVAudioPlayer alloc];
-}
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid {
     //upload the audio sound to fire storage
@@ -242,6 +239,12 @@
     for (NSString *file in tmpDirectory) {
         [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), file] error:NULL];
     }
+}
+
+#pragma mark - Getter methods
+
+-(NSURL *)getURL {
+    return [NSURL URLWithString:self.audioURL];
 }
 
 @end

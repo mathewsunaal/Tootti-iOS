@@ -32,6 +32,6 @@
 - (void) stopAudio;
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid;
-- (AVAudioPlayer* ) getAudioSound;
 - (NSArray *) convertAVToArr;
+- (NSURL *)getURL;
 @end
