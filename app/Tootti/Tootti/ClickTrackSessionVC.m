@@ -111,6 +111,7 @@
         [self.audioPlayer stop];
         [self.playTrackButton setTitle:@"Play track" forState:UIControlStateNormal];
     } else {
+        self.audioPlayer.currentTime = 0;
         [self.audioPlayer play];
         [self.playTrackButton setTitle:@"Stop playback" forState:UIControlStateNormal];
     }

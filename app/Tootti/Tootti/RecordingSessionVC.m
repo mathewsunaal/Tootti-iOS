@@ -249,6 +249,7 @@
         BOOL result = [self.audioRecorder record];
         if(result) {
             NSLog(@"Audio recordring!");
+            self.clickTrackPlayer.currentTime = 0;
             [self.clickTrackPlayer play];
         }
         // Update UI
@@ -358,6 +359,8 @@
     }
 }
 
+#pragma mark - Timer Methods
+
 - (void) startTimer {
     NSLog(@"Start record timer");
     self.recordTimerLabel.hidden = NO;
@@ -397,6 +400,8 @@
     //Update timer label
     [self.recordTimerLabel setText:[NSString stringWithFormat:@"%@:%@",formatMinutes,formatSeconds]];
 }
+
+#pragma mark - waveview methods
 
 #define XMAX    20.0f
 - (void) refreshWaveView:(id) arg{
