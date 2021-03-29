@@ -42,6 +42,14 @@
     [self.audioLibTableView reloadData];
     [self setupSessionStatus];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
+    
+    NSString *sessionId = self.cachedSessionLibraryVC.uid;
+    NSLog(@"SessionID: %@", sessionId );
+    if (sessionId != 0) {
+        [self updateTabStatus:YES];
+    } else {
+        [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
+    }
 }
 
 - (void)setupViews {
@@ -49,6 +57,18 @@
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     
     [self setupButton:self.confirmButton];
+}
+
+// Enable or disable tabbar items depending on session status
+- (void)updateTabStatus:(BOOL)enabledStatus {
+    if(!enabledStatus){
+        [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
+    }
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        if(![tabBarItem.title isEqual:@"Home"]) {
+            [tabBarItem setEnabled:enabledStatus];
+        }
+    }
 }
 
 - (void)setupButton:(UIButton *)button {

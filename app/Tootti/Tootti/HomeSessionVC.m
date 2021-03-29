@@ -40,12 +40,12 @@
     [self.tabBarController setSelectedIndex:self.pageIndex];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 
-
     //LISTENING ON FIREBASE
     //test start
     NSString *sessionId = self.cachedSessionHomeVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
+        [self updateTabStatus:YES];
         [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
             addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
               if (snapshot == nil) {
@@ -55,6 +55,9 @@
               NSLog(@"Current data: %@", snapshot.data);
               NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
             }];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
     }
     // test ends
 }
@@ -71,6 +74,18 @@
     [self setupButton:self.joinSessionButton];
     [self setupButton:self.viewSessionsButton];
     
+}
+
+// Enable or disable tabbar items depending on session status
+- (void)updateTabStatus:(BOOL)enabledStatus {
+    if(!enabledStatus){
+        [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
+    }
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        if(![tabBarItem.title isEqual:@"Home"]) {
+            [tabBarItem setEnabled:enabledStatus];
+        }
+    }
 }
 
 - (void) setupSessionStatus {
@@ -123,6 +138,8 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
     [self performSegueWithIdentifier:@"logoutSegue" sender:self];
+    
+    //TODO: Exit session and save stuff
     
 }
 /*

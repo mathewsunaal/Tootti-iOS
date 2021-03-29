@@ -35,6 +35,24 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    NSString *sessionId = self.cachedSessionClickTrackVC.uid;
+    NSLog(@"SessionID: %@", sessionId );
+    if (sessionId != 0){
+        [self updateTabStatus:YES];
+        //TODO: Add click track listening here
+//        [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
+//            addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+//              if (snapshot == nil) {
+//                NSLog(@"Error fetching document: %@", error);
+//                return;
+//              }
+//              NSLog(@"Current data: %@", snapshot.data);
+//              NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+//            }];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
 }
 
 - (void)setupViews {
@@ -43,6 +61,18 @@
     [self setupButton:self.uploadTrackButton];
     [self setupButton:self.playTrackButton];
     [self setupButton:self.confirmTrackButton];
+}
+
+// Enable or disable tabbar items depending on session status
+- (void)updateTabStatus:(BOOL)enabledStatus {
+    if(!enabledStatus){
+        [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
+    }
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        if(![tabBarItem.title isEqual:@"Home"]) {
+            [tabBarItem setEnabled:enabledStatus];
+        }
+    }
 }
 
 - (void)setupSessionStatus {

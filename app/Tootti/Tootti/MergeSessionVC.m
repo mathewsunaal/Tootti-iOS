@@ -50,6 +50,24 @@ Audio *_audio;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];    
     [self.mergeTableView reloadData];
+    NSString *sessionId = self.cachedSessionMerged.uid;
+    NSLog(@"SessionID: %@", sessionId );
+    if (sessionId != 0){
+        [self updateTabStatus:YES];
+        //TODO: Need to add auto reload based on new tracks in session
+        [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
+            addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+              if (snapshot == nil) {
+                NSLog(@"Error fetching document: %@", error);
+                return;
+              }
+              NSLog(@"Current data: %@", snapshot.data);
+              NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+            }];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
 }
 
 - (void) setupViews {
@@ -57,6 +75,18 @@ Audio *_audio;
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     [self setupButton:self.mergeButton];
     [self setupButton:self.doneButton];
+}
+
+// Enable or disable tabbar items depending on session status
+- (void)updateTabStatus:(BOOL)enabledStatus {
+    if(!enabledStatus){
+        [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
+    }
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        if(![tabBarItem.title isEqual:@"Home"]) {
+            [tabBarItem setEnabled:enabledStatus];
+        }
+    }
 }
 
 -(void)setupButton:(UIButton *)button {

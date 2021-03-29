@@ -57,6 +57,7 @@
     NSString *sessionId = self.cachedSessionRecordingVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
+        [self updateTabStatus:YES];
         [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
             addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
               if (snapshot == nil) {
@@ -71,10 +72,12 @@
             if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES){
                 // Start recording
                 [self recordAudio: nil];
-                NSLog(@"HEYYYYYYYY");
+                NSLog(@"Host started recording");
                 //TODO: Update the recording for host and guest
             }
             }];
+    } else {
+        [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
     }
     // test ends
 
@@ -95,6 +98,19 @@
     //Waveform Start
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
+
+// Enable or disable tabbar items depending on session status
+- (void)updateTabStatus:(BOOL)enabledStatus {
+    if(!enabledStatus){
+        [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
+    }
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        if(![tabBarItem.title isEqual:@"Home"]) {
+            [tabBarItem setEnabled:enabledStatus];
+        }
+    }
+}
+
 
 - (void)setupSessionStatus {
     self.cachedSessionRecordingVC = [[ApplicationState sharedInstance] currentSession];
