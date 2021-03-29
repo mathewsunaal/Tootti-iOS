@@ -32,6 +32,14 @@
 - (void) stopAudio;
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid;
+- (void) uploadTypedAudioSound: (NSString *) userUid
+               sessionUid: (NSString *) sessionUid
+                audioType: (NSString *) audioType
+               completionBlock: (void (^)(BOOL success))completion;
+-(void) deleteAudioTrack: (NSString *) userUid
+              sessionUid: (NSString *) sessionUid
+         guestPlayerList: (NSArray *) guestPlayerList
+         completionBlock: (void (^)(BOOL success))completion;
 - (NSArray *) convertAVToArr;
 - (NSURL *)getURL;
 @end

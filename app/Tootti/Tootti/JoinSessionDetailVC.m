@@ -47,14 +47,18 @@ ClickTrackSessionVC *vc;
 
 - (IBAction)joinSession:(UIButton *)sender {
     self.db =  [FIRFirestore firestore];
-    NSString *sessionName = self.sessionCodeTextField.text;
+    NSString *sessionName =[self.sessionCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSLog(@"123331231231231%@", sessionName);
     [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
         getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
           if (error != nil) {
             NSLog(@"Error getting documents: %@", error);
-              self.errorMessage.hidden = NO;
-              self.errorMessage.text = @"The session name doesn't exist";
           } else {
+              if ([snapshot.documents count] == 0){
+                  self.errorMessage.hidden = NO;
+                  self.errorMessage.text = @"The session doesn't exist";
+              }
+              else{
               FIRDocumentSnapshot *document  = snapshot.documents[0];
               NSLog(@"%@ => %@", document.documentID, document.data);
                 //Will replace the Audio file
@@ -67,6 +71,7 @@ ClickTrackSessionVC *vc;
               [[ApplicationState sharedInstance] setCurrentSession:self.session ] ;
               [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
               //[self prepareForSegue: @"joinSessionRecording" sender:self];
+              }
           }
         }];
 }

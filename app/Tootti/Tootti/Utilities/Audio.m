@@ -9,6 +9,7 @@
 #import "Audio.h"
 #import "User.h"
 @import Firebase;
+
 @interface Audio() <AVAudioPlayerDelegate>
 
 @end
@@ -89,8 +90,8 @@
                   @"guestPlayerList": [FIRFieldValue fieldValueForArrayUnion:@[audioFilePath]]
               } completion:^(NSError * _Nullable error) {
                   //Save the audioFile to firestore
-                  NSLog(@"yaaaassssssssss");
-                  NSLog(@"%@", downloadURL);
+                  NSLog(@"Audio file is saved successfully");
+                  NSLog(@"Dowload URL is %@", downloadURL);
               }];
           }
         }];
@@ -98,6 +99,85 @@
     }];
     return;
 }
+
+
+- (void) uploadTypedAudioSound: (NSString *) userUid
+               sessionUid: (NSString *) sessionUid
+                      audioType: (NSString *) audioType
+               completionBlock:(void (^)(BOOL success))completionBlock
+                    {
+    //upload the audio sound to fire storage
+    FIRStorage *storage = [FIRStorage storage];
+    FIRFirestore *db =  [FIRFirestore firestore];
+    //FIRStorageReference *storageRef = [storage reference];
+    FIRStorageMetadata *metadata = [[FIRStorageMetadata alloc] init];
+    metadata.contentType = @"audio/wav";
+    NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@.wav", userUid, sessionUid, self.audioName];
+    NSURL *dataFile =  [NSURL URLWithString:self.audioURL];
+    //NSData *data = [NSData dataWithContentsOfFile:self.audioURL];
+    FIRStorageReference *audioRef = [storage referenceForURL: audioFilePath];
+    FIRStorageUploadTask *uploadTask = [audioRef putFile: dataFile metadata:metadata completion:^(FIRStorageMetadata *metadata, NSError *error) {
+      if (error != nil) {
+          NSLog(@"%@", error.localizedDescription);
+        // Uh-oh, an error occurred!
+      } else {
+        // You can also access to download URL after upload.
+        [audioRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+          if (error != nil) {
+              NSLog(@"%@", error.localizedDescription);
+          } else {
+            NSURL *downloadURL = URL;
+              //save the downloadURL to firestorage
+              FIRDocumentReference *sessionRef =
+                  [[db collectionWithPath:@"session"] documentWithPath:sessionUid];
+              [sessionRef updateData:@{
+                  audioType: [downloadURL absoluteString]
+              } completion:^(NSError * _Nullable error) {
+                  //Save the audioFile to firestore
+                  NSLog(@"The merged result is saved successfully");
+                  NSLog(@"Download URL is %@", downloadURL);
+                  if (completionBlock != nil) completionBlock(YES);
+              }];
+          }
+        }];
+      }
+    }];
+    return;
+}
+
+-(void) deleteAudioTrack: (NSString *) userUid
+              sessionUid: (NSString *) sessionUid
+         guestPlayerList:(NSArray *)guestPlayerList
+         completionBlock:(void (^)(BOOL success))completionBlock{
+    // Only use the audioName to update the information
+    FIRStorage *storage = [FIRStorage storage];
+    FIRFirestore *db =  [FIRFirestore firestore];
+    NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", userUid, sessionUid, self.audioName];
+    // Create a reference to the file to delete
+    FIRStorageReference *audioRef = [storage referenceForURL: audioFilePath];
+    // Delete the file
+    [audioRef deleteWithCompletion:^(NSError *error){
+      if (error != nil) {
+          NSLog(@"There is an error deleting the audio file. %@", error);
+      } else {
+        // File deleted successfully
+          FIRDocumentReference *sessionRef =
+              [[db collectionWithPath:@"session"] documentWithPath:sessionUid];
+          [sessionRef updateData:@{
+              @"guestPlayerList": guestPlayerList
+          } completion:^(NSError * _Nullable error) {
+              //Save the audioFile to firestore
+              NSLog(@"The audioTrack is deleted successfully");
+              if (completionBlock != nil) completionBlock(YES);
+          }];
+          
+          
+      }
+    }];
+        
+}
+
+
 - (NSArray *) convertAVToArr{
     /* Use local file
     NSString *urlString = [[NSBundle mainBundle] pathForResource:_audioName ofType:@".wav"];

@@ -44,7 +44,7 @@
     [track playAudio];
 }
 
--(BOOL)performMerge {
+-(BOOL)performMerge: (void (^)(BOOL success))completionBlock{
     NSLog(@"%@",self.audioTracks);
     
     // 1) Create composition
@@ -87,12 +87,12 @@
     [_assetExport exportAsynchronouslyWithCompletionHandler:
     ^(void ) {
         NSLog(@"Final merged track succesfully saved at: %@",exportURL.absoluteString);
-        self.mergedTrack = [[Audio alloc] initWithAudioName:@"mergedtrack" audioURL:exportURL.relativePath];
+        self.mergedTrack = [[Audio alloc] initWithAudioName:@"mergedtrack" audioURL:exportURL.absoluteString];
         if(![self.mergedTrack playAudio]) {
             NSLog(@"Failed to play!");
         }
+        if (completionBlock != nil) completionBlock(YES);
     }];
-
     return YES;
 }
 

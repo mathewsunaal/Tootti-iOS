@@ -236,8 +236,10 @@ Audio *_audio;
                 } else {
                     NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
                     NSString *currAudioName = [arr lastObject];
+                    NSString *performerUid = arr[[arr count] -3];
                     NSLog(@"The audio name is %@ . URL is %@", currAudioName, [URL absoluteString]) ;
                     Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: URL];
+                    newAudioObj.performer = performerUid;
                     // Update tableview data source
                     [self.audioTracks addObject:newAudioObj] ;
                     if ([self.audioTracks count] == [sn.guestPlayerList count]){
@@ -275,7 +277,19 @@ Audio *_audio;
     for(Audio *selectedTrack in self.selectedTracks) {
         [self.merge addAudio:selectedTrack];
     }
-    [self.merge performMerge];
+    [self.merge performMerge: ^(BOOL success) {
+        NSLog(@"heyyyyyyyyyyyyyyyyyyyyasdasdasdasdasdasdasdasd");
+        if (success){
+            NSString *sessionId =  self.cachedSessionMerged.uid;
+            NSString *hostId = self.cachedSessionMerged.hostUid;
+            [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success) {
+                NSLog(@"!!!!!!!!!!!!!!!");
+                if (success){
+                    NSLog(@"Successfully upload the clicktrack");
+                }
+            }];
+        }
+    }];
     
       // Move to confirmation share screen
 //    [self performSegueWithIdentifier:@"showShareLink" sender:self];
@@ -356,10 +370,30 @@ Audio *_audio;
         if([self.selectedTracks containsObject:trackToDelete]) {
             [self.selectedTracks removeObject:trackToDelete];
         }
-        [self.audioTracks removeObjectAtIndex:indexPath.row];
+        //remove the track
+        NSMutableArray *guestPlayerList =[self.cachedSessionMerged.guestPlayerList mutableCopy];
+        NSString *sessionId =  self.cachedSessionMerged.uid;
+        NSString *performerId = trackToDelete.performer;
+        NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", performerId, sessionId, trackToDelete.audioName];
+
+        if ([guestPlayerList containsObject:audioFilePath]){
+                [guestPlayerList removeObject:audioFilePath];
+        }
+        self.cachedSessionMerged.guestPlayerList = guestPlayerList;
+        [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionMerged];
+        [trackToDelete deleteAudioTrack:performerId sessionUid:sessionId guestPlayerList:guestPlayerList completionBlock: ^(BOOL success){
+            if (success){
+                [self.audioTracks removeObjectAtIndex:indexPath.row];
+                //TODO: FIREBASE DELETE function call here
+                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView reloadData]; // tell table to refresh now
+            }
+            
+        }];
+        //[self.audioTracks removeObjectAtIndex:indexPath.row];
         //TODO: FIREBASE DELETE function call here
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [tableView reloadData]; // tell table to refresh now
+        //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //[tableView reloadData]; // tell table to refresh now
     }
     
 }

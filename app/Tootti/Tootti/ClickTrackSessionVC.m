@@ -12,6 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ApplicationState.h"
+#import <CoreMedia/CoreMedia.h>
 
 @interface ClickTrackSessionVC () <MPMediaPickerControllerDelegate>
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
@@ -82,10 +83,11 @@
    self.pickerVC.allowsPickingMultipleItems = NO;
    self.pickerVC.popoverPresentationController.sourceView = self.uploadTrackButton;
    self.pickerVC.delegate = self;
-   [self presentViewController:self.pickerVC animated:YES completion:nil];
+    [self presentViewController:self.pickerVC animated:YES completion:nil];
 }
 
 #pragma mark - MPMediaPickerControllerDelegate methods
+
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection {
     NSLog(@"Did pick audio track: %@",mediaItemCollection);
@@ -96,13 +98,86 @@
     // Test player
     NSLog(@"url of click trac: %@",url.absoluteString);
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    self.clickTrackAudio = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL:url.absoluteString];
+        if (mediaItemCollection) {
+            if (! item) {
+                return;
+            }
+            AVURLAsset *songAsset = [AVURLAsset URLAssetWithURL:url options:nil];
+            NSLog (@"Core Audio %@ directly open library URL %@",
+                   coreAudioCanOpenURL (url) ? @"can" : @"cannot",
+                   url);
+            
+            NSLog (@"compatible presets for songAsset: %@",
+                   [AVAssetExportSession exportPresetsCompatibleWithAsset:songAsset]);
+            /* approach 1: export just the song itself
+             */
+            AVAssetExportSession *exporter = [[AVAssetExportSession alloc]
+                                              initWithAsset: songAsset
+                                              presetName: AVAssetExportPresetAppleM4A];
+            NSLog (@"created exporter. supportedFileTypes: %@", exporter.supportedFileTypes);
+            //exporter.outputFileType = @".m4a";
+            [exporter setOutputFileType:@"com.apple.m4a-audio"];
+            // exporter.outputFileType=@"com.apple.quicktime-movie";
+            NSArray *docpaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *tempPath = [docpaths objectAtIndex:0];
+            NSString *exportFile = [tempPath stringByAppendingPathComponent: @"exported.m4a"];
+            
+            myDeleteFile(exportFile);
+            NSURL *exportURL = [NSURL fileURLWithPath:exportFile];
+            exporter.outputURL = exportURL;
+            // do the export
+            [exporter exportAsynchronouslyWithCompletionHandler:^{
+                AVAssetExportSessionStatus exportStatus = exporter.status;
+                switch (exportStatus) {
+                    case AVAssetExportSessionStatusFailed: {
+                        // log error to text view
+                        NSError *exportError = exporter.error;
+                        NSLog (@"AVAssetExportSessionStatusFailed: %@", exportError);
+                        //errorView.text = exportError ? [exportError description] : @"Unknown failure";
+                       // errorView.hidden = NO;
+                        break;
+                    }
+                    case AVAssetExportSessionStatusCompleted: {
+                        NSLog (@"AVAssetExportSessionStatusCompleted");
+                       // fileNameLabel.text = [exporter.outputURL lastPathComponent];
+                        // set up AVPlayer
+                        //[self setUpAVPlayerForURL: exporter.outputURL];
+                       // [self enablePCMConversionIfCoreAudioCanOpenURL: exporter.outputURL];
+                        break;
+                    }
+                    case AVAssetExportSessionStatusUnknown: { NSLog (@"AVAssetExportSessionStatusUnknown"); break;}
+                    case AVAssetExportSessionStatusExporting: { NSLog (@"AVAssetExportSessionStatusExporting"); break;}
+                    case AVAssetExportSessionStatusCancelled: { NSLog (@"AVAssetExportSessionStatusCancelled"); break;}
+                    case AVAssetExportSessionStatusWaiting: { NSLog (@"AVAssetExportSessionStatusWaiting"); break;}
+                    default: { NSLog (@"didn't get export status"); break;}
+                }
+            }];
+            self.clickTrackAudio = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL: [exportURL absoluteString]];
+        }
 
-}
+    }
+
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker {
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark core audio test
+
+BOOL coreAudioCanOpenURL (NSURL* url){
+
+    OSStatus openErr = noErr;
+    AudioFileID audioFile = NULL;
+    openErr = AudioFileOpenURL((__bridge CFURLRef) url,
+                               kAudioFileReadPermission ,
+                               0,
+                               &audioFile);
+    if (audioFile) {
+        AudioFileClose (audioFile);
+    }
+    return openErr ? NO : YES;
+}
+
 
 #pragma mark - IBAction Methods
 
@@ -117,11 +192,32 @@
     }
 }
 
+void myDeleteFile (NSString* path){
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSError *deleteErr = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&deleteErr];
+        if (deleteErr) {
+            NSLog (@"Can't delete %@: %@", path, deleteErr);
+        }
+    }
+}
+    
 - (IBAction)confirmTrack:(id)sender {
     RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
     recordingVC.clickTrack = self.clickTrackAudio;
     NSLog(@"Click track stored as %@",recordingVC.clickTrack);
-    [self.tabBarController setSelectedIndex:2]; // move to record page
+    NSLog(@"Checccccccccccccccccccccccckkkkk");
+    //Start uploading the clickTrack
+   NSString *sessionId =  self.cachedSessionClickTrackVC.uid;
+   NSString *hostId = self.cachedSessionClickTrackVC.hostUid;
+   [self.clickTrackAudio uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success) {
+       NSLog(@"!!!!!!!!!!!!!!!");
+       if (success){
+           NSLog(@"Successfully upload the clicktrack");
+           [self.tabBarController setSelectedIndex:2]; // move to record page
+       }
+   }];
     
 }
 
