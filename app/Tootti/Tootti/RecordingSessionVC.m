@@ -64,17 +64,22 @@
                 NSLog(@"Error fetching document: %@", error);
                 return;
               }
-              NSLog(@"Current data: %@", snapshot.data);
+            NSLog(@"Current data: %@", snapshot.data);
             NSDictionary *ds = snapshot.data;
             NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
             NSLog(@"%@", [ds class]);
             NSLog(@"%@", [ds[@"hostStartRecording"] class]);
-            if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES){
-                // Start recording
-                [self recordAudio: nil];
-                NSLog(@"Host started recording");
-                //TODO: Update the recording for host and guest
+            NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+            // Handle live recording for guest user
+            if(![currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]) {
+                if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES) {
+                    [self startRecording: nil];
+                    NSLog(@"Host started recording");
+                } else {
+                    [self endRecording:nil];
+                }
             }
+
             }];
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
@@ -241,66 +246,91 @@
 // Button action methods
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording pressed");
-    NSError *error;
     
+    // Stop current playback
     if(self.audioPlayer.isPlaying) {
         [self.audioPlayer stop];
     }
     
-    // Start Recording
-    if (!self.audioRecorder.recording) {
-        [self startWaveform];
-        // Activate AVAudioSession
-        AVAudioSession *session = [AVAudioSession sharedInstance];
-        BOOL success = [session setActive:YES error:&error];
-        if (!success) {
-            NSLog(@"AVAudioSession error activating: %@",error);
-        }
-        else {
-             NSLog(@"AudioSession active");
-        }
-        // Setup recording
-        [self prepareForNewRecording];
-        // Start recording
-        BOOL result = [self.audioRecorder record];
-        if(result) {
-            NSLog(@"Audio recordring!");
-            self.clickTrackPlayer.currentTime = 0;
-            [self.clickTrackPlayer play];
-        }
-        // Update UI
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-        [self startTimer];
-        //Waveform Start
-        //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
+    // Handle recording action
+    if(!self.audioRecorder.recording) {
+        [self startRecording:sender];
+    } else { // Stop Recording
+        [self endRecording:sender];
     }
-    // Stop Recording
+}
+
+-(void)startRecording:(UIButton *)sender {
+    NSError *error;
+    [self startWaveform];
+    // Activate AVAudioSession
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    BOOL success = [session setActive:YES error:&error];
+    if (!success) {
+        NSLog(@"AVAudioSession error activating: %@",error);
+        return;
+    }
     else {
-        [self.audioRecorder stop];
-        [self.clickTrackPlayer stop];
-        
-        // Deactivate audio session
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-        BOOL success = [audioSession setActive:NO error:&error];
-        if (!success) {
-            NSLog(@"AVAudioSession error deactivating: %@",error);
-        } else {
-             NSLog(@"AudioSession inactive");
+         NSLog(@"AudioSession active");
+    }
+    // Setup recording
+    [self prepareForNewRecording];
+    // Start recording
+    BOOL result = [self.audioRecorder record];
+    if(result) {
+        NSLog(@"Audio recordring!");
+        self.clickTrackPlayer.currentTime = 0;
+        [self.clickTrackPlayer play];
+        //Update Firestore hostStartRecording field
+        NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+        if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
+            [self.cachedSessionRecordingVC sessionRecordingStatusUpdate:TRUE];
         }
-        
-        // Update UI
+    } else {
+        NSLog(@"Recording failed to start");
+        return;
+    }
+    // Update UI
+    if(sender) {
+        [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
+    }
+    [self startTimer];
+    
+}
+-(void)endRecording:(UIButton *)sender {
+    NSError *error;
+    if(self.audioRecorder.isRecording == NO){
+        return;
+    }
+    [self.audioRecorder stop];
+    [self.clickTrackPlayer stop];
+    // Deactivate audio session
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    BOOL success = [audioSession setActive:NO error:&error];
+    if (!success) {
+        NSLog(@"AVAudioSession error deactivating: %@",error);
+    } else {
+         NSLog(@"AudioSession inactive");
+    }
+    //Update Firestore hostStartRecording field
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
+        [self.cachedSessionRecordingVC sessionRecordingStatusUpdate:FALSE];
+    }
+    // Update UI
+    if(sender) {
         [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-        [self resetTimer];
-        //Stop Waveform
+    }
+    [self resetTimer];
+    //Stop Waveform
 //        if ([self.waveformTimer isValid]){
 //            NSLog(@"###################################");
 //            [self.waveformTimer invalidate];
 //            self.waveformTimer = nil;
 //        }
-        [self resetWaveform];
-        //Show alert to name recording or cancel
-        [self showAlertForRecordingName];
-    }
+    [self resetWaveform];
+    //Show alert to name recording or cancel
+    [self showAlertForRecordingName];
 }
 
 -(void) updateLocalRecordingsWith:(Audio *)newRecordingAudio {

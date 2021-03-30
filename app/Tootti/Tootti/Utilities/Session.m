@@ -63,13 +63,14 @@
     return [AVAudioPlayer alloc];
 }
 - (void) sessionRecordingStatusUpdate: (BOOL)status {
-    [[[self.db collectionWithPath:@"session"] documentWithPath: self.uid]  setData:@{
+    self.db = [FIRFirestore firestore];
+    [[[self.db collectionWithPath:@"session"] documentWithPath: self.uid]  updateData:@{
         @"hostStartRecording": @(status)
     } completion:^(NSError * _Nullable error) {
         if (error != nil) {
-          NSLog(@"Error writing document: %@", error);
+          NSLog(@"HostStartRecording: Error updating field: %@", error);
         } else {
-          NSLog(@"Document successfully written!");
+          NSLog(@"HostStartRecording: Field successfully updated!");
         }
       }];
     return;
