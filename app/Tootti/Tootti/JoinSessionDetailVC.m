@@ -62,7 +62,18 @@ ClickTrackSessionVC *vc;
               FIRDocumentSnapshot *document  = snapshot.documents[0];
               NSLog(@"%@ => %@", document.documentID, document.data);
                 //Will replace the Audio file
-              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: [[Audio alloc] init] recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: [[Audio alloc] init] hostStartRecording: NO];
+              //Check if the clickTrack is empty
+                  Audio *clickTrackAudio = [[Audio alloc] init];
+                  Audio *mergedAudio =  [[Audio alloc] init];
+                  if (document.data[@"clickTrackRef"]){
+                      NSURL *ckURL = [ NSURL URLWithString: document.data[@"clickTrackRef"]];
+                      clickTrackAudio = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL: ckURL];
+                  }
+                  if (document.data[@"finalMergedResultRef"]){
+                      NSURL *mgURL = [ NSURL URLWithString: document.data[@"finalMergedResultRef"]];
+                      mergedAudio = [[Audio alloc] initWithRemoteAudioName:@"merged-song.wav" audioURL: mgURL];
+                  }
+              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: clickTrackAudio recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: mergedAudio hostStartRecording: NO];
               self.session = sn;
               //NSDictionary *dict = [NSDictionary dictionaryWithObject:sn forKey:@"currentSession"];
               //Sending the notification

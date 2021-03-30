@@ -41,7 +41,7 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 
     //LISTENING ON FIREBASE
-    //test start
+    //Check the Session click trac
     NSString *sessionId = self.cachedSessionHomeVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
@@ -54,6 +54,24 @@
               }
               NSLog(@"Current data: %@", snapshot.data);
               NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+            NSLog(@"%@",snapshot.data[@"clickTrackRef"]);
+            NSLog(@"%@", self.cachedSessionHomeVC.clickTrack.audioURL);
+            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionHomeVC.clickTrack.audioURL] ){
+                UIAlertController * alert = [UIAlertController
+                                alertControllerWithTitle:@"Information Updates"
+                                                 message:@"A new click track is added"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                        //update the session
+                    NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
+                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL:clURL];
+                    self.cachedSessionHomeVC.clickTrack = newClickTrac;
+                    self.cachedSessionHomeVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
+                    [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionHomeVC] ;
+                    }];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
             }];
     } else {
         // Lock other tabs
