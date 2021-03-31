@@ -18,7 +18,6 @@
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
-@property (nonatomic, retain) AVAudioPlayer *clickTrackPlayer;
 @property (nonatomic, retain) NSTimer *recordTimer;
 @property (nonatomic) int timerMinutes;
 @property (nonatomic) int timerSeconds;
@@ -50,7 +49,10 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setupSessionStatus];
-    [self updateSessionData];
+    // Override click track //TODO: in the future, do we need to disable this?
+    if(![self.cachedSessionRecordingVC.clickTrack isEqual:self.clickTrack] && self.cachedSessionRecordingVC.clickTrack!=nil) {
+        self.clickTrack = self.cachedSessionRecordingVC.clickTrack;
+    }
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
     //LISTENING ON FIREBASE
     //test start
@@ -79,19 +81,28 @@
                     [self endRecording:nil];
                 }
             }
-
-            }];
+            // Update click track data if different from current cached session
+//            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionRecordingVC.clickTrack.audioURL] ){
+//                UIAlertController * alert = [UIAlertController
+//                                alertControllerWithTitle:@"Information Updates"
+//                                                 message:@"A new click track is added"
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+//                    NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
+//                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL:clURL];
+//                    self.cachedSessionRecordingVC.clickTrack = newClickTrac;
+//                    self.cachedSessionRecordingVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
+//                    //TODO: Already doing this in ClicktracVC. In the future, we should upate one single session instance for all VCs i the application
+//                    [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionRecordingVC];
+//                    // Update local variables
+//                    self.clickTrack = self.cachedSessionRecordingVC.clickTrack; // TODO: Handle the closing of AVAudiosession etc to avoid unexpected errors
+//                }];
+//                [alert addAction:okAction];
+//                [self presentViewController:alert animated:YES completion:nil];
+//            }
+    }];
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
-    }
-    // test ends
-
-}
-
--(void)updateSessionData {
-    if (self.clickTrack != nil) {
-        self.clickTrackPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:self.clickTrack.audioURL] error:nil];
-        [self.clickTrackPlayer setDelegate:self];
     }
 }
 
@@ -115,7 +126,6 @@
         }
     }
 }
-
 
 - (void)setupSessionStatus {
     self.cachedSessionRecordingVC = [[ApplicationState sharedInstance] currentSession];
@@ -279,8 +289,8 @@
     BOOL result = [self.audioRecorder record];
     if(result) {
         NSLog(@"Audio recordring!");
-        self.clickTrackPlayer.currentTime = 0;
-        [self.clickTrackPlayer play];
+        self.clickTrack.player.currentTime = 0;
+        [self.clickTrack playAudio];
         //Update Firestore hostStartRecording field
         NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
         if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
@@ -291,9 +301,7 @@
         return;
     }
     // Update UI
-    if(sender) {
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-    }
+    [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
     [self startTimer];
     
 }
@@ -303,7 +311,7 @@
         return;
     }
     [self.audioRecorder stop];
-    [self.clickTrackPlayer stop];
+    [self.clickTrack stopAudio];
     // Deactivate audio session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     BOOL success = [audioSession setActive:NO error:&error];
@@ -318,9 +326,7 @@
         [self.cachedSessionRecordingVC sessionRecordingStatusUpdate:FALSE];
     }
     // Update UI
-    if(sender) {
-        [sender setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-    }
+    [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
     [self resetTimer];
     //Stop Waveform
 //        if ([self.waveformTimer isValid]){

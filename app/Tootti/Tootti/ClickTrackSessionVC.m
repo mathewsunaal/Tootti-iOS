@@ -18,6 +18,7 @@
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
 @property (nonatomic,retain) AVAudioPlayer *audioPlayer;
 @property (nonatomic,retain) NSURL *clickTrackURL; // need to connect this to utilities at some point, or leave as URL for optimization
+@property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic, retain) Session *cachedSessionClickTrackVC;
 
 @end
@@ -30,25 +31,54 @@
     // Do any additional setup after loading the view.
     self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
     [self setupViews];
-    [self setupSessionStatus];
+    self.db =  [FIRFirestore firestore];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    [self setupSessionStatus];
     NSString *sessionId = self.cachedSessionClickTrackVC.uid;
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
         [self updateTabStatus:YES];
-        //TODO: Add click track listening here
-//        [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
-//            addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-//              if (snapshot == nil) {
-//                NSLog(@"Error fetching document: %@", error);
-//                return;
-//              }
-//              NSLog(@"Current data: %@", snapshot.data);
-//              NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
-//            }];
+        [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
+            addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+              if (snapshot == nil) {
+                NSLog(@"Error fetching document: %@", error);
+                return;
+              }
+              NSLog(@"Current data: %@", snapshot.data);
+              NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+            NSLog(@"%@",snapshot.data[@"clickTrackRef"]);
+            NSLog(@"%@", self.cachedSessionClickTrackVC.clickTrack.audioURL);
+            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
+                UIAlertController * alert = [UIAlertController
+                                alertControllerWithTitle:@"Information Updates"
+                                                 message:@"A new click track is added"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    //update the session
+                    //TODO: START PROGRESS VIEW HERE
+                    NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
+                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL:clURL];
+                    self.cachedSessionClickTrackVC.clickTrack = newClickTrac;
+                    self.cachedSessionClickTrackVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
+                    [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionClickTrackVC] ;
+                    //Update local player and clicktrack object
+                    self.audioPlayer = self.cachedSessionClickTrackVC.clickTrack.player;
+                    self.clickTrack = self.cachedSessionClickTrackVC.clickTrack;
+                    // Pass clicktrack to recording session
+                    RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
+                    recordingVC.clickTrack = self.clickTrack;
+                    NSLog(@"Click track stored as %@",recordingVC.clickTrack);
+                    //TODO: END PROGRESS VIEW HERE
+                    [self.tabBarController setSelectedIndex:2]; // move to record page
+                    }];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
     } else {
         // Lock other tabs
         [self updateTabStatus:NO];
@@ -86,8 +116,12 @@
         session_title = [NSString stringWithFormat:@"%@", self.cachedSessionClickTrackVC.sessionName];
         if ([currentUserId isEqual:self.cachedSessionClickTrackVC.hostUid]){
             user_type = [NSString stringWithFormat:@"Host user"];
+            [self.uploadTrackButton setEnabled:YES];
+            [self.uploadTrackButton setHidden:NO];
         } else {
             user_type = [NSString stringWithFormat:@"Guest user"];
+            [self.uploadTrackButton setEnabled:NO];
+            [self.uploadTrackButton setHidden:YES];
         }
     }
     // Update labels
@@ -183,7 +217,7 @@
                     default: { NSLog (@"didn't get export status"); break;}
                 }
             }];
-            self.clickTrackAudio = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL: [exportURL absoluteString]];
+            self.clickTrack = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL: [exportURL absoluteString]];
         }
 
     }
@@ -209,6 +243,16 @@ BOOL coreAudioCanOpenURL (NSURL* url){
     return openErr ? NO : YES;
 }
 
+void myDeleteFile (NSString* path){
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSError *deleteErr = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&deleteErr];
+        if (deleteErr) {
+            NSLog (@"Can't delete %@: %@", path, deleteErr);
+        }
+    }
+}
 
 #pragma mark - IBAction Methods
 
@@ -222,34 +266,26 @@ BOOL coreAudioCanOpenURL (NSURL* url){
         [self.playTrackButton setTitle:@"Stop playback" forState:UIControlStateNormal];
     }
 }
-
-void myDeleteFile (NSString* path){
-
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSError *deleteErr = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:path error:&deleteErr];
-        if (deleteErr) {
-            NSLog (@"Can't delete %@: %@", path, deleteErr);
-        }
-    }
-}
     
 - (IBAction)confirmTrack:(id)sender {
-    RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
-    //TODO: access clicktrack from session
-    recordingVC.clickTrack = self.cachedSessionClickTrackVC.clickTrack;
-    NSLog(@"Click track stored as %@",recordingVC.clickTrack);
     NSLog(@"Checccccccccccccccccccccccckkkkk");
     //Start uploading the clickTrack
-   NSString *sessionId =  self.cachedSessionClickTrackVC.uid;
-   NSString *hostId = self.cachedSessionClickTrackVC.hostUid;
-   [self.clickTrackAudio uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *downloadURL) {
-       NSLog(@"!!!!!!!!!!!!!!!");
-       if (success){
-           NSLog(@"Successfully upload the clicktrack");
-           [self.tabBarController setSelectedIndex:2]; // move to record page
-       }
-   }];
+    //TODO: START PROGRESS VIEW HERE
+    NSString *sessionId =  self.cachedSessionClickTrackVC.uid;
+    NSString *hostId = self.cachedSessionClickTrackVC.hostUid;
+    NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    // TODO: Host only allowed to share and upload click tracks now; this may change with "OFFLINE" mode
+    if([currentUserId isEqual:hostId]) {
+        [self.clickTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *downloadURL) {
+           NSLog(@"!!!!!!!!!!!!!!!");
+           if (success){
+               NSLog(@"Successfully upload the clicktrack");
+           }
+        }];
+    } else {
+        //Just go to recording screen for guest
+        [self.tabBarController setSelectedIndex:2]; // move to record page
+    }
     
 }
 

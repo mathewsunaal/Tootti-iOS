@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ClickTrackSessionVC : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *uploadTrackButton;
-@property (nonatomic, retain) Audio *clickTrackAudio;
+@property (nonatomic, retain) Audio *clickTrack;
 @property (weak, nonatomic) IBOutlet UIButton *playTrackButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmTrackButton;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
