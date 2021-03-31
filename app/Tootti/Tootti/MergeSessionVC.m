@@ -312,10 +312,29 @@ Audio *_audio;
         if (success){
             NSString *sessionId =  self.cachedSessionMerged.uid;
             NSString *hostId = self.cachedSessionMerged.hostUid;
-            [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success) {
+            [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
                 NSLog(@"!!!!!!!!!!!!!!!");
                 if (success){
-                    NSLog(@"Successfully upload the clicktrack");
+                    UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
+                                                                                    message:@"The final merged track is uploaded and ready to share. Tap Share to copy the download link!"
+                                                                             preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* shareButton = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault
+                    handler:^(UIAlertAction * action) {
+                        // Copy link to clipboard
+                        NSLog(@"Share this final merged track at: %@",finalDownloadURL.absoluteString);
+                        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+                        pasteBoard.string = finalDownloadURL.absoluteString;
+                                            
+                    }];
+                    UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                    handler:^(UIAlertAction * action) {
+                        //Perform any clear or reset operations for session
+                        [self.mergeTableView reloadData];
+                    }];
+                    [alertVC addAction:shareButton];
+                    [alertVC addAction:cancelButton];
+                    [self presentViewController:alertVC animated:YES completion:nil];
+                    
                 }
             }];
         }

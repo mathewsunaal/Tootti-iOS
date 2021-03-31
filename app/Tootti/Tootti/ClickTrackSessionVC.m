@@ -125,6 +125,7 @@
     NSURL *url = [item  valueForProperty:MPMediaItemPropertyAssetURL];
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
     
+    //TODO: Update to have clicktrack from session 
     // Test player
     NSLog(@"url of click trac: %@",url.absoluteString);
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
@@ -235,13 +236,14 @@ void myDeleteFile (NSString* path){
     
 - (IBAction)confirmTrack:(id)sender {
     RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
-    recordingVC.clickTrack = self.clickTrackAudio;
+    //TODO: access clicktrack from session
+    recordingVC.clickTrack = self.cachedSessionClickTrackVC.clickTrack;
     NSLog(@"Click track stored as %@",recordingVC.clickTrack);
     NSLog(@"Checccccccccccccccccccccccckkkkk");
     //Start uploading the clickTrack
    NSString *sessionId =  self.cachedSessionClickTrackVC.uid;
    NSString *hostId = self.cachedSessionClickTrackVC.hostUid;
-   [self.clickTrackAudio uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success) {
+   [self.clickTrackAudio uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *downloadURL) {
        NSLog(@"!!!!!!!!!!!!!!!");
        if (success){
            NSLog(@"Successfully upload the clicktrack");

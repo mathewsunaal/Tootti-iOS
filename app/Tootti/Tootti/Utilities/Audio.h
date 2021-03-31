@@ -35,7 +35,7 @@
 - (void) uploadTypedAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
                 audioType: (NSString *) audioType
-               completionBlock: (void (^)(BOOL success))completion;
+               completionBlock: (void (^)(BOOL success, NSURL *finalDownloadURL))completion;
 -(void) deleteAudioTrack: (NSString *) userUid
               sessionUid: (NSString *) sessionUid
          guestPlayerList: (NSArray *) guestPlayerList
