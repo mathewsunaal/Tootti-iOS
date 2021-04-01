@@ -132,19 +132,20 @@
     NSString *session_title= [NSString stringWithFormat:@"No session active"];
     NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionRecordingVC.hostUid);
     if (self.cachedSessionRecordingVC != 0){
         session_title = [NSString stringWithFormat:@"%@", self.cachedSessionRecordingVC.sessionName];
         if ([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
-            user_type = [NSString stringWithFormat:@"Host user"];
+            user_type = [NSString stringWithFormat:@"(Host)"];
         } else {
-            user_type = [NSString stringWithFormat:@"Guest user"];
+            user_type = [NSString stringWithFormat:@"(Guest)"];
         }
     }
     // Update labels
     [self.sessionCodeLabel setText:session_title];
-    [self.userTypeLabel setText:user_type];
+    [self.userTypeLabel setText:[NSString stringWithFormat:@"%@ %@",username,user_type]];
     [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
@@ -291,6 +292,7 @@
         NSLog(@"Audio recordring!");
         self.clickTrack.player.currentTime = 0;
         [self.clickTrack playAudio];
+        [self startTimer];
         //Update Firestore hostStartRecording field
         NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
         if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
@@ -302,11 +304,11 @@
     }
     // Update UI
     [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-    [self startTimer];
     
 }
 -(void)endRecording:(UIButton *)sender {
     NSError *error;
+    [self resetTimer];
     if(self.audioRecorder.isRecording == NO){
         return;
     }
@@ -327,7 +329,6 @@
     }
     // Update UI
     [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-    [self resetTimer];
     //Stop Waveform
 //        if ([self.waveformTimer isValid]){
 //            NSLog(@"###################################");

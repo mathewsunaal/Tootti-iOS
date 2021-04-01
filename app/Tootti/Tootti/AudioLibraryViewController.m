@@ -90,14 +90,14 @@
     if (self.cachedSessionLibraryVC != 0){
         session_title = [NSString stringWithFormat:@"%@", self.cachedSessionLibraryVC.sessionName];
         if ([currentUserId isEqual:self.cachedSessionLibraryVC.hostUid]){
-            user_type = [NSString stringWithFormat:@"Host user"];
+            user_type = [NSString stringWithFormat:@"(Host)"];
         } else {
-            user_type = [NSString stringWithFormat:@"Guest user"];
+            user_type = [NSString stringWithFormat:@"(Guest)"];
         }
     }
     // Update labels
     [self.sessionCodeLabel setText:session_title];
-    [self.userTypeLabel setText:user_type];
+    [self.userTypeLabel setText:[NSString stringWithFormat:@"%@ %@",username,user_type]];
     [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }

@@ -102,19 +102,20 @@ Audio *_audio;
     NSString *session_title= [NSString stringWithFormat:@"No session active"];
     NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionMerged.hostUid);
     if (self.cachedSessionMerged != 0){
         session_title = [NSString stringWithFormat:@"%@", self.cachedSessionMerged.sessionName];
         if ([currentUserId isEqual:self.cachedSessionMerged.hostUid]){
-            user_type = [NSString stringWithFormat:@"Host user"];
+            user_type = [NSString stringWithFormat:@"(Host)"];
         } else {
-            user_type = [NSString stringWithFormat:@"Guest user"];
+            user_type = [NSString stringWithFormat:@"(Guest)"];
         }
     }
     // Update labels
     [self.sessionCodeLabel setText:session_title];
-    [self.userTypeLabel setText:user_type];
+    [self.userTypeLabel setText:[NSString stringWithFormat:@"%@ %@",username,user_type]];
     [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }

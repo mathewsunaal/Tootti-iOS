@@ -26,7 +26,7 @@
 @implementation ClickTrackSessionVC
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [super viewDidLoad];    
     NSLog(@"from here %@", self.cachedSession);
     // Do any additional setup after loading the view.
     self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
@@ -75,7 +75,6 @@
                     recordingVC.clickTrack = self.clickTrack;
                     NSLog(@"Click track stored as %@",recordingVC.clickTrack);
                     //TODO: END PROGRESS VIEW HERE
-                    [self.tabBarController setSelectedIndex:2]; // move to record page
                     }];
                 [alert addAction:okAction];
                 [self presentViewController:alert animated:YES completion:nil];
@@ -112,23 +111,26 @@
     NSString *session_title= [NSString stringWithFormat:@"No session active"];
     NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionClickTrackVC.hostUid);
     if (self.cachedSessionClickTrackVC != 0){
         session_title = [NSString stringWithFormat:@"%@", self.cachedSessionClickTrackVC.sessionName];
         if ([currentUserId isEqual:self.cachedSessionClickTrackVC.hostUid]){
-            user_type = [NSString stringWithFormat:@"Host user"];
+            user_type = [NSString stringWithFormat:@"(Host)"];
             [self.uploadTrackButton setEnabled:YES];
             [self.uploadTrackButton setHidden:NO];
         } else {
-            user_type = [NSString stringWithFormat:@"Guest user"];
+            user_type = [NSString stringWithFormat:@"(Guest)"];
             [self.uploadTrackButton setEnabled:NO];
             [self.uploadTrackButton setHidden:YES];
+            //TODO: Need to load clicktrack from session in Firebase, consult with Han
+            //self.clickTrack = self.cachedSessionClickTrackVC.clickTrack;
         }
     }
     // Update labels
     [self.sessionCodeLabel setText:session_title];
-    [self.userTypeLabel setText:user_type];
+    [self.userTypeLabel setText:[NSString stringWithFormat:@"%@ %@",username,user_type]];
     [self.sessionCodeLabel setTextColor:LOGO_GOLDEN_YELLOW];
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
@@ -283,12 +285,14 @@ void myDeleteFile (NSString* path){
            NSLog(@"!!!!!!!!!!!!!!!");
            if (success){
                NSLog(@"Successfully upload the clicktrack");
+           } else {
+               NSLog(@"Failed to upload the clicktrack");
            }
         }];
     } else {
-        //Just go to recording screen for guest
-        [self.tabBarController setSelectedIndex:2]; // move to record page
+        //TODO: Handle for guest
     }
+    [self.tabBarController setSelectedIndex:2]; // move to record page
     
 }
 
