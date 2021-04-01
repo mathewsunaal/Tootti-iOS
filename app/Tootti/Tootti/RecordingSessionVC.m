@@ -13,8 +13,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Session.h"
 #import "ApplicationState.h"
+#import "UserStatusCell.h"
 
-@interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, retain) AVAudioRecorder *audioRecorder;
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
@@ -30,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
+@property (weak, nonatomic) IBOutlet UITableView *usersTableView;
 
 @end
 @implementation RecordingSessionVC
@@ -40,6 +42,8 @@
     [super viewDidLoad];
     self.db =  [FIRFirestore firestore];
     // Do any additional setup after loading the view.
+    self.usersTableView.delegate = self;
+    self.usersTableView.dataSource = self;
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
@@ -254,7 +258,7 @@
     //cachedSessionRecordingVC = [dict valueForKey:@"currentSession"];
 }
 */
-// Button action methods
+#pragma  mark - Button methods
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording pressed");
     
@@ -271,6 +275,22 @@
     }
 }
 
+
+- (IBAction)updateUsersStatus:(UISwitch *)sender {
+    if(sender.on) {
+        NSLog(@"User status changed to READY");
+        [self.statusLabel setText:@"Ready"];
+        //TODO: Update user status in firebase session
+        
+    } else {
+        NSLog(@"User status changed to STANDBY");
+        [self.statusLabel setText:@"Standby"];
+        //TODO: Update user status in firebase session
+        
+    }
+}
+
+#pragma mark - Recording Methods
 -(void)startRecording:(UIButton *)sender {
     NSError *error;
     [self startWaveform];
@@ -478,4 +498,26 @@
     [self.wv addAveragePoint:aa andPeakPoint:pp];
 #endif
 }
+
+
+#pragma mark - UITableView Delegate methods
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    UserStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userStatusCell" forIndexPath:indexPath];
+    
+    //TODO: Return username of all active users from local array that is updated from Firebase whenever there is a change of status
+    //[cell.usernameLabel setText:@"insert username"]; 
+
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //TODO: Return users where user status is "ACTIVE" from Firebase, maybe we store this locally and referesh whenever there is a change?
+    return 5;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 @end

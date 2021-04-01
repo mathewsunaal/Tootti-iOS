@@ -33,6 +33,7 @@
 		4DB5B18E2602D25700583C54 /* AudioLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */; };
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
+		4DC50FE626162DCD0098C52E /* UserStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC50FE526162DCD0098C52E /* UserStatusCell.m */; };
 		4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423122603BD5A0027DCDC /* AudioCell.m */; };
 		4DD423172603F4F30027DCDC /* MergeAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423162603F4F30027DCDC /* MergeAudioCell.m */; };
 		4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */; };
@@ -91,6 +92,8 @@
 		4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MergeSessionVC.m; sourceTree = "<group>"; };
 		4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickTrackSessionVC.h; sourceTree = "<group>"; };
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
+		4DC50FE426162DCD0098C52E /* UserStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserStatusCell.h; sourceTree = "<group>"; };
+		4DC50FE526162DCD0098C52E /* UserStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserStatusCell.m; sourceTree = "<group>"; };
 		4DD423112603BD5A0027DCDC /* AudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioCell.h; sourceTree = "<group>"; };
 		4DD423122603BD5A0027DCDC /* AudioCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioCell.m; sourceTree = "<group>"; };
 		4DD423152603F4F30027DCDC /* MergeAudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeAudioCell.h; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				4D86E8BA25F2C6EE00A70623 /* Utilities */,
 				4D8B0120260B8891006659AC /* ShareLinkVC.h */,
 				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
+				4DC50FE426162DCD0098C52E /* UserStatusCell.h */,
+				4DC50FE526162DCD0098C52E /* UserStatusCell.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -412,6 +417,7 @@
 				4D86E8C625F2C6EE00A70623 /* User.m in Sources */,
 				4D925A5D25EC68E700907574 /* CreateSessionDetailVC.m in Sources */,
 				4D2D53FE260E3F6700DA7E32 /* Merge.m in Sources */,
+				4DC50FE626162DCD0098C52E /* UserStatusCell.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
 				52671A0725FDF850001E9856 /* WaveView.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
