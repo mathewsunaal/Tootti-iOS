@@ -12,6 +12,7 @@
 //Constructor
 - (instancetype) initWithUid: (NSString *)uid
                        email: (NSString *)email
+                    username: (NSString *)username
                   instrument: (NSString *)instrument
                 joinedSessions:(NSArray *)joinedSessions
               allMergedSongs: (NSArray *) allMergedSongs {
@@ -19,6 +20,7 @@
     if (self) {
         _uid = uid;
         _email = email;
+        _username = username;
         _instrument = instrument;
         _joinedSessions = joinedSessions;
         _allMergedSongs = allMergedSongs;

@@ -44,7 +44,10 @@
     [track playAudio];
 }
 
--(BOOL)performMerge: (void (^)(BOOL success))completionBlock{
+-(BOOL)performMerge: (void (^)(BOOL success))completionBlock
+            hostUid: (NSString *) hostUid
+        hostUsername: (NSString *) hostUsername
+{
     NSLog(@"%@",self.audioTracks);
     
     // 1) Create composition
@@ -87,7 +90,7 @@
     [_assetExport exportAsynchronouslyWithCompletionHandler:
     ^(void ) {
         NSLog(@"Final merged track succesfully saved at: %@",exportURL.absoluteString);
-        self.mergedTrack = [[Audio alloc] initWithAudioName:@"mergedtrack" audioURL:exportURL.absoluteString];
+        self.mergedTrack = [[Audio alloc] initWithAudioName:@"mergedtrack" performerUid:hostUid performer:hostUsername audioURL:exportURL.absoluteString];
         //TODO: remove the play portion below once testing is complete
 //        if(![self.mergedTrack playAudio]) {
 //            NSLog(@"Failed to play!");

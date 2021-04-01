@@ -49,6 +49,9 @@ ClickTrackSessionVC *vc;
     self.db =  [FIRFirestore firestore];
     NSString *sessionName =[self.sessionCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     NSLog(@"123331231231231%@", sessionName);
+    NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+    NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSLog(@"123331231231231%@", performer);
     [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
         getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
           if (error != nil) {
@@ -67,11 +70,11 @@ ClickTrackSessionVC *vc;
                   Audio *mergedAudio =  [[Audio alloc] init];
                   if (document.data[@"clickTrackRef"]){
                       NSURL *ckURL = [ NSURL URLWithString: document.data[@"clickTrackRef"]];
-                      clickTrackAudio = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL: ckURL];
+                      clickTrackAudio = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" performerUid:performerUid performer:performer audioURL: ckURL];
                   }
                   if (document.data[@"finalMergedResultRef"]){
                       NSURL *mgURL = [ NSURL URLWithString: document.data[@"finalMergedResultRef"]];
-                      mergedAudio = [[Audio alloc] initWithRemoteAudioName:@"merged-song.wav" audioURL: mgURL];
+                      mergedAudio = [[Audio alloc] initWithRemoteAudioName:@"merged-song.wav" performerUid:performerUid  performer:performer  audioURL: mgURL];
                   }
               Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: clickTrackAudio recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: mergedAudio hostStartRecording: NO];
               self.session = sn;

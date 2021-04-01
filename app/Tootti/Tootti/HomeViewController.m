@@ -80,6 +80,8 @@ bool isUp= false;
         stringForKey:@"uid"];
     NSString *savedEmail = [[NSUserDefaults standardUserDefaults]
         stringForKey:@"email"];
+    NSString *savedUsername = [[NSUserDefaults standardUserDefaults]
+        stringForKey:@"username"];
     
     //Fetch all user information from database and initialize the user instance
     if ( savedUid != nil){
@@ -89,7 +91,7 @@ bool isUp= false;
             NSLog(@"Error getting documents: %@", error);
           } else {
               FIRDocumentSnapshot *document = snapshot.documents[0];
-              user = [[User alloc] initWithUid: document.documentID email: savedEmail instrument:document.data[@"instrument"] joinedSessions: document.data[@"joinedSessions"] allMergedSongs: document.data[@"allMergedSongs"]];
+              user = [[User alloc] initWithUid: document.documentID email: savedEmail username: savedUsername instrument:document.data[@"instrument"]  joinedSessions: document.data[@"joinedSessions"] allMergedSongs: document.data[@"allMergedSongs"]];
               [self performSegueWithIdentifier:@"loginUser" sender:self];
           }
         }];
@@ -162,12 +164,13 @@ bool isUp= false;
                   } else {
                       FIRDocumentSnapshot *document = snapshot.documents[0];
                       NSLog(@"%@ => %@", document.documentID, document.data);
-                      user = [[User alloc] initWithUid: document.documentID email: self.email instrument:document.data[@"instrument"] joinedSessions: document.data[@"joinedSessions"] allMergedSongs: document.data[@"allMergedSongs"]];
+                      user = [[User alloc] initWithUid: document.documentID email: self.email username: document.data[@"username"] instrument:document.data[@"instrument"] joinedSessions: document.data[@"joinedSessions"] allMergedSongs: document.data[@"allMergedSongs"]];
                       //Archive the user data
                       NSLog(@"%@", user);
                       //UserDefaults -> email, uid
                       [[NSUserDefaults standardUserDefaults] setObject:self.email forKey:@"email"];
                       [[NSUserDefaults standardUserDefaults] setObject:document.documentID forKey:@"uid"];
+                      [[NSUserDefaults standardUserDefaults] setObject:document.data[@"username"] forKey:@"username"];
                       [self performSegueWithIdentifier:@"loginUser" sender:self];
                       [self.errorMessage setHidden: TRUE];
                   }

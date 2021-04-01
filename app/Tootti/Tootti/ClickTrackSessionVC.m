@@ -61,7 +61,9 @@
                     //update the session
                     //TODO: START PROGRESS VIEW HERE
                     NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
-                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL:clURL];
+                    NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+                    NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" performerUid:performerUid performer:performer audioURL:clURL];
                     self.cachedSessionClickTrackVC.clickTrack = newClickTrac;
                     self.cachedSessionClickTrackVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
                     [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionClickTrackVC] ;
@@ -217,7 +219,9 @@
                     default: { NSLog (@"didn't get export status"); break;}
                 }
             }];
-            self.clickTrack = [[Audio alloc] initWithAudioName:@"click-trac-test" audioURL: [exportURL absoluteString]];
+            NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+            NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+            self.clickTrack = [[Audio alloc] initWithAudioName:@"click-trac-test" performerUid:performerUid performer:performer  audioURL: [exportURL absoluteString]];
         }
 
     }
@@ -268,7 +272,6 @@ void myDeleteFile (NSString* path){
 }
     
 - (IBAction)confirmTrack:(id)sender {
-    NSLog(@"Checccccccccccccccccccccccckkkkk");
     //Start uploading the clickTrack
     //TODO: START PROGRESS VIEW HERE
     NSString *sessionId =  self.cachedSessionClickTrackVC.uid;

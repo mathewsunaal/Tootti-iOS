@@ -84,6 +84,7 @@
     NSString *session_title= [NSString stringWithFormat:@"No session active"];
     NSString *user_type = [NSString stringWithFormat:@""];
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSLog(@"%@", currentUserId);
     NSLog(@"%@", self.cachedSessionLibraryVC.hostUid);
     if (self.cachedSessionLibraryVC != 0){
@@ -150,8 +151,11 @@
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]);
     NSString *userID = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSString *sessionID = self.cachedSessionLibraryVC.uid;
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+    NSLog(@"112111222222222209878932642364782634876234876238746");
+    NSLog(@"%@", username);
     for(Audio *track in self.selectedRecordings){
-        [track uploadAudioSound: userID sessionUid: sessionID];
+        [track uploadAudioSound: userID sessionUid: sessionID username: username];
     }
     
     //Navigate to merge tracks now

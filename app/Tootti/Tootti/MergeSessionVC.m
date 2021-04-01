@@ -175,7 +175,9 @@ Audio *_audio;
 
 
 - (void) drawWaveForm:(NSString *) audioURL{
-    _audio = [[Audio alloc] initWithAudioName:@"THISSONG" audioURL:audioURL];
+    NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+    NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    _audio = [[Audio alloc] initWithAudioName:@"THISSONG" performerUid: performerUid performer:performer audioURL:audioURL];
     NSArray *samplePoints = [_audio convertAVToArr];
     NSURL *playUrl = [NSURL URLWithString:audioURL];
     _sliderView = [[MOAudioSliderView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 85)
@@ -240,7 +242,6 @@ Audio *_audio;
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Reresh merge tracks");
     NSLog(@"%@",self.cachedSessionMerged.uid );
-    FIRStorage *storage = [FIRStorage storage];
     //TODO: for now, we are clearing all audio tracks in merge
     [self.audioTracks removeAllObjects];
     [self.selectedTracks removeAllObjects];
@@ -255,28 +256,20 @@ Audio *_audio;
           self.cachedSessionMerged = sn ;
           [[ApplicationState sharedInstance] setCurrentSession:sn] ;
           for (int i=0; i < [ sn.guestPlayerList count]; i++){
-              NSString *fireRefURL = (NSString *) sn.guestPlayerList[i] ;
+              NSString *fireRefURL = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"url"];
               NSLog(@"fireRefURL: %@", fireRefURL);
-              FIRStorageReference *gsReference = [storage referenceForURL:fireRefURL];
-              [gsReference downloadURLWithCompletion:^(NSURL *URL, NSError *error){
-                if (error != nil) {
-                  // Handle any errors
-                    NSLog(@"%@", error.localizedDescription);
-                    NSLog(@"Something is worng!! download the data");
-                } else {
-                    NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
-                    NSString *currAudioName = [arr lastObject];
-                    NSString *performerUid = arr[[arr count] -3];
-                    NSLog(@"The audio name is %@ . URL is %@", currAudioName, [URL absoluteString]) ;
-                    Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: URL];
-                    newAudioObj.performer = performerUid;
+              NSString *currAudioName = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"audioName"];
+              NSString *performerUid = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"uid"];
+              NSString *performer = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"username"];
+              NSURL *url = [NSURL URLWithString:fireRefURL];
+              NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
+              Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName performerUid:performerUid performer:performer audioURL: url];
                     // Update tableview data source
-                    [self.audioTracks addObject:newAudioObj] ;
-                    if ([self.audioTracks count] == [sn.guestPlayerList count]){
+            [self.audioTracks addObject:newAudioObj] ;
+                if ([self.audioTracks count] == [sn.guestPlayerList count]){
                         [self.mergeTableView reloadData];
                     }
-                }
-              }];
+        
               //initialize the new instance
               //NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
               //NSString *currAudioName = [arr lastObject];
@@ -307,8 +300,9 @@ Audio *_audio;
     for(Audio *selectedTrack in self.selectedTracks) {
         [self.merge addAudio:selectedTrack];
     }
+    NSString *hostUid = self.cachedSessionMerged.hostUid;
+    NSString *hostUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     [self.merge performMerge: ^(BOOL success) {
-        NSLog(@"heyyyyyyyyyyyyyyyyyyyyasdasdasdasdasdasdasdasd");
         if (success){
             NSString *sessionId =  self.cachedSessionMerged.uid;
             NSString *hostId = self.cachedSessionMerged.hostUid;
@@ -338,7 +332,7 @@ Audio *_audio;
                 }
             }];
         }
-    }];
+    } hostUid:hostUid hostUsername:hostUsername];
     
       // Move to confirmation share screen
 //    [self performSegueWithIdentifier:@"showShareLink" sender:self];
@@ -422,11 +416,14 @@ Audio *_audio;
         //remove the track
         NSMutableArray *guestPlayerList =[self.cachedSessionMerged.guestPlayerList mutableCopy];
         NSString *sessionId =  self.cachedSessionMerged.uid;
-        NSString *performerId = trackToDelete.performer;
-        NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", performerId, sessionId, trackToDelete.audioName];
-
-        if ([guestPlayerList containsObject:audioFilePath]){
-                [guestPlayerList removeObject:audioFilePath];
+        //NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", performerId, sessionId, trackToDelete.audioName];
+        NSMutableDictionary *playerDict = [NSMutableDictionary new];
+        playerDict[@"uid"] = trackToDelete.performerUid;
+        playerDict[@"username"] = trackToDelete.performer;
+        playerDict[@"url"] = trackToDelete.audioURL;
+        NSString *performerId = trackToDelete.performerUid;
+        if ([guestPlayerList containsObject:playerDict]){
+                [guestPlayerList removeObject:playerDict];
         }
         self.cachedSessionMerged.guestPlayerList = guestPlayerList;
         [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionMerged];

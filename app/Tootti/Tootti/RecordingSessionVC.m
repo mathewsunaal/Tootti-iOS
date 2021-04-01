@@ -365,7 +365,10 @@
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action) {
                                     //Update name
+        NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+        NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
                                     Audio *newRecordingAudio = [[Audio alloc] initWithAudioName:alertVC.textFields[0].text
+                                                                performerUid:performerUid performer:performer
                                                                                        audioURL:self.audioRecorder.url.absoluteString];
                                     [self updateLocalRecordingsWith:newRecordingAudio];
                                }];

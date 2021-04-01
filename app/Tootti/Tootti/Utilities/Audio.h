@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *audioName;
 @property (strong, nonatomic) NSString *audioURL;
 @property (strong, nonatomic) NSString *performer;
+@property (strong, nonatomic) NSString *performerUid;
 @property (strong, nonatomic) NSDictionary *configDictionary;
 @property (strong, nonatomic) NSString *sessionId;
 @property (strong, nonatomic) NSString *audioType;
@@ -21,9 +22,13 @@
 
 
 - (instancetype) initWithAudioName:(NSString *)audioName
+                      performerUid: (NSString *)performerUid
+                         performer: (NSString *)performer
                           audioURL:(NSString *)audioURL;
 
 - (instancetype) initWithRemoteAudioName:(NSString *)audioName
+                            performerUid: (NSString *)performerUid
+                            performer: (NSString *)performer
                           audioURL:(NSURL *)audioURL;
 
 - (BOOL) playAudio;
@@ -31,7 +36,8 @@
 - (void) pauseAudio;
 - (void) stopAudio;
 - (void) uploadAudioSound: (NSString *) userUid
-               sessionUid: (NSString *) sessionUid;
+               sessionUid: (NSString *) sessionUid
+                 username: (NSString *) username;
 - (void) uploadTypedAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
                 audioType: (NSString *) audioType

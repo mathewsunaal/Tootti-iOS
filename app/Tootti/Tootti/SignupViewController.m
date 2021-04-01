@@ -138,6 +138,7 @@
             NSDictionary *docData = @{
                 @"email": self.email,
                 @"instrument": self.bio,
+                @"user": self.username,
                 @"allMergedSongs": [NSMutableArray new],
                 @"joinedSessions": [NSMutableArray new]
             };

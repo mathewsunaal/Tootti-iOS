@@ -17,10 +17,14 @@
 //Constructor
 
 - (instancetype) initWithAudioName:(NSString *)audioName
+                      performerUid: (NSString *)performerUid
+                         performer: (NSString *)performer
                                 audioURL:(NSString *)audioURL{
     self = [super init];
     if (self) {
         _audioName = audioName;
+        _performer = performer;
+        _performerUid = performerUid;
         _audioURL = audioURL;
     }
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:audioURL]
@@ -30,11 +34,15 @@
 }
 
 - (instancetype) initWithRemoteAudioName:(NSString *)audioName
+                            performerUid: (NSString *)performerUid
+                               performer: (NSString *)performer
                                 audioURL:(NSURL *)audioURL {
     self = [super init];
     if (self) {
         //NSData *urlData = [NSData dataWithContentsOfURL:audioURL];
         _audioName = audioName;
+        _performer = performer;
+        _performerUid = performerUid;
         _audioURL = [audioURL absoluteString] ;
         //self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL URLWithString:_audioURL] error:nil];
         self.player = [[AVAudioPlayer alloc]  initWithData: [NSData dataWithContentsOfURL:audioURL] error:nil];
@@ -60,7 +68,8 @@
 }
     
 - (void) uploadAudioSound: (NSString *) userUid
-               sessionUid: (NSString *) sessionUid {
+               sessionUid: (NSString *) sessionUid
+                 username: (NSString *) username{
     //upload the audio sound to fire storage
     FIRStorage *storage = [FIRStorage storage];
     FIRFirestore *db =  [FIRFirestore firestore];
@@ -83,11 +92,16 @@
               NSLog(@"%@", error.localizedDescription);
           } else {
             NSURL *downloadURL = URL;
+              NSMutableDictionary *audioDict = [NSMutableDictionary new];
+              audioDict[@"uid"] = userUid;
+              audioDict[@"username"] = username;
+              audioDict[@"audioName"] = self.audioName;
+              audioDict[@"url"] = [downloadURL absoluteString];
               //save the downloadURL to firestorage
               FIRDocumentReference *sessionRef =
                   [[db collectionWithPath:@"session"] documentWithPath:sessionUid];
               [sessionRef updateData:@{
-                  @"guestPlayerList": [FIRFieldValue fieldValueForArrayUnion:@[audioFilePath]]
+                  @"guestPlayerList": [FIRFieldValue fieldValueForArrayUnion:@[audioDict]]
               } completion:^(NSError * _Nullable error) {
                   //Save the audioFile to firestore
                   NSLog(@"Audio file is saved successfully");
