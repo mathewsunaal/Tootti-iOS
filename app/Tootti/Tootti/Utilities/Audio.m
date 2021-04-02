@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "Audio.h"
 #import "User.h"
+#import "ActivityIndicator.h"
+
 @import Firebase;
 
 @interface Audio() <AVAudioPlayerDelegate>
@@ -133,6 +135,7 @@
     FIRStorageUploadTask *uploadTask = [audioRef putFile: dataFile metadata:metadata completion:^(FIRStorageMetadata *metadata, NSError *error) {
       if (error != nil) {
           NSLog(@"%@", error.localizedDescription);
+          [[ActivityIndicator sharedInstance] stop];
         // Uh-oh, an error occurred!
       } else {
         // You can also access to download URL after upload.

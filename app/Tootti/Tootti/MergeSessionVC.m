@@ -14,6 +14,7 @@
 #import "ApplicationState.h"
 #import "AppDelegate.h"
 #import "Merge.h"
+#import "ActivityIndicator.h"
 
 @interface MergeSessionVC () <AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic,retain) NSMutableArray *players;
@@ -243,52 +244,49 @@ Audio *_audio;
 - (IBAction)refresh:(UIButton *)sender {
     NSLog(@"Reresh merge tracks");
     NSLog(@"%@",self.cachedSessionMerged.uid );
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     //TODO: for now, we are clearing all audio tracks in merge
     [self.audioTracks removeAllObjects];
     [self.selectedTracks removeAllObjects];
-    FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
-    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-        NSLog(@"%@", snapshot);
-      if (snapshot.exists) {
-        // Document data may be nil if the document exists but has no keys or values.
-        NSLog(@"Document data: %@", snapshot.data);
-        // updates the guestpplayerlist
-          Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
-          self.cachedSessionMerged = sn ;
-          [[ApplicationState sharedInstance] setCurrentSession:sn] ;
-          for (int i=0; i < [ sn.guestPlayerList count]; i++){
-              NSString *fireRefURL = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"url"];
-              NSLog(@"fireRefURL: %@", fireRefURL);
-              NSString *currAudioName = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"audioName"];
-              NSString *performerUid = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"uid"];
-              NSString *performer = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"username"];
-              NSURL *url = [NSURL URLWithString:fireRefURL];
-              NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
-              Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName performerUid:performerUid performer:performer audioURL: url];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
+        [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+            NSLog(@"%@", snapshot);
+            if (snapshot.exists) {
+                // Document data may be nil if the document exists but has no keys or values.
+                NSLog(@"Document data: %@", snapshot.data);
+                // updates the guestpplayerlist
+                Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
+                self.cachedSessionMerged = sn ;
+                [[ApplicationState sharedInstance] setCurrentSession:sn] ;
+            
+                for (int i=0; i < [ sn.guestPlayerList count]; i++){
+                    NSString *fireRefURL = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"url"];
+                    NSLog(@"fireRefURL: %@", fireRefURL);
+                    NSString *currAudioName = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"audioName"];
+                    NSString *performerUid = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"uid"];
+                    NSString *performer = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"username"];
+                    NSURL *url = [NSURL URLWithString:fireRefURL];
+                    NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
+                    Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName
+                                                                   performerUid:performerUid
+                                                                      performer:performer
+                                                                       audioURL: url];
                     // Update tableview data source
-            [self.audioTracks addObject:newAudioObj] ;
-                if ([self.audioTracks count] == [sn.guestPlayerList count]){
+                    [self.audioTracks addObject:newAudioObj];
+                    if ([self.audioTracks count] == [sn.guestPlayerList count]){
                         [self.mergeTableView reloadData];
+                        [[ActivityIndicator sharedInstance] stop];
                     }
-        
-              //initialize the new instance
-              //NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
-              //NSString *currAudioName = [arr lastObject];
-              //NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
-              //Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName audioURL: fireRefURL];
-              // Update tableview data source
-              //[self.audioTracks addObject:newAudioObj] ;
-          }
-          //NSLog(@"The audiotracks array %@", self.audioTracks);
-          //[self.mergeTableView reloadData];
-          
-      } else {
-        NSLog(@"Document does not exist");
-      }
-    }];
-
+                }
+              
+            } else {
+                NSLog(@"Document does not exist");
+                [[ActivityIndicator sharedInstance] stop];
+            }
+        }];
+    });
     
-    //[self.mergeTableView reloadData];
 }
 
 - (IBAction)mergeTracks:(UIButton *)sender {
@@ -296,45 +294,48 @@ Audio *_audio;
     
 //    Audio *s1 = [[Audio alloc] initWithAudioName:@"Flute-1" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
 //    Audio *s2 = [[Audio alloc] initWithAudioName:@"Flute-2" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
-    
-    self.merge = [[Merge alloc] init];
-    for(Audio *selectedTrack in self.selectedTracks) {
-        [self.merge addAudio:selectedTrack];
-    }
-    NSString *hostUid = self.cachedSessionMerged.hostUid;
-    NSString *hostUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
-    [self.merge performMerge: ^(BOOL success) {
-        if (success){
-            NSString *sessionId =  self.cachedSessionMerged.uid;
-            NSString *hostId = self.cachedSessionMerged.hostUid;
-            [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
-                NSLog(@"!!!!!!!!!!!!!!!");
-                if (success){
-                    UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
-                                                                                    message:@"The final merged track is uploaded and ready to share. Tap Share to copy the download link!"
-                                                                             preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* shareButton = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault
-                    handler:^(UIAlertAction * action) {
-                        // Copy link to clipboard
-                        NSLog(@"Share this final merged track at: %@",finalDownloadURL.absoluteString);
-                        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-                        pasteBoard.string = finalDownloadURL.absoluteString;
-                                            
-                    }];
-                    UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
-                    handler:^(UIAlertAction * action) {
-                        //Perform any clear or reset operations for session
-                        [self.mergeTableView reloadData];
-                    }];
-                    [alertVC addAction:shareButton];
-                    [alertVC addAction:cancelButton];
-                    [self presentViewController:alertVC animated:YES completion:nil];
-                    
-                }
-            }];
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        self.merge = [[Merge alloc] init];
+        for(Audio *selectedTrack in self.selectedTracks) {
+            [self.merge addAudio:selectedTrack];
         }
-    } hostUid:hostUid hostUsername:hostUsername];
-    
+        NSString *hostUid = self.cachedSessionMerged.hostUid;
+        NSString *hostUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+        [self.merge performMerge: ^(BOOL success) {
+            if (success){
+                NSString *sessionId =  self.cachedSessionMerged.uid;
+                NSString *hostId = self.cachedSessionMerged.hostUid;
+                [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
+                    NSLog(@"!!!!!!!!!!!!!!!");
+                    if (success){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
+                                                                                                message:@"The final merged track is uploaded and ready to share. Tap Share to copy the download link!"
+                                                                                         preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction* shareButton = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action) {
+                                // Copy link to clipboard
+                                NSLog(@"Share this final merged track at: %@",finalDownloadURL.absoluteString);
+                                UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+                                pasteBoard.string = finalDownloadURL.absoluteString;
+                                                    
+                            }];
+                            UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                            handler:^(UIAlertAction * action) {
+                                //Perform any clear or reset operations for session
+                                [self.mergeTableView reloadData];
+                            }];
+                            [alertVC addAction:shareButton];
+                            [alertVC addAction:cancelButton];
+                            [self presentViewController:alertVC animated:YES completion:nil];
+                        });
+                        [[ActivityIndicator sharedInstance] stop];
+                    }
+                }];
+            }
+        } hostUid:hostUid hostUsername:hostUsername];
+    });
       // Move to confirmation share screen
 //    [self performSegueWithIdentifier:@"showShareLink" sender:self];
 }
@@ -419,10 +420,12 @@ Audio *_audio;
         NSString *sessionId =  self.cachedSessionMerged.uid;
         //NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", performerId, sessionId, trackToDelete.audioName];
         NSMutableDictionary *playerDict = [NSMutableDictionary new];
+        playerDict[@"audioName"] = trackToDelete.audioName;
         playerDict[@"uid"] = trackToDelete.performerUid;
         playerDict[@"username"] = trackToDelete.performer;
         playerDict[@"url"] = trackToDelete.audioURL;
         NSString *performerId = trackToDelete.performerUid;
+        //TODO: Guestplayerlist here has zero elements, must be an issue with how we update guestplayerlist in cachedsession
         if ([guestPlayerList containsObject:playerDict]){
                 [guestPlayerList removeObject:playerDict];
         }

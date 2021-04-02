@@ -9,10 +9,12 @@
 #import "RecordingSessionVC.h"
 #import "Audio.h"
 #import "ToottiDefinitions.h"
+#import "ApplicationState.h"
+#import "ActivityIndicator.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ApplicationState.h"
 #import <CoreMedia/CoreMedia.h>
+
 
 @interface ClickTrackSessionVC () <MPMediaPickerControllerDelegate>
 @property (nonatomic,retain) MPMediaPickerController *pickerVC;
@@ -48,8 +50,9 @@
                 NSLog(@"Error fetching document: %@", error);
                 return;
               }
-              NSLog(@"Current data: %@", snapshot.data);
-              NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
+
+            NSLog(@"Current data: %@", snapshot.data);
+            NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
             NSLog(@"%@",snapshot.data[@"clickTrackRef"]);
             NSLog(@"%@", self.cachedSessionClickTrackVC.clickTrack.audioURL);
             if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
@@ -59,7 +62,6 @@
                                           preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
                     //update the session
-                    //TODO: START PROGRESS VIEW HERE
                     NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
                     NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
                     NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
@@ -74,7 +76,6 @@
                     RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
                     recordingVC.clickTrack = self.clickTrack;
                     NSLog(@"Click track stored as %@",recordingVC.clickTrack);
-                    //TODO: END PROGRESS VIEW HERE
                     }];
                 [alert addAction:okAction];
                 [self presentViewController:alert animated:YES completion:nil];
@@ -151,7 +152,7 @@
    self.pickerVC.allowsPickingMultipleItems = NO;
    self.pickerVC.popoverPresentationController.sourceView = self.uploadTrackButton;
    self.pickerVC.delegate = self;
-    [self presentViewController:self.pickerVC animated:YES completion:nil];
+   [self presentViewController:self.pickerVC animated:YES completion:nil];
 }
 
 #pragma mark - MPMediaPickerControllerDelegate methods
@@ -163,14 +164,14 @@
     NSURL *url = [item  valueForProperty:MPMediaItemPropertyAssetURL];
     [mediaPicker dismissViewControllerAnimated:YES completion:nil];
     
-    //TODO: Update to have clicktrack from session 
-    // Test player
-    NSLog(@"url of click trac: %@",url.absoluteString);
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-        if (mediaItemCollection) {
-            if (! item) {
-                return;
-            }
+    //TODO: Update to have clicktrack from session
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            NSLog(@"url of click trac: %@",url.absoluteString);
+            self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+            if (mediaItemCollection) {
+                if (! item) {
+                    return;
+                }
             AVURLAsset *songAsset = [AVURLAsset URLAssetWithURL:url options:nil];
             NSLog (@"Core Audio %@ directly open library URL %@",
                    coreAudioCanOpenURL (url) ? @"can" : @"cannot",
@@ -224,9 +225,9 @@
             NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
             NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
             self.clickTrack = [[Audio alloc] initWithAudioName:@"click-trac-test" performerUid:performerUid performer:performer  audioURL: [exportURL absoluteString]];
-        }
-
-    }
+            }
+        });
+}
 
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker {
@@ -281,18 +282,25 @@ void myDeleteFile (NSString* path){
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     // TODO: Host only allowed to share and upload click tracks now; this may change with "OFFLINE" mode
     if([currentUserId isEqual:hostId]) {
-        [self.clickTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *downloadURL) {
-           NSLog(@"!!!!!!!!!!!!!!!");
-           if (success){
-               NSLog(@"Successfully upload the clicktrack");
-           } else {
-               NSLog(@"Failed to upload the clicktrack");
-           }
-        }];
+        [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self.clickTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *downloadURL) {
+               NSLog(@"!!!!!!!!!!!!!!!");
+               if (success){
+                   NSLog(@"Successfully upload the clicktrack");
+                   [[ActivityIndicator sharedInstance] stop];
+                   [self.tabBarController setSelectedIndex:2]; // move to record page
+               } else {
+                   NSLog(@"Failed to upload the clicktrack");
+                   [[ActivityIndicator sharedInstance] stop];
+               }
+            }];
+        });
     } else {
         //TODO: Handle for guest
+        [[ActivityIndicator sharedInstance] stop];
+        [self.tabBarController setSelectedIndex:2]; // move to record page
     }
-    [self.tabBarController setSelectedIndex:2]; // move to record page
     
 }
 

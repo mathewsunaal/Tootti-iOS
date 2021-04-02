@@ -24,6 +24,7 @@
 		4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5A25EC68E700907574 /* HomeSessionVC.m */; };
 		4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5B25EC68E700907574 /* RecordingSessionVC.m */; };
 		4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */; };
+		4DB28EAD2617656F00139216 /* ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB28EAC2617656F00139216 /* ActivityIndicator.m */; };
 		4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3245A25E5656D006B09B4 /* SignupViewController.m */; };
 		4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3246225E56614006B09B4 /* SettingsViewController.m */; };
 		4DB5B1872602828C00583C54 /* MOAudioSliderView.h in Sources */ = {isa = PBXBuildFile; fileRef = 526719FF25FDF850001E9856 /* MOAudioSliderView.h */; };
@@ -82,6 +83,8 @@
 		4D925A5B25EC68E700907574 /* RecordingSessionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingSessionVC.m; sourceTree = "<group>"; };
 		4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinSessionDetailVC.m; sourceTree = "<group>"; };
 		4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToottiDefinitions.h; sourceTree = "<group>"; };
+		4DB28EAB2617656F00139216 /* ActivityIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActivityIndicator.h; sourceTree = "<group>"; };
+		4DB28EAC2617656F00139216 /* ActivityIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActivityIndicator.m; sourceTree = "<group>"; };
 		4DB3245925E5656D006B09B4 /* SignupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		4DB3245A25E5656D006B09B4 /* SignupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		4DB3246125E56614006B09B4 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
 				4DC50FE426162DCD0098C52E /* UserStatusCell.h */,
 				4DC50FE526162DCD0098C52E /* UserStatusCell.m */,
+				4DB28EAB2617656F00139216 /* ActivityIndicator.h */,
+				4DB28EAC2617656F00139216 /* ActivityIndicator.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
@@ -420,6 +425,7 @@
 				4DC50FE626162DCD0098C52E /* UserStatusCell.m in Sources */,
 				4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */,
 				52671A0725FDF850001E9856 /* WaveView.m in Sources */,
+				4DB28EAD2617656F00139216 /* ActivityIndicator.m in Sources */,
 				4DB3245B25E5656D006B09B4 /* SignupViewController.m in Sources */,
 				4DB3246325E56614006B09B4 /* SettingsViewController.m in Sources */,
 				4D925A5F25EC68E700907574 /* RecordingSessionVC.m in Sources */,
