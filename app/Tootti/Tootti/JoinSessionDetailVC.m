@@ -48,10 +48,11 @@ ClickTrackSessionVC *vc;
 - (IBAction)joinSession:(UIButton *)sender {
     self.db =  [FIRFirestore firestore];
     NSString *sessionName =[self.sessionCodeTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    NSLog(@"123331231231231%@", sessionName);
+
     NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
-    NSLog(@"123331231231231%@", performer);
+    NSMutableArray *joinedSessionListMutable = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:@"joinedSessions"];
+    NSLog(@"123331231231231%@", joinedSessionListMutable);
     [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
         getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
           if (error != nil) {
@@ -76,15 +77,66 @@ ClickTrackSessionVC *vc;
                       NSURL *mgURL = [ NSURL URLWithString: document.data[@"finalMergedResultRef"]];
                       mergedAudio = [[Audio alloc] initWithRemoteAudioName:@"merged-song.wav" performerUid:performerUid  performer:performer  audioURL: mgURL];
                   }
-              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: clickTrackAudio recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: mergedAudio hostStartRecording: NO];
+                  //update current player list
+                  BOOL checker = YES;
+                  NSLog(@"%ld",[document.data[@"currentPlayerList"] count]);
+                  for (int i =0 ; i< [document.data[@"currentPlayerList"] count]; i++){
+                      if ([document.data[@"currentPlayerList"][i][@"uid"] isEqual:performerUid] ){
+                          checker = NO;
+                      }
+                  }
+                  NSMutableArray *cpl = document.data[@"currentPlayerList"];
+                  if (checker){
+                      NSMutableDictionary *p = [[ NSMutableDictionary alloc] init];
+                      [ p setObject:performer forKey:@"username"];
+                      [ p setObject:performerUid forKey:@"uid"];
+                      [ p setObject: @NO forKey:@"status"];
+                      [cpl addObject:p];
+                  }
+              Session *sn = [[Session alloc] initWithUid: document.documentID sessionName:document.data[@"sessionName"] hostUid:document.data[@"hostUid"] guestPlayerList:document.data[@"guestPlayerList"] clickTrack: clickTrackAudio recordedAudioDict:document.data[@"recordedAudioDict"] finalMergedResult: mergedAudio hostStartRecording: NO currentPlayerList:cpl ];
               self.session = sn;
-              //NSDictionary *dict = [NSDictionary dictionaryWithObject:sn forKey:@"currentSession"];
-              //Sending the notification
-              //[[NSNotificationCenter defaultCenter] postNotificationName: @"sessionNotification" object:nil userInfo: dict];
-              //segue
               [[ApplicationState sharedInstance] setCurrentSession:self.session ] ;
-              [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
-              //[self prepareForSegue: @"joinSessionRecording" sender:self];
+              //save to database
+              if (checker){
+                  NSLog(@"%@",cpl);
+                  FIRFirestore *db =  [FIRFirestore firestore];
+                  FIRDocumentReference *sessionRef = [[db collectionWithPath:@"session"] documentWithPath:document.documentID];
+                  [sessionRef updateData:@{
+                      @"currentPlayerList": cpl
+                  } completion:^(NSError * _Nullable error) {
+                      //Save the audioFile to firestore
+                      if (error){
+                          NSLog(@"%@",error);
+                      }
+                      else{
+                          NSLog(@"Audio file is saved successfully");
+                          NSMutableArray *joinedSessionList = [joinedSessionListMutable copy];
+                          if (![ joinedSessionList containsObject: document.documentID]){
+                              FIRDocumentReference *userRef = [[db collectionWithPath:@"user"] documentWithPath: performerUid];
+                              [userRef updateData:@{
+                                  @"joinedSessions": [FIRFieldValue fieldValueForArrayUnion: @[document.documentID]]
+                              } completion:^(NSError * _Nullable error) {
+                                  //Save the audioFile to firestore
+                                  if (error){
+                                      NSLog(@"%@",error);
+                                  }
+                                  else{
+                                      NSLog(@"Audio file is saved successfully");
+                                      [joinedSessionListMutable addObject:document.documentID];
+                                      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
+                                      [[NSUserDefaults standardUserDefaults] setObject: joinedSessionListMutable forKey:@"joinedSessions"];
+                                      [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+                                  }
+                              }];
+                          }
+                          //[self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+                      }
+                  }];
+              }
+              else{
+                  [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+              }
+              //[self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
               }
           }
         }];

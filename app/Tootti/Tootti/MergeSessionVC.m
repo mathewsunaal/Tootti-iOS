@@ -253,7 +253,7 @@ Audio *_audio;
         // Document data may be nil if the document exists but has no keys or values.
         NSLog(@"Document data: %@", snapshot.data);
         // updates the guestpplayerlist
-          Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
+          Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"] currentPlayerList:snapshot.data[@"currentPlayerList"]];
           self.cachedSessionMerged = sn ;
           [[ApplicationState sharedInstance] setCurrentSession:sn] ;
           for (int i=0; i < [ sn.guestPlayerList count]; i++){
@@ -270,7 +270,6 @@ Audio *_audio;
                 if ([self.audioTracks count] == [sn.guestPlayerList count]){
                         [self.mergeTableView reloadData];
                     }
-        
               //initialize the new instance
               //NSArray *arr = [fireRefURL componentsSeparatedByString:@"/"];
               //NSString *currAudioName = [arr lastObject];

@@ -5,7 +5,7 @@
 //  Created by Hanyu Xi on 2021-02-28.
 //
 
-
+@import Firebase;
 @interface User: NSObject
 @property (readonly) NSString *uid;
 @property (strong, nonatomic) NSString *instrument;
@@ -24,6 +24,7 @@
 //Destructor
 - (void) logOut;
 - (void) shareMusic;
+- (NSArray *) fetchSessions;
 
 
 @end

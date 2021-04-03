@@ -34,4 +34,28 @@
     return;
 }
 
+-(void) deleteJoinedSessions: (void (^)(BOOL success))completionBlock
+{
+    NSMutableArray* joinedSessionsCopy = [self.joinedSessions mutableCopy];
+    for (int i=0; i< [_joinedSessions count]; i++){
+        if (_joinedSessions[i][@"uid"] == _uid){
+            [ joinedSessionsCopy removeObject:_joinedSessions[i]];
+        }
+    }
+    FIRFirestore *db =  [FIRFirestore firestore];
+    FIRDocumentReference *userRef = [[db collectionWithPath:@"user"] documentWithPath:self.uid];
+    [userRef updateData:@{
+        @"joinedSessions": joinedSessionsCopy
+    } completion:^(NSError * _Nullable error) {
+        //Save the audioFile to firestore
+        NSLog(@"The player related info has been deleted");
+        if (completionBlock != nil) completionBlock(YES);
+    }];
+}
+
+- (NSArray *) fetchSessions{
+    //Convert session id to list of session instances
+    return self.joinedSessions;
+}
+
 @end

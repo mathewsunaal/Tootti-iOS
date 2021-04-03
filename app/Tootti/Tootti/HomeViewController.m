@@ -80,9 +80,8 @@ bool isUp= false;
         stringForKey:@"uid"];
     NSString *savedEmail = [[NSUserDefaults standardUserDefaults]
         stringForKey:@"email"];
-    NSString *savedUsername = [[NSUserDefaults standardUserDefaults]
-        stringForKey:@"username"];
-    
+    NSString *savedUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+
     //Fetch all user information from database and initialize the user instance
     if ( savedUid != nil){
     [[[self.db collectionWithPath:@"user"] queryWhereField:@"email" isEqualTo: savedEmail]
@@ -171,6 +170,8 @@ bool isUp= false;
                       [[NSUserDefaults standardUserDefaults] setObject:self.email forKey:@"email"];
                       [[NSUserDefaults standardUserDefaults] setObject:document.documentID forKey:@"uid"];
                       [[NSUserDefaults standardUserDefaults] setObject:document.data[@"username"] forKey:@"username"];
+                      [[NSUserDefaults standardUserDefaults] setObject: [NSMutableArray arrayWithArray: document.data[@"joinedSessions"]] forKey:@"joinedSessions"];
+                      [[NSUserDefaults standardUserDefaults] synchronize];
                       [self performSegueWithIdentifier:@"loginUser" sender:self];
                       [self.errorMessage setHidden: TRUE];
                   }
