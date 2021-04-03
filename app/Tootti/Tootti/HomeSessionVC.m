@@ -136,7 +136,8 @@
     self.cachedSessionHomeVC = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username    "];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
     [self performSegueWithIdentifier:@"logoutSegue" sender:self];
     
     //TODO: Exit session and save stuff

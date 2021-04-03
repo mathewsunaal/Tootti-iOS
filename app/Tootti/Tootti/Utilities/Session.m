@@ -11,16 +11,16 @@
 #import "Session.h"
 
 @implementation Session
-
 //Constructor
 - (instancetype) initWithUid: (NSString *)uid
                  sessionName: (NSString *)sessionName
                      hostUid: (NSString *)hostUid
-             guestPlayerList: (NSArray *)guestPlayerList
+             guestPlayerList: (NSArray *)guestPlayerList // [{audioName: ... , uid: ... , username: ..., url: ...}, ...]
                   clickTrack: (Audio *)clickTrack
            recordedAudioDict: (NSDictionary *)recordedAudioDict
            finalMergedResult: (Audio *)finalMergedResult
-          hostStartRecording: (BOOL) hostStartRecording{
+          hostStartRecording: (BOOL) hostStartRecording
+           currentPlayerList: (NSArray *)currentPlayerList{        // [{username: ..., uid: ..., status: ...}, ...]
     self = [super init];
     if (self) {
         _uid = uid;
@@ -31,6 +31,7 @@
         _recordedAudioDict = recordedAudioDict;
         _finalMergedResult = finalMergedResult;
         _hostStartRecording =hostStartRecording;
+        _currentPlayerList = currentPlayerList;
     }
     return self;
 }
@@ -46,15 +47,17 @@
         @"clickTrackRef": @"",
         @"recordedAudioDict": self.recordedAudioDict, 
         @"finalMergedResultRef": @"",
-        @"hostStartRecording": @NO
+        @"hostStartRecording": @NO,
+        @"currentPlayerList": self.currentPlayerList
     };
     __block FIRDocumentReference *ref =
         [[self.db collectionWithPath:@"session"] addDocumentWithData:docData completion:^(NSError * _Nullable error) {
           if (error != nil) {
             NSLog(@"Error adding Session document: %@", error);
           } else {
-            NSLog(@"Document added with ID: %@", ref.documentID);
+             NSLog(@"Document added with ID: %@", ref.documentID);
               NSLog(@"%@",self.uid);
+              self.uid = ref.documentID;
               if (completionBlock != nil) completionBlock(YES);
           }
         }];
@@ -83,4 +86,42 @@
 + (void) updateRecordedTracks: (Audio *) audioClip{
     return;
 }
+
+//un tested
+
+-(void) deleteGuestPerformer: (NSString *)username
+                    uid: (NSString *) uid
+             completionBlock:(void (^)(BOOL success))completionBlock
+{
+    NSMutableArray* guestPlayerListCopy = [self.guestPlayerList mutableCopy];
+    NSMutableArray* currentPlayerListCopy = [self.currentPlayerList mutableCopy];
+    for (int i=0; i< [_guestPlayerList count]; i++){
+        if (_guestPlayerList[i][@"uid"] == uid){
+            [ guestPlayerListCopy removeObject:_guestPlayerList[i]];
+        }
+    }
+    for (int i=0; i< [_currentPlayerList count]; i++){
+        if (_currentPlayerList[i][@"uid"] == uid){
+            [ currentPlayerListCopy removeObject:_currentPlayerList[i]];
+        }
+    }
+    _guestPlayerList = guestPlayerListCopy;
+    _currentPlayerList = currentPlayerListCopy;
+    FIRFirestore *db =  [FIRFirestore firestore];
+    FIRDocumentReference *sessionRef = [[db collectionWithPath:@"session"] documentWithPath:self.uid];
+    [sessionRef updateData:@{
+        @"guestPlayerList": _guestPlayerList,
+        @"currentPlayerList": _currentPlayerList
+    } completion:^(NSError * _Nullable error) {
+        //Save the audioFile to firestore
+        NSLog(@"The player related info has been deleted");
+        if (completionBlock != nil) completionBlock(YES);
+    }];
+    
+}
+-(NSArray* ) getOnlineUserSession{
+    //[{username: "..",  uid: "...", status: BOOL}, ...]
+    return self.currentPlayerList;
+}
+
 @end

@@ -45,13 +45,39 @@
     NSString *sessionUid = [uuid UUIDString];
     NSString *sessionName = self.nameTextField.text;
     NSString *hostUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSArray *emptyGuestPlayerList  = [[NSMutableArray alloc] init];
+    NSMutableArray *currentPlayerList  = [[NSMutableArray alloc] init];
+    NSMutableDictionary *p = [[ NSMutableDictionary alloc] init];
+    [ p setObject:username forKey:@"username"];
+    [ p setObject:hostUid forKey:@"uid"];
+    [ p setObject: @NO forKey:@"status"];
+    [ currentPlayerList addObject:p];
+    // TODO:Check if session name exists
+
     NSMutableDictionary *recordedAudioDict = [[NSMutableDictionary alloc] init];
-    Session *sn = [[Session alloc] initWithUid:sessionUid sessionName: sessionName hostUid:hostUid guestPlayerList:emptyGuestPlayerList clickTrack:[[Audio alloc] init] recordedAudioDict:recordedAudioDict finalMergedResult:[[Audio alloc] init] hostStartRecording: NO];
+    Session *sn = [[Session alloc] initWithUid:sessionUid sessionName: sessionName hostUid:hostUid guestPlayerList:emptyGuestPlayerList clickTrack:[[Audio alloc] init] recordedAudioDict:recordedAudioDict finalMergedResult:[[Audio alloc] init] hostStartRecording: NO currentPlayerList:currentPlayerList];
     [sn saveSessionToDatabase: ^(BOOL success) {
-        NSLog(@"!!!!!!!!!!!!!!!");
         if (success){
-            [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+            FIRFirestore *db =  [FIRFirestore firestore];
+            FIRDocumentReference *userRef = [[db collectionWithPath:@"user"] documentWithPath:hostUid];
+            NSMutableArray *joinedSessionList = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"joinedSessions"]];
+            [joinedSessionList addObject:sn.uid];
+            [userRef updateData:@{
+                @"joinedSessions": joinedSessionList
+            } completion:^(NSError * _Nullable error) {
+                //Save the audioFile to firestore
+                if (error){
+                    NSLog(@"%@",error);
+                }
+                else{
+                    NSLog(@"Audio file is saved successfully");
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
+                    [[NSUserDefaults standardUserDefaults] setObject: [[ NSArray alloc] initWithArray: joinedSessionList] forKey:@"joinedSessions"];
+                    [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+                }
+            }];
+            //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
         }
     }];
     //save the new session

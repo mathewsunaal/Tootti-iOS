@@ -252,26 +252,22 @@ Audio *_audio;
         FIRDocumentReference *docRef = [[self.db collectionWithPath:@"session"] documentWithPath:self.cachedSessionMerged.uid];
         [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
             NSLog(@"%@", snapshot);
-            if (snapshot.exists) {
-                // Document data may be nil if the document exists but has no keys or values.
-                NSLog(@"Document data: %@", snapshot.data);
-                // updates the guestpplayerlist
-                Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"]];
-                self.cachedSessionMerged = sn ;
-                [[ApplicationState sharedInstance] setCurrentSession:sn] ;
-            
-                for (int i=0; i < [ sn.guestPlayerList count]; i++){
-                    NSString *fireRefURL = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"url"];
-                    NSLog(@"fireRefURL: %@", fireRefURL);
-                    NSString *currAudioName = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"audioName"];
-                    NSString *performerUid = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"uid"];
-                    NSString *performer = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"username"];
-                    NSURL *url = [NSURL URLWithString:fireRefURL];
-                    NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
-                    Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName
-                                                                   performerUid:performerUid
-                                                                      performer:performer
-                                                                       audioURL: url];
+          if (snapshot.exists) {
+            // Document data may be nil if the document exists but has no keys or values.
+            NSLog(@"Document data: %@", snapshot.data);
+            // updates the guestpplayerlist
+              Session *sn = [[Session alloc] initWithUid: self.cachedSessionMerged.uid sessionName:snapshot.data[@"sessionName"] hostUid:snapshot.data[@"hostUid"] guestPlayerList:snapshot.data[@"guestPlayerList"] clickTrack: snapshot.data[@"clickTrack"] recordedAudioDict:snapshot.data[@"recordedAudioDict"] finalMergedResult: snapshot.data[@"finalMergedResult"] hostStartRecording: snapshot.data[@"hostStartRecording"] currentPlayerList:snapshot.data[@"currentPlayerList"]];
+              self.cachedSessionMerged = sn ;
+              [[ApplicationState sharedInstance] setCurrentSession:sn] ;
+              for (int i=0; i < [ sn.guestPlayerList count]; i++){
+                  NSString *fireRefURL = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"url"];
+                  NSLog(@"fireRefURL: %@", fireRefURL);
+                  NSString *currAudioName = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"audioName"];
+                  NSString *performerUid = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"uid"];
+                  NSString *performer = [(NSDictionary *) sn.guestPlayerList[i] objectForKey:@"username"];
+                  NSURL *url = [NSURL URLWithString:fireRefURL];
+                  NSLog(@"The audio name is %@ . URL is %@", currAudioName, fireRefURL) ;
+                  Audio *newAudioObj = [[Audio alloc] initWithRemoteAudioName:currAudioName performerUid:performerUid performer:performer audioURL: url];
                     // Update tableview data source
                     [self.audioTracks addObject:newAudioObj];
                     if ([self.audioTracks count] == [sn.guestPlayerList count]){
