@@ -1577,9 +1577,9 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="GUT-tU-LXc"/>
-                                <exclude reference="3jh-oZ-SF0"/>
                                 <exclude reference="UwX-Nr-Cdd"/>
                                 <exclude reference="f54-5k-wEs"/>
+                                <exclude reference="3jh-oZ-SF0"/>
                                 <exclude reference="eri-Ml-xvp"/>
                                 <exclude reference="nqd-0l-xy6"/>
                                 <exclude reference="x4H-qd-WKG"/>
@@ -1596,12 +1596,12 @@
                             <mask key="constraints">
                                 <include reference="GUT-tU-LXc"/>
                                 <exclude reference="ctf-nQ-EtR"/>
-                                <include reference="3jh-oZ-SF0"/>
-                                <exclude reference="gpd-Tn-zf6"/>
                                 <exclude reference="0hs-8b-FB6"/>
                                 <include reference="UwX-Nr-Cdd"/>
                                 <include reference="f54-5k-wEs"/>
                                 <exclude reference="m8G-Bc-bRY"/>
+                                <include reference="3jh-oZ-SF0"/>
+                                <exclude reference="gpd-Tn-zf6"/>
                                 <include reference="eri-Ml-xvp"/>
                                 <exclude reference="8c6-F9-9J4"/>
                                 <include reference="nqd-0l-xy6"/>
@@ -1772,6 +1772,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="B8l-cl-2JM"/>
         <segue reference="8XD-dm-v49"/>
         <segue reference="GBa-gi-Mz9"/>
     </inferredMetricsTieBreakers>

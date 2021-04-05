@@ -83,24 +83,23 @@
                                  uid: (NSString *) uid
                           completionBlock:(void (^)(BOOL success))completionBlock {
     
-    //TODO: Update user status in firebase session
-//    NSMutableArray* currentPlayerListCopy = [self.currentPlayerList mutableCopy];
-//    for (int i=0; i< [_currentPlayerList count]; i++){
-//        if (_currentPlayerList[i][@"uid"] == uid){
-//            (BOOL)currentPlayerListCopy[i][@"status"] = status;
-//        }
-//    }
-//
-//    _currentPlayerList = currentPlayerListCopy;
-//    FIRFirestore *db =  [FIRFirestore firestore];
-//    FIRDocumentReference *sessionRef = [[db collectionWithPath:@"session"] documentWithPath:self.uid];
-//    [sessionRef updateData:@{
-//        @"currentPlayerList": _currentPlayerList
-//    } completion:^(NSError * _Nullable error) {
-//        //Save the audioFile to firestore
-//        NSLog(@"The player related info has been deleted");
-//        if (completionBlock != nil) completionBlock(YES);
-//    }];
+    NSMutableArray* currentPlayerListCopy = [self.currentPlayerList mutableCopy];
+    for (int i=0; i< [_currentPlayerList count]; i++){
+        if ([_currentPlayerList[i][@"uid"] isEqualToString:uid]){
+            currentPlayerListCopy[i][@"status"] = @(status);
+        }
+    }
+ 
+    _currentPlayerList =[currentPlayerListCopy copy];
+    FIRFirestore *db =  [FIRFirestore firestore];
+    FIRDocumentReference *sessionRef = [[db collectionWithPath:@"session"] documentWithPath:self.uid];
+    [sessionRef updateData:@{
+        @"currentPlayerList": _currentPlayerList
+    } completion:^(NSError * _Nullable error) {
+        //Save the audioFile to firestore
+        NSLog(@"The player related info has been deleted");
+        if (completionBlock != nil) completionBlock(YES);
+    }];
     return;
 }
 

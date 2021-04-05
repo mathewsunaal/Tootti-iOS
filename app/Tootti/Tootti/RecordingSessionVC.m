@@ -57,9 +57,7 @@
     if(![self.cachedSessionRecordingVC.clickTrack isEqual:self.clickTrack] && self.cachedSessionRecordingVC.clickTrack!=nil) {
         self.clickTrack = self.cachedSessionRecordingVC.clickTrack;
     }
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
     //LISTENING ON FIREBASE
-    //test start
     NSString *sessionId = self.cachedSessionRecordingVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
@@ -72,11 +70,8 @@
               }
             NSLog(@"Current data: %@", snapshot.data);
             NSDictionary *ds = snapshot.data;
-            NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
-            NSLog(@"%@", [ds class]);
-            NSLog(@"%@", [ds[@"hostStartRecording"] class]);
             NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
-            // Handle live recording for guest user
+            // Step 1: Check if the recording started. Handle live recording for guest user
             if(![currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]) {
                 if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES) {
                     [self startRecording: nil];
@@ -85,25 +80,28 @@
                     [self endRecording:nil];
                 }
             }
-            // Update click track data if different from current cached session
-//            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionRecordingVC.clickTrack.audioURL] ){
-//                UIAlertController * alert = [UIAlertController
-//                                alertControllerWithTitle:@"Information Updates"
-//                                                 message:@"A new click track is added"
-//                                          preferredStyle:UIAlertControllerStyleAlert];
-//                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-//                    NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
-//                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" audioURL:clURL];
-//                    self.cachedSessionRecordingVC.clickTrack = newClickTrac;
-//                    self.cachedSessionRecordingVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
-//                    //TODO: Already doing this in ClicktracVC. In the future, we should upate one single session instance for all VCs i the application
-//                    [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionRecordingVC];
-//                    // Update local variables
-//                    self.clickTrack = self.cachedSessionRecordingVC.clickTrack; // TODO: Handle the closing of AVAudiosession etc to avoid unexpected errors
-//                }];
-//                [alert addAction:okAction];
-//                [self presentViewController:alert animated:YES completion:nil];
-//            }
+            // Step 2: Assign the player status list
+            self.cachedSessionRecordingVC.currentPlayerList = snapshot.data[@"currentPlayerList"];
+            [self.usersTableView reloadData];
+            // Step 3: Check if the guest player list is updated. Update click track data if different from current cached session
+            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionRecordingVC.clickTrack.audioURL] ){
+                UIAlertController * alert = [UIAlertController
+                                alertControllerWithTitle:@"Information Updates"
+                                                 message:@"A new click track is added"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
+                    Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" performerUid: self.cachedSessionRecordingVC.hostUid performer: @"ClickTrack" audioURL:clURL ];
+                    self.cachedSessionRecordingVC.clickTrack = newClickTrac;
+                    self.cachedSessionRecordingVC.guestPlayerList = snapshot.data[@"guestPlayerList"];
+                    //TODO: Already doing this in ClicktracVC. In the future, we should upate one single session instance for all VCs i the application
+                    [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionRecordingVC];
+                    // Update local variables
+                    self.clickTrack = self.cachedSessionRecordingVC.clickTrack; // TODO: Handle the closing of AVAudiosession etc to avoid unexpected errors
+                }];
+                [alert addAction:okAction];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
     }];
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
@@ -115,6 +113,7 @@
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     // Hide recording timestamp
     self.recordTimerLabel.hidden = YES;
+    
     //Waveform Start
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }
