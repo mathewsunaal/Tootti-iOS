@@ -57,6 +57,8 @@
     self.audioLibTableView.delegate = self;
     self.audioLibTableView.dataSource = self;
     self.audioLibTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
+    
+    [self.tabBarController.navigationItem setHidesBackButton:YES];
 }
 
 // Enable or disable tabbar items depending on session status

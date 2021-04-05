@@ -73,6 +73,8 @@
     [self setupButton:self.joinSessionButton];
     [self setupButton:self.viewSessionsButton];
     
+    [self.tabBarController.navigationItem setHidesBackButton:YES];
+    
 }
 
 // Enable or disable tabbar items depending on session status

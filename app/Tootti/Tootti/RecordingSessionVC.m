@@ -116,6 +116,8 @@
     self.usersTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
     self.waveFormView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
     
+    [self.tabBarController.navigationItem setHidesBackButton:YES];
+    
     //Waveform Start
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
 }

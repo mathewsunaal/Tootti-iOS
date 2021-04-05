@@ -78,6 +78,8 @@ Audio *_audio;
     self.mergeTableView.delegate = self;
     self.mergeTableView.dataSource = self;
     self.mergeTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
+    
+    [self.tabBarController.navigationItem setHidesBackButton:YES];
 }
 
 // Enable or disable tabbar items depending on session status

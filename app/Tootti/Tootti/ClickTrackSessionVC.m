@@ -93,6 +93,8 @@
     [self setupButton:self.uploadTrackButton];
     [self setupButton:self.playTrackButton];
     [self setupButton:self.confirmTrackButton];
+    
+    [self.tabBarController.navigationItem setHidesBackButton:YES];
 }
 
 // Enable or disable tabbar items depending on session status
