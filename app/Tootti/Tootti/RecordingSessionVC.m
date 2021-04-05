@@ -42,8 +42,6 @@
     [super viewDidLoad];
     self.db =  [FIRFirestore firestore];
     // Do any additional setup after loading the view.
-    self.usersTableView.delegate = self;
-    self.usersTableView.dataSource = self;
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
@@ -113,6 +111,10 @@
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     // Hide recording timestamp
     self.recordTimerLabel.hidden = YES;
+    self.usersTableView.delegate = self;
+    self.usersTableView.dataSource = self;
+    self.usersTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
+    self.waveFormView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
     
     //Waveform Start
     //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];

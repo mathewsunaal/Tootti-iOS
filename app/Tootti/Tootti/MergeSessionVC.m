@@ -41,8 +41,6 @@ Audio *_audio;
     if(self.selectedTracks == nil) {
         self.selectedTracks = [[NSMutableArray alloc] init];
     }
-    self.mergeTableView.delegate = self;
-    self.mergeTableView.dataSource = self;
     
     [self setupViews];
     [self setupSessionStatus];
@@ -76,6 +74,10 @@ Audio *_audio;
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
     [self setupButton:self.mergeButton];
     [self setupButton:self.doneButton];
+    // Setup table
+    self.mergeTableView.delegate = self;
+    self.mergeTableView.dataSource = self;
+    self.mergeTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
 }
 
 // Enable or disable tabbar items depending on session status

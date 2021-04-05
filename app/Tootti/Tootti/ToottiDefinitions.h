@@ -21,6 +21,9 @@
 #define NORMAL_BUTTON_FONT_TYPE @"HelveticaNeue"
 #define NORMAL_BUTTON_FONT_SIZE 17
 
+// TABLE INFO
+#define NORMAL_TABLE_CORNER_RADIUS 10
+
 // VIEW INFO
 #define SCREEN_WIDTH self.view.bounds.size.width
 #define SCREEN_HEIGHT self.view.bounds.size.height

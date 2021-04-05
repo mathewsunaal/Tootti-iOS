@@ -31,8 +31,6 @@
     }
     
     //Set delegates
-    self.audioLibTableView.delegate = self;
-    self.audioLibTableView.dataSource = self;
     [self setupViews];
     
 }
@@ -55,8 +53,10 @@
 - (void)setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
-    
     [self setupButton:self.confirmButton];
+    self.audioLibTableView.delegate = self;
+    self.audioLibTableView.dataSource = self;
+    self.audioLibTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
 }
 
 // Enable or disable tabbar items depending on session status
