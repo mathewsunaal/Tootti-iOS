@@ -8,16 +8,37 @@
 #import "ApplicationState.h"
 #import <Foundation/Foundation.h>
 
+static ApplicationState* sharedInstance = nil;
+
 @implementation ApplicationState
 
-+ (ApplicationState*) sharedInstance
-{
-    static ApplicationState* sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
++ (ApplicationState*)sharedInstance {
+    @synchronized (self) {
+        if(sharedInstance==nil)
+            sharedInstance = [[self alloc] init];
+    }
     return sharedInstance;
+}
+
++(void)logout {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
+}
+
++(void)close {
+    [sharedInstance.currentSession updateCurrentPlayerListWithActivity:NO
+                                             username:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]
+                                                  uid:[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]
+                                      completionBlock:nil];
+    //destroy all global instances
+    [self destroyInstance];
+}
+
++(void)destroyInstance {
+    sharedInstance.currentSession = nil;
+    sharedInstance = nil;
 }
 
 @end

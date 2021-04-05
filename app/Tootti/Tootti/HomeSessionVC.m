@@ -25,7 +25,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setupViews];
-    [self setupSessionStatus];
     self.db =  [FIRFirestore firestore];
 }
 
@@ -36,6 +35,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    [self setupSessionStatus];
     self.pageIndex = 0;
     [self.tabBarController setSelectedIndex:self.pageIndex];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
@@ -130,14 +130,17 @@
 
 - (IBAction)logOutTapped:(id)sender {
     //[[FIRAuth auth] removeAuthStateDidChangeListener: userHandle];
-    NSLog(@"tapppppppppped");
-    self.user = nil;
+    NSLog(@"Settings tapped");
+    [self.cachedSessionHomeVC updateCurrentPlayerListWithActivity:NO
+                                             username:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]
+                                                  uid:[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]
+                                      completionBlock:nil];
+        
     //destroy all global instances
+    self.user = nil;
     self.cachedSessionHomeVC = nil;
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"uid"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"email"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
+    [ApplicationState close];
+    [ApplicationState logout];
     [self performSegueWithIdentifier:@"logoutSegue" sender:self];
     
     //TODO: Exit session and save stuff

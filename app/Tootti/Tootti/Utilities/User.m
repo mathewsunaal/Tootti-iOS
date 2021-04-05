@@ -34,11 +34,12 @@
     return;
 }
 
--(void) deleteJoinedSessions: (void (^)(BOOL success))completionBlock
+//TODO: Need to figure out if "joinedSessions" should be a History all sessions joined in the past or only 1 currently active session, this is a placeholder for now
+-(void) deleteJoinedSession: (NSString *)session_uid completion:(void (^)(BOOL success))completionBlock
 {
     NSMutableArray* joinedSessionsCopy = [self.joinedSessions mutableCopy];
     for (int i=0; i< [_joinedSessions count]; i++){
-        if (_joinedSessions[i][@"uid"] == _uid){
+        if (_joinedSessions[i][@"uid"] == session_uid){
             [ joinedSessionsCopy removeObject:_joinedSessions[i]];
         }
     }

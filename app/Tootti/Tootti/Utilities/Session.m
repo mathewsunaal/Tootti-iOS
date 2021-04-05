@@ -97,7 +97,41 @@
         @"currentPlayerList": _currentPlayerList
     } completion:^(NSError * _Nullable error) {
         //Save the audioFile to firestore
-        NSLog(@"The player related info has been deleted");
+        NSLog(@"The status of player (%@) has been updated",uid);
+        if (completionBlock != nil) completionBlock(YES);
+    }];
+    return;
+}
+
+- (void) updateCurrentPlayerListWithActivity:(BOOL)isActive
+                        username:(NSString *)username
+                             uid:(NSString *)uid
+                          completionBlock:(void (^)(BOOL success))completionBlock {
+    NSMutableArray* currentPlayerListCopy = [self.currentPlayerList mutableCopy];
+    // Check whether to add or remove
+    if(isActive) {
+        // ADD player to currentPlayerList
+        NSMutableDictionary *newPlayer = [[ NSMutableDictionary alloc] init];
+        [newPlayer setObject:username forKey:@"username"];
+        [newPlayer setObject:uid forKey:@"uid"];
+        [newPlayer setObject: @NO forKey:@"status"];
+        [currentPlayerListCopy addObject:newPlayer];
+    } else {
+        // REMOVE player from currentPlayerList
+        for (int i=0; i< [_currentPlayerList count]; i++){
+            if ([_currentPlayerList[i][@"uid"] isEqualToString:uid]){
+                [ currentPlayerListCopy removeObject:_currentPlayerList[i]];
+            }
+        }
+    }
+    _currentPlayerList =[currentPlayerListCopy copy];
+    FIRFirestore *db =  [FIRFirestore firestore];
+    FIRDocumentReference *sessionRef = [[db collectionWithPath:@"session"] documentWithPath:self.uid];
+    [sessionRef updateData:@{
+        @"currentPlayerList": _currentPlayerList
+    } completion:^(NSError * _Nullable error) {
+        //Save the audioFile to firestore
+        NSLog(@"Player (%@) has left currentPlayerList",uid);
         if (completionBlock != nil) completionBlock(YES);
     }];
     return;

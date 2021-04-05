@@ -6,6 +6,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ApplicationState.h"
 
 @import Firebase;
 
@@ -42,5 +43,9 @@
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
+-(void)applicationWillTerminate:(UIApplication *)application {
+//    NSLog(@"Application Instance %@",[ApplicationState sharedInstance]);
+//    [ApplicationState close];
+}
 
 @end

@@ -53,6 +53,14 @@ ClickTrackSessionVC *vc;
     NSString *performerUid = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     NSMutableArray *joinedSessionListMutable = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:@"joinedSessions"];
     NSLog(@"123331231231231%@", joinedSessionListMutable);
+    // Remove from currentPlayerList if joining a different session
+    if(![[[[ApplicationState sharedInstance] currentSession] sessionName] isEqual:sessionName]) {
+        [[[ApplicationState sharedInstance] currentSession] updateCurrentPlayerListWithActivity:NO
+                                     username:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]
+                                          uid:[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]
+                              completionBlock:nil];
+    }
+    // Search for session in Firebase if exists
     [[[self.db collectionWithPath:@"session"] queryWhereField:@"sessionName" isEqualTo: sessionName]
         getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
           if (error != nil) {
@@ -61,6 +69,8 @@ ClickTrackSessionVC *vc;
               if ([snapshot.documents count] == 0){
                   self.errorMessage.hidden = NO;
                   self.errorMessage.text = @"The session doesn't exist";
+                  //TODO: test this, return if no session exists
+                  return;
               }
               else{
               FIRDocumentSnapshot *document  = snapshot.documents[0];
@@ -129,7 +139,7 @@ ClickTrackSessionVC *vc;
                                   }
                               }];
                           }
-                          //[self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
+                          [self performSegueWithIdentifier:@"joinSessionRecording" sender:self];
                       }
                   }];
               }

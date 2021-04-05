@@ -25,6 +25,7 @@
 - (void) logOut;
 - (void) shareMusic;
 - (NSArray *) fetchSessions;
+-(void) deleteJoinedSession: (NSString *)session_uid completion:(void (^)(BOOL success))completionBlock;
 
 
 @end

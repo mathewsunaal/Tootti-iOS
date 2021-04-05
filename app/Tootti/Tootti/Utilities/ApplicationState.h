@@ -12,6 +12,8 @@
 @property (nonatomic, strong) Session* currentSession;
 
 + (ApplicationState*) sharedInstance;
++(void)logout;
++ (void)close;
 
 
 
