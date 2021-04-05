@@ -281,11 +281,17 @@
         NSLog(@"User status changed to READY");
         [self.statusLabel setText:@"Ready"];
         //TODO: Update user status in firebase session
+        [self.cachedSessionRecordingVC updateSessionActivityStatus:YES
+                                                               uid:[[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]
+                                                   completionBlock:nil];
         
     } else {
         NSLog(@"User status changed to STANDBY");
         [self.statusLabel setText:@"Standby"];
         //TODO: Update user status in firebase session
+        [self.cachedSessionRecordingVC updateSessionActivityStatus:NO
+                                                               uid:[[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]
+                                                   completionBlock:nil];
         
     }
 }
@@ -503,17 +509,21 @@
 #pragma mark - UITableView Delegate methods
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    UserStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userStatusCell" forIndexPath:indexPath];
     
     //TODO: Return username of all active users from local array that is updated from Firebase whenever there is a change of status
-    //[cell.usernameLabel setText:@"insert username"]; 
-
+    
+    UserStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userStatusCell" forIndexPath:indexPath];
+    NSDictionary *userInSession = self.cachedSessionRecordingVC.currentPlayerList[indexPath.row];
+    [cell.usernameLabel setText:[userInSession objectForKey:@"username"]];
+    BOOL sessionStatus = [[userInSession objectForKey:@"status"] boolValue];
+    NSLog(@"Session status:%d",sessionStatus);
+    [cell toggleSessionStatus:sessionStatus];
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //TODO: Return users where user status is "ACTIVE" from Firebase, maybe we store this locally and referesh whenever there is a change?
-    return 5;
+    return self.cachedSessionRecordingVC.currentPlayerList.count;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

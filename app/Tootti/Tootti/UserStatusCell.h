@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic) BOOL sessionStatus;
+
+-(void)toggleSessionStatus:(BOOL)status;
 @end
 
 NS_ASSUME_NONNULL_END

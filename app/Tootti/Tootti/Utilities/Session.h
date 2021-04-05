@@ -32,6 +32,7 @@
 + (Audio *) getClickTrack;
 - (void) saveSessionToDatabase: (void (^)(BOOL success))completion;
 - (void) sessionRecordingStatusUpdate: (BOOL) status;
+- (void) updateSessionActivityStatus:(BOOL)status uid: (NSString *) uid completionBlock:(void (^)(BOOL success))completionBlock;
 
 + (void) mergeAllTracks;
 + (void) updateRecordedTracks: (Audio *) audioClip;
