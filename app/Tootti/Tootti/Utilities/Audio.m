@@ -169,7 +169,7 @@
     // Only use the audioName to update the information
     FIRStorage *storage = [FIRStorage storage];
     FIRFirestore *db =  [FIRFirestore firestore];
-    NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@", userUid, sessionUid, self.audioName];
+    NSString *audioFilePath = [NSString stringWithFormat:@"gs://ece1778tooti.appspot.com/%@/%@/%@.wav", userUid, sessionUid, self.audioName];
     // Create a reference to the file to delete
     FIRStorageReference *audioRef = [storage referenceForURL: audioFilePath];
     // Delete the file
@@ -187,8 +187,6 @@
               NSLog(@"The audioTrack is deleted successfully");
               if (completionBlock != nil) completionBlock(YES);
           }];
-          
-          
       }
     }];
         
