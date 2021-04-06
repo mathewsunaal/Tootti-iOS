@@ -34,10 +34,6 @@
     self.pickerVC = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeAnyAudio];
     [self setupViews];
     self.db =  [FIRFirestore firestore];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
     [self setupSessionStatus];
     NSString *sessionId = self.cachedSessionClickTrackVC.uid;
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
@@ -87,6 +83,12 @@
         // Lock other tabs
         [self updateTabStatus:NO];
     }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self setupSessionStatus];
 }
 
 - (void)setupViews {

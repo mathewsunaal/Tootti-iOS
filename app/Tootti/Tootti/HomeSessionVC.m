@@ -26,22 +26,7 @@
     // Do any additional setup after loading the view.
     [self setupViews];
     self.db =  [FIRFirestore firestore];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:TRUE];
-    
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
     [self setupSessionStatus];
-    self.pageIndex = 0;
-    [self.tabBarController setSelectedIndex:self.pageIndex];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
-
-    //LISTENING ON FIREBASE
-    //Check the Session click trac
     NSString *sessionId = self.cachedSessionHomeVC.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
@@ -58,7 +43,19 @@
         // Lock other tabs
         [self updateTabStatus:NO];
     }
-    // test ends
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:TRUE];
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self setupSessionStatus];
+    self.pageIndex = 0;
+    [self.tabBarController setSelectedIndex:self.pageIndex];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 }
 
 - (void) setupViews {

@@ -23,7 +23,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FGD-IX-acH">
-                                <rect key="frame" x="210" y="381" width="150" height="35"/>
+                                <rect key="frame" x="30" y="381" width="150" height="35"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="4HQ-b0-6Yf"/>
@@ -111,7 +111,7 @@
                                 </variation>
                             </textField>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80Q-AZ-sGU">
-                                <rect key="frame" x="30" y="381" width="150" height="35"/>
+                                <rect key="frame" x="210" y="381" width="150" height="35"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Tal-me-liD"/>
@@ -178,9 +178,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ErO-0t-gdi" firstAttribute="top" secondItem="xgs-N7-Wr2" secondAttribute="bottom" constant="10" id="3E8-Lf-tCK"/>
-                            <constraint firstItem="80Q-AZ-sGU" firstAttribute="leading" secondItem="ErO-0t-gdi" secondAttribute="leading" id="3uT-CT-hKc"/>
+                            <constraint firstItem="ErO-0t-gdi" firstAttribute="leading" secondItem="xgs-N7-Wr2" secondAttribute="leading" id="4RW-Gn-6o9"/>
                             <constraint firstItem="G6P-Uc-h5C" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="52m-KT-ZPE"/>
                             <constraint firstItem="80Q-AZ-sGU" firstAttribute="top" secondItem="ErO-0t-gdi" secondAttribute="bottom" constant="30" id="6KZ-Ye-WfL"/>
+                            <constraint firstItem="80Q-AZ-sGU" firstAttribute="trailing" secondItem="xgs-N7-Wr2" secondAttribute="trailing" id="8a1-zp-dc1"/>
                             <constraint firstItem="xgs-N7-Wr2" firstAttribute="top" secondItem="ae2-er-hnf" secondAttribute="bottom" constant="25" id="94L-L7-4fX"/>
                             <constraint firstItem="ae2-er-hnf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="HYy-X6-MqK">
                                 <variation key="heightClass=compact-widthClass=regular" constant="30"/>
@@ -192,11 +193,10 @@
                             <constraint firstItem="xgs-N7-Wr2" firstAttribute="top" secondItem="ae2-er-hnf" secondAttribute="bottom" constant="20" id="eks-fW-yy6"/>
                             <constraint firstItem="xgs-N7-Wr2" firstAttribute="top" secondItem="ae2-er-hnf" secondAttribute="bottom" constant="20" id="iJi-aI-wwW"/>
                             <constraint firstItem="FGD-IX-acH" firstAttribute="centerY" secondItem="80Q-AZ-sGU" secondAttribute="centerY" id="lCH-8g-EWv"/>
-                            <constraint firstItem="FGD-IX-acH" firstAttribute="trailing" secondItem="ErO-0t-gdi" secondAttribute="trailing" id="lzd-sj-qhF"/>
-                            <constraint firstItem="80Q-AZ-sGU" firstAttribute="leading" secondItem="ErO-0t-gdi" secondAttribute="leading" id="mMc-ua-Yk5"/>
                             <constraint firstItem="ErO-0t-gdi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sCt-r4-kCv"/>
                             <constraint firstItem="xgs-N7-Wr2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="u4y-b8-vlg"/>
-                            <constraint firstItem="FGD-IX-acH" firstAttribute="trailing" secondItem="ErO-0t-gdi" secondAttribute="trailing" id="w3q-bB-j64"/>
+                            <constraint firstItem="ErO-0t-gdi" firstAttribute="trailing" secondItem="xgs-N7-Wr2" secondAttribute="trailing" id="v6g-L9-6pT"/>
+                            <constraint firstItem="FGD-IX-acH" firstAttribute="leading" secondItem="xgs-N7-Wr2" secondAttribute="leading" id="xSY-k0-29k"/>
                             <constraint firstItem="ae2-er-hnf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="120" id="yt0-bY-lr1"/>
                             <constraint firstItem="ae2-er-hnf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zP6-aq-Gac"/>
                         </constraints>
@@ -212,8 +212,6 @@
                                 <exclude reference="u4y-b8-vlg"/>
                                 <exclude reference="IxP-7g-B2F"/>
                                 <exclude reference="sCt-r4-kCv"/>
-                                <exclude reference="3uT-CT-hKc"/>
-                                <exclude reference="w3q-bB-j64"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -233,8 +231,6 @@
                                 <include reference="zP6-aq-Gac"/>
                                 <include reference="u4y-b8-vlg"/>
                                 <include reference="sCt-r4-kCv"/>
-                                <include reference="3uT-CT-hKc"/>
-                                <include reference="w3q-bB-j64"/>
                             </mask>
                         </variation>
                     </view>

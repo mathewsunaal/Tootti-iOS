@@ -44,11 +44,6 @@ Audio *_audio;
     
     [self setupViews];
     [self setupSessionStatus];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];    
-    [self.mergeTableView reloadData];
     NSString *sessionId = self.cachedSessionMerged.uid;
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
@@ -67,6 +62,13 @@ Audio *_audio;
         // Lock other tabs
         [self updateTabStatus:NO];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self setupSessionStatus];
+    [self.mergeTableView reloadData];
+
 }
 
 - (void) setupViews {
@@ -279,6 +281,10 @@ Audio *_audio;
                         [[ActivityIndicator sharedInstance] stop];
                     }
                 }
+              // Stop spinner if there are no guest tracks in session
+              if([sn.guestPlayerList count] == 0) {
+                  [[ActivityIndicator sharedInstance] stop];
+              }
               
             } else {
                 NSLog(@"Document does not exist");

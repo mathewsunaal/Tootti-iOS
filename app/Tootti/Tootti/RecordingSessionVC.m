@@ -44,17 +44,9 @@
     // Do any additional setup after loading the view.
     [self setupViews];
     [self setupAVSessionwithSpeaker:NO];
-    //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
     [self setupSessionStatus];
-    // Override click track //TODO: in the future, do we need to disable this?
-    if(![self.cachedSessionRecordingVC.clickTrack isEqual:self.clickTrack] && self.cachedSessionRecordingVC.clickTrack!=nil) {
-        self.clickTrack = self.cachedSessionRecordingVC.clickTrack;
-    }
+    //self.waveformTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(refreshWaveView:) userInfo:nil repeats:YES];
+    
     //LISTENING ON FIREBASE
     NSString *sessionId = self.cachedSessionRecordingVC.uid;
     NSLog(@"SessionID: %@", sessionId );
@@ -72,6 +64,7 @@
             // Step 1: Check if the recording started. Handle live recording for guest user
             if(![currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]) {
                 if ([[ds objectForKey:@"hostStartRecording"]boolValue] == YES) {
+                    [self.tabBarController setSelectedIndex:2]; // Force guest user to the recording screen
                     [self startRecording: nil];
                     NSLog(@"Host started recording");
                 } else {
@@ -103,6 +96,15 @@
     }];
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    [self setupSessionStatus];
+    if(![self.cachedSessionRecordingVC.clickTrack isEqual:self.clickTrack] && self.cachedSessionRecordingVC.clickTrack!=nil) {
+        self.clickTrack = self.cachedSessionRecordingVC.clickTrack;
     }
 }
 
@@ -447,6 +449,9 @@
 #pragma mark - Timer Methods
 
 - (void) startTimer {
+    if(self.recordTimer)
+        return;
+    
     NSLog(@"Start record timer");
     self.recordTimerLabel.hidden = NO;
     self.timerSeconds=0; self.timerMinutes=0;
@@ -461,6 +466,7 @@
 - (void) resetTimer {
     NSLog(@"Reset record timer");
     [self.recordTimer invalidate];
+    self.recordTimer = nil;
     self.timerMinutes = 0; self.timerSeconds = 0;
     [self.recordTimerLabel setText:@"00:00"];
     self.recordTimerLabel.hidden = YES;
