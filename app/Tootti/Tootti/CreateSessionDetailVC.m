@@ -8,6 +8,8 @@
 #import "CreateSessionDetailVC.h"
 #import "ToottiDefinitions.h"
 #import "Session.h"
+#import "ActivityIndicator.h"
+
 @interface CreateSessionDetailVC () <UITextFieldDelegate>
 
 @end
@@ -53,8 +55,9 @@
     [ p setObject:hostUid forKey:@"uid"];
     [ p setObject: @NO forKey:@"status"];
     [ currentPlayerList addObject:p];
+    
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     // TODO:Check if session name exists
-
     NSMutableDictionary *recordedAudioDict = [[NSMutableDictionary alloc] init];
     Session *sn = [[Session alloc] initWithUid:sessionUid sessionName: sessionName hostUid:hostUid guestPlayerList:emptyGuestPlayerList clickTrack:[[Audio alloc] init] recordedAudioDict:recordedAudioDict finalMergedResult:[[Audio alloc] init] hostStartRecording: NO currentPlayerList:currentPlayerList];
     [sn saveSessionToDatabase: ^(BOOL success) {
@@ -69,15 +72,21 @@
                 //Save the audioFile to firestore
                 if (error){
                     NSLog(@"%@",error);
+                    [[ActivityIndicator sharedInstance] stop];
                 }
                 else{
                     NSLog(@"Audio file is saved successfully");
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
                     [[NSUserDefaults standardUserDefaults] setObject: [[ NSArray alloc] initWithArray: joinedSessionList] forKey:@"joinedSessions"];
+                    [[ActivityIndicator sharedInstance] stop];
                     [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
                 }
             }];
             //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+        } else {
+            // ERROR saving session to database
+            NSLog(@"Error saving new session to database");
+            [[ActivityIndicator sharedInstance] stop];
         }
     }];
     //save the new session

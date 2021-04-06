@@ -7,6 +7,7 @@
 
 #import "SignupViewController.h"
 #import "ToottiDefinitions.h"
+#import "ActivityIndicator.h"
 @import Firebase;
 
 @interface SignupViewController () <UITextFieldDelegate>
@@ -118,12 +119,8 @@
     self.bio = self.instrumentTextField.text;
     
     NSLog(@"Create Account Request");
-
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     // Firebase call to create new user ...
-    
-    
-    
-    
     [[FIRAuth auth] createUserWithEmail:self.email
                                password:self.pass
                              completion:^(FIRAuthDataResult * _Nullable authResult,
@@ -133,6 +130,7 @@
             NSLog(@"%@", error.localizedDescription);
             [self.errorMessage setText: error.localizedDescription];
             [self.errorMessage setHidden: FALSE];
+            [[ActivityIndicator sharedInstance] stop];
         }
         else{
             NSDictionary *docData = @{
@@ -151,6 +149,7 @@
                     NSLog(@"Document added with ID: %@", ref.documentID);
                   }
                 }];
+            [[ActivityIndicator sharedInstance] stop];
             [self performSegueWithIdentifier:@"showLogInSegue" sender:self];
         }
     }];

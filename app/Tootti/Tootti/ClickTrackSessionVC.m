@@ -89,6 +89,12 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self setupSessionStatus];
+    if (self.cachedSessionClickTrackVC.uid != 0){
+        [self updateTabStatus:YES];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
 }
 
 - (void)setupViews {

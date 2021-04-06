@@ -41,12 +41,11 @@
     [self setupSessionStatus];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
     
-    NSString *sessionId = self.cachedSessionLibraryVC.uid;
-    NSLog(@"SessionID: %@", sessionId );
-    if (sessionId != 0) {
+    if (self.cachedSessionLibraryVC.uid != 0){
         [self updateTabStatus:YES];
     } else {
-        [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
+        // Lock other tabs
+        [self updateTabStatus:NO];
     }
 }
 

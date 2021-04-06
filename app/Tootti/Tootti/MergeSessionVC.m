@@ -68,6 +68,12 @@ Audio *_audio;
     [super viewWillAppear:YES];
     [self setupSessionStatus];
     [self.mergeTableView reloadData];
+    if (self.cachedSessionMerged.uid != 0){
+        [self updateTabStatus:YES];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
 
 }
 
@@ -284,6 +290,17 @@ Audio *_audio;
               // Stop spinner if there are no guest tracks in session
               if([sn.guestPlayerList count] == 0) {
                   [[ActivityIndicator sharedInstance] stop];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"No session tracks found"
+                                                                                          message:@"Please confirm tracks from the Library page to upload in a session."
+                                                                                   preferredStyle:UIAlertControllerStyleAlert];
+                      UIAlertAction* okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * action) {
+                          [self.mergeTableView reloadData];           
+                      }];
+                      [alertVC addAction:okButton];
+                      [self presentViewController:alertVC animated:YES completion:nil];
+                  });
               }
               
             } else {
@@ -300,6 +317,20 @@ Audio *_audio;
     
 //    Audio *s1 = [[Audio alloc] initWithAudioName:@"Flute-1" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
 //    Audio *s2 = [[Audio alloc] initWithAudioName:@"Flute-2" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
+    if([self.selectedTracks count] == 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"No tracks selected for merge!"
+                                                                                message:@"Please select the tracks to merge.\nThe yellow highlight indicates that a track is selected."
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * action) {
+                [self.mergeTableView reloadData];
+                                    
+            }];
+            [alertVC addAction:okButton];
+            [self presentViewController:alertVC animated:YES completion:nil];
+        });
+    }
     [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         self.merge = [[Merge alloc] init];
@@ -317,7 +348,7 @@ Audio *_audio;
                     if (success){
                         dispatch_async(dispatch_get_main_queue(), ^{
                             UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
-                                                                                                message:@"The final merged track is uploaded and ready to share. Tap Share to copy the download link!"
+                                                                                                message:@"The final merged track is uploaded and ready to share.\nTap Share to copy the download link!"
                                                                                          preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction* shareButton = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault
                             handler:^(UIAlertAction * action) {

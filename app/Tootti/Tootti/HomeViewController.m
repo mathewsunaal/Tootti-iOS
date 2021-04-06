@@ -9,6 +9,7 @@
 #import "HomeSessionVC.h"
 #import "ToottiDefinitions.h"
 #include "User.h"
+#include "ActivityIndicator.h"
 
 @import Firebase;
 @interface HomeViewController ()
@@ -141,7 +142,7 @@ bool isUp= false;
     self.pass = self.passTextField.text;
     
     NSLog(@"Logging In for: %@",self.email);
-    
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     // Firebase function to login user.. (move seague to success block)
     //Check the email and pass
     [[FIRAuth auth] signInWithEmail:self.email
@@ -152,6 +153,7 @@ bool isUp= false;
             NSLog(@"Sign in failed. Error: %@", error.localizedDescription);
             [self.errorMessage setText: error.localizedDescription];
             [self.errorMessage setHidden: FALSE];
+            [[ActivityIndicator sharedInstance] stop];
         }
         else{
             NSLog(@"%@",authResult);
@@ -160,6 +162,7 @@ bool isUp= false;
                 getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
                   if (error != nil) {
                     NSLog(@"Error getting documents: %@", error);
+                      [[ActivityIndicator sharedInstance] stop];
                   } else {
                       FIRDocumentSnapshot *document = snapshot.documents[0];
                       NSLog(@"%@ => %@", document.documentID, document.data);
@@ -172,6 +175,7 @@ bool isUp= false;
                       [[NSUserDefaults standardUserDefaults] setObject:document.data[@"username"] forKey:@"username"];
                       [[NSUserDefaults standardUserDefaults] setObject: [NSMutableArray arrayWithArray: document.data[@"joinedSessions"]] forKey:@"joinedSessions"];
                       [[NSUserDefaults standardUserDefaults] synchronize];
+                      [[ActivityIndicator sharedInstance] stop];
                       [self performSegueWithIdentifier:@"loginUser" sender:self];
                       [self.errorMessage setHidden: TRUE];
                   }

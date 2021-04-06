@@ -106,6 +106,12 @@
     if(![self.cachedSessionRecordingVC.clickTrack isEqual:self.clickTrack] && self.cachedSessionRecordingVC.clickTrack!=nil) {
         self.clickTrack = self.cachedSessionRecordingVC.clickTrack;
     }
+    if (self.cachedSessionRecordingVC.uid != 0){
+        [self updateTabStatus:YES];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
 }
 
 - (void)setupViews {

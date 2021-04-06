@@ -55,6 +55,12 @@
     [self setupSessionStatus];
     self.pageIndex = 0;
     [self.tabBarController setSelectedIndex:self.pageIndex];
+    if (self.cachedSessionHomeVC.uid != 0){
+        [self updateTabStatus:YES];
+    } else {
+        // Lock other tabs
+        [self updateTabStatus:NO];
+    }
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 }
 
