@@ -44,6 +44,8 @@
     NSLog(@"SessionID: %@", sessionId );
     if (sessionId != 0){
         [self updateTabStatus:YES];
+        self.audioPlayer = self.cachedSessionClickTrackVC.clickTrack.player;
+        self.clickTrack = self.cachedSessionClickTrackVC.clickTrack;
         [[[self.db collectionWithPath:@"session"] documentWithPath: sessionId]
             addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
               if (snapshot == nil) {
