@@ -53,7 +53,7 @@
             NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
             NSLog(@"%@",snapshot.data[@"clickTrackRef"]);
             NSLog(@"%@", self.cachedSessionClickTrackVC.clickTrack.audioURL);
-            //if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
+            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
             //    UIAlertController * alert = [UIAlertController
             //                    alertControllerWithTitle:@"Information Updates"
             //                                     message:@"A new click track is added"
@@ -77,7 +77,7 @@
              //       }];
              //   [alert addAction:okAction];
              //   [self presentViewController:alert animated:YES completion:nil];
-         //   }
+            }
         }];
     } else {
         // Lock other tabs
