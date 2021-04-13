@@ -53,12 +53,12 @@
             NSLog(@"Updated data!!!!!!!!!!!!!!!!!!!!!!");
             NSLog(@"%@",snapshot.data[@"clickTrackRef"]);
             NSLog(@"%@", self.cachedSessionClickTrackVC.clickTrack.audioURL);
-            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
-                UIAlertController * alert = [UIAlertController
-                                alertControllerWithTitle:@"Information Updates"
-                                                 message:@"A new click track is added"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            //if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionClickTrackVC.clickTrack.audioURL]){
+            //    UIAlertController * alert = [UIAlertController
+            //                    alertControllerWithTitle:@"Information Updates"
+            //                                     message:@"A new click track is added"
+            //                              preferredStyle:UIAlertControllerStyleAlert];
+            //    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
                     //update the session
                     NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
                     NSString *performer = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
@@ -74,10 +74,10 @@
                     RecordingSessionVC *recordingVC = self.tabBarController.viewControllers[2];
                     recordingVC.clickTrack = self.clickTrack;
                     NSLog(@"Click track stored as %@",recordingVC.clickTrack);
-                    }];
-                [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:nil];
-            }
+             //       }];
+             //   [alert addAction:okAction];
+             //   [self presentViewController:alert animated:YES completion:nil];
+         //   }
         }];
     } else {
         // Lock other tabs

@@ -75,12 +75,12 @@
             self.cachedSessionRecordingVC.currentPlayerList = snapshot.data[@"currentPlayerList"];
             [self.usersTableView reloadData];
             // Step 3: Check if the guest player list is updated. Update click track data if different from current cached session
-            if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionRecordingVC.clickTrack.audioURL] ){
-                UIAlertController * alert = [UIAlertController
-                                alertControllerWithTitle:@"Information Updates"
-                                                 message:@"A new click track is added"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            //if (![snapshot.data[@"clickTrackRef"] isEqualToString:self.cachedSessionRecordingVC.clickTrack.audioURL] ){
+            //    UIAlertController * alert = [UIAlertController
+            //                    alertControllerWithTitle:@"Information Updates"
+            //                                     message:@"A new click track is added"
+            //                              preferredStyle:UIAlertControllerStyleAlert];
+            //    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
                     NSURL *clURL = [ NSURL URLWithString:snapshot.data[@"clickTrackRef"]];
                     Audio *newClickTrac = [[Audio alloc] initWithRemoteAudioName:@"click-track.wav" performerUid: self.cachedSessionRecordingVC.hostUid performer: @"ClickTrack" audioURL:clURL ];
                     self.cachedSessionRecordingVC.clickTrack = newClickTrac;
@@ -89,10 +89,10 @@
                     [[ApplicationState sharedInstance] setCurrentSession:self.cachedSessionRecordingVC];
                     // Update local variables
                     self.clickTrack = self.cachedSessionRecordingVC.clickTrack; // TODO: Handle the closing of AVAudiosession etc to avoid unexpected errors
-                }];
-                [alert addAction:okAction];
-                [self presentViewController:alert animated:YES completion:nil];
-            }
+             //   }];
+             //   [alert addAction:okAction];
+             //   [self presentViewController:alert animated:YES completion:nil];
+           // }
     }];
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
