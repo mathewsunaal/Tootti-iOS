@@ -57,6 +57,9 @@
     self.audioLibTableView.dataSource = self;
     self.audioLibTableView.layer.cornerRadius = NORMAL_TABLE_CORNER_RADIUS;
     
+    [self.refreshButton setEnabled:NO];
+    [self.refreshButton setHidden:YES];
+    
     [self.tabBarController.navigationItem setHidesBackButton:YES];
 }
 
