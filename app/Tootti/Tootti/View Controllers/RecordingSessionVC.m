@@ -131,14 +131,20 @@
 }
 
 // Enable or disable tabbar items depending on session status
-- (void)updateTabStatus:(BOOL)enabledStatus {
-    if(!enabledStatus){
+- (void)updateTabStatus:(BOOL)enabled {
+    if(!enabled){
         [self.tabBarController setSelectedIndex:0];// Set tabbar selection to HomeSessionVC
     }
     for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
         if(![tabBarItem.title isEqual:@"Home"]) {
-            [tabBarItem setEnabled:enabledStatus];
+            [tabBarItem setEnabled:enabled];
         }
+    }
+}
+
+- (void)setTabBarStatusEnabled:(BOOL) enabled {
+    for(UITabBarItem *tabBarItem in [[self.tabBarController tabBar]items]) {
+        [tabBarItem setEnabled:enabled];
     }
 }
 
@@ -341,6 +347,7 @@
     }
     // Update UI
     [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
+    [self setTabBarStatusEnabled:NO];
     
 }
 -(void)endRecording:(UIButton *)sender {
@@ -366,7 +373,8 @@
     }
     // Update UI
     [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"record.circle"] forState:UIControlStateNormal];
-    //Stop Waveform
+    [self setTabBarStatusEnabled:YES];
+    //Stop Waveform[self setTabBarStatusEnabled:NO];
 //        if ([self.waveformTimer isValid]){
 //            NSLog(@"###################################");
 //            [self.waveformTimer invalidate];
