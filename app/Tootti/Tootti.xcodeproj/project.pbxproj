@@ -147,9 +147,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D28D009262B4ECD00AE9658 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4DD423112603BD5A0027DCDC /* AudioCell.h */,
+				4DD423122603BD5A0027DCDC /* AudioCell.m */,
+				4DD423152603F4F30027DCDC /* MergeAudioCell.h */,
+				4DD423162603F4F30027DCDC /* MergeAudioCell.m */,
+				4DC50FE426162DCD0098C52E /* UserStatusCell.h */,
+				4DC50FE526162DCD0098C52E /* UserStatusCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4D28D00C262B4F0600AE9658 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4DB5B18C2602D25700583C54 /* AudioLibraryViewController.h */,
+				4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */,
+				4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */,
+				4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */,
+				4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */,
+				4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */,
+				4D925A5925EC68E700907574 /* HomeSessionVC.h */,
+				4D925A5A25EC68E700907574 /* HomeSessionVC.m */,
+				529E89B025D4F16C004CD9B4 /* HomeViewController.h */,
+				529E89B125D4F16C004CD9B4 /* HomeViewController.m */,
+				4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */,
+				4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */,
+				4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */,
+				4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */,
+				4D925A5525EC68E600907574 /* RecordingSessionVC.h */,
+				4D925A5B25EC68E700907574 /* RecordingSessionVC.m */,
+				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
+				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
+				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
+				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
+				4D8B0120260B8891006659AC /* ShareLinkVC.h */,
+				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		4D28D010262B4F8D00AE9658 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				529E89B825D4F16E004CD9B4 /* LaunchScreen.storyboard */,
+				529E89B325D4F16C004CD9B4 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		4D28D011262B4FB000AE9658 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				529E89AA25D4F16C004CD9B4 /* AppDelegate.h */,
+				529E89AB25D4F16C004CD9B4 /* AppDelegate.m */,
+				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
+				529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
 		4D86E8BA25F2C6EE00A70623 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4DB28EAB2617656F00139216 /* ActivityIndicator.h */,
+				4DB28EAC2617656F00139216 /* ActivityIndicator.m */,
+				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
 				5211E63A26097D0800EB9A10 /* ApplicationState.h */,
 				5211E63C26097D6800EB9A10 /* ApplicationState.m */,
 				4D86E8BE25F2C6EE00A70623 /* Audio.h */,
@@ -208,48 +273,15 @@
 		529E89A925D4F16C004CD9B4 /* Tootti */ = {
 			isa = PBXGroup;
 			children = (
-				529E89AA25D4F16C004CD9B4 /* AppDelegate.h */,
-				529E89AB25D4F16C004CD9B4 /* AppDelegate.m */,
 				529E89B625D4F16E004CD9B4 /* Assets.xcassets */,
-				4DD423112603BD5A0027DCDC /* AudioCell.h */,
-				4DD423122603BD5A0027DCDC /* AudioCell.m */,
-				4DB5B18C2602D25700583C54 /* AudioLibraryViewController.h */,
-				4DB5B18D2602D25700583C54 /* AudioLibraryViewController.m */,
-				4DB7994D25F19E4F004C1C8B /* ClickTrackSessionVC.h */,
-				4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */,
-				4D925A5625EC68E600907574 /* CreateSessionDetailVC.h */,
-				4D925A5725EC68E700907574 /* CreateSessionDetailVC.m */,
-				528F64FD25F2C51300021C64 /* GoogleService-Info.plist */,
-				4D925A5925EC68E700907574 /* HomeSessionVC.h */,
-				4D925A5A25EC68E700907574 /* HomeSessionVC.m */,
-				529E89B025D4F16C004CD9B4 /* HomeViewController.h */,
-				529E89B125D4F16C004CD9B4 /* HomeViewController.m */,
-				529E89BB25D4F16E004CD9B4 /* Info.plist */,
-				4D925A5825EC68E700907574 /* JoinSessionDetailVC.h */,
-				4D925A5C25EC68E700907574 /* JoinSessionDetailVC.m */,
-				529E89B825D4F16E004CD9B4 /* LaunchScreen.storyboard */,
-				529E89BC25D4F16E004CD9B4 /* main.m */,
-				529E89B325D4F16C004CD9B4 /* Main.storyboard */,
-				4DD423152603F4F30027DCDC /* MergeAudioCell.h */,
-				4DD423162603F4F30027DCDC /* MergeAudioCell.m */,
-				4DB7994925F19CBB004C1C8B /* MergeSessionVC.h */,
-				4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */,
-				4D925A5525EC68E600907574 /* RecordingSessionVC.h */,
-				4D925A5B25EC68E700907574 /* RecordingSessionVC.m */,
-				529E89AD25D4F16C004CD9B4 /* SceneDelegate.h */,
-				529E89AE25D4F16C004CD9B4 /* SceneDelegate.m */,
-				4DB3246125E56614006B09B4 /* SettingsViewController.h */,
-				4DB3246225E56614006B09B4 /* SettingsViewController.m */,
-				4DB3245925E5656D006B09B4 /* SignupViewController.h */,
-				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
-				4D925A6225ECA1FE00907574 /* ToottiDefinitions.h */,
+				4D28D009262B4ECD00AE9658 /* Cells */,
+				4D28D011262B4FB000AE9658 /* Delegates */,
+				4D28D010262B4F8D00AE9658 /* Storyboards */,
 				4D86E8BA25F2C6EE00A70623 /* Utilities */,
-				4D8B0120260B8891006659AC /* ShareLinkVC.h */,
-				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
-				4DC50FE426162DCD0098C52E /* UserStatusCell.h */,
-				4DC50FE526162DCD0098C52E /* UserStatusCell.m */,
-				4DB28EAB2617656F00139216 /* ActivityIndicator.h */,
-				4DB28EAC2617656F00139216 /* ActivityIndicator.m */,
+				4D28D00C262B4F0600AE9658 /* View Controllers */,
+				528F64FD25F2C51300021C64 /* GoogleService-Info.plist */,
+				529E89BB25D4F16E004CD9B4 /* Info.plist */,
+				529E89BC25D4F16E004CD9B4 /* main.m */,
 			);
 			path = Tootti;
 			sourceTree = "<group>";
