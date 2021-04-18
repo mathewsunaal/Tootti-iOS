@@ -11,9 +11,11 @@
 #import "AudioCell.h"
 #import "Session.h"
 #import "ApplicationState.h"
+#import "ActivityIndicator.h"
 
 @interface AudioLibraryViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, retain) Session *cachedSessionLibraryVC;
+@property (nonatomic) int uploadCount;
 @end
 
 @implementation AudioLibraryViewController
@@ -142,6 +144,8 @@
     if([self.selectedRecordings count] == 0) {
         NSLog(@"No tracks selected!");
     }
+    
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
     // Add new audio object to library VC
     MergeSessionVC *mergeVC = self.tabBarController.viewControllers[4];
     if(mergeVC.audioTracks == nil){
@@ -158,12 +162,30 @@
     NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
     NSLog(@"112111222222222209878932642364782634876234876238746");
     NSLog(@"%@", username);
+    self.uploadCount=0;
     for(Audio *track in self.selectedRecordings){
-        [track uploadAudioSound: userID sessionUid: sessionID username: username];
+        [track uploadAudioSound: userID sessionUid: sessionID username: username completionBlock: ^(BOOL success, NSURL *downloadURL) {
+            NSLog(@"Library: Starting upload to Firebase");
+            if (success){
+                NSLog(@"Library: Uploaded %@ track to Firebase successfully",track.audioName);
+                NSLog(@"Library: Download URL is %@",downloadURL);
+                self.uploadCount++;
+                // Check to see if all selected recordings have been uploaded successfully (TODO: duplicate uploads considered successful for moving on to Merge page
+                if(self.uploadCount >= [self.selectedRecordings count]) {
+                    self.uploadCount=0;
+                    [[ActivityIndicator sharedInstance] stop];
+                    //Navigate to merge tracks now
+                    [self.tabBarController setSelectedIndex:4];
+                }
+            } else {
+                NSLog(@"Library: Failed to upload track %@",track.audioName);
+                //TODO: add alertview and handle failed uploads for user
+                [[ActivityIndicator sharedInstance] stop];
+            }
+        }];
     }
     
-    //Navigate to merge tracks now
-    [self.tabBarController setSelectedIndex:4];
+
 }
 
 #pragma mark - AudioLibTableView methods

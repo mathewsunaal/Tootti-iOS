@@ -71,7 +71,8 @@
     
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
-                 username: (NSString *) username{
+                 username: (NSString *) username
+          completionBlock:(void (^)(BOOL success, NSURL *finalDownloadURL))completionBlock {
     //upload the audio sound to fire storage
     FIRStorage *storage = [FIRStorage storage];
     FIRFirestore *db =  [FIRFirestore firestore];
@@ -86,7 +87,7 @@
     FIRStorageReference *audioRef = [storage referenceForURL: audioFilePath];
     FIRStorageUploadTask *uploadTask = [audioRef putFile: dataFile metadata:metadata completion:^(FIRStorageMetadata *metadata, NSError *error) {
       if (error != nil) {
-        // Uh-oh, an error occurred!
+          NSLog(@"Error detecting in uploading Library track to Firebase");
       } else {
         // You can also access to download URL after upload.
         [audioRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
@@ -106,8 +107,9 @@
                   @"guestPlayerList": [FIRFieldValue fieldValueForArrayUnion:@[audioDict]]
               } completion:^(NSError * _Nullable error) {
                   //Save the audioFile to firestore
-                  NSLog(@"Audio file is saved successfully");
+                  NSLog(@"Library audio file successfully");
                   NSLog(@"Dowload URL is %@", downloadURL);
+                  if (completionBlock != nil) completionBlock(YES,downloadURL);
               }];
           }
         }];

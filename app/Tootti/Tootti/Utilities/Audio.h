@@ -37,7 +37,8 @@
 - (void) stopAudio;
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
-                 username: (NSString *) username;
+                 username: (NSString *) username
+          completionBlock:(void (^)(BOOL success, NSURL *finalDownloadURL))completionBlock;
 - (void) uploadTypedAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
                 audioType: (NSString *) audioType
