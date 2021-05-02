@@ -206,7 +206,8 @@
     
     // Setup AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                       withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
     if (!success) {
         NSLog(@"AVAudioSession error setting category:%@",error.description);
     }
@@ -360,7 +361,9 @@
     [self.clickTrack stopAudio];
     // Deactivate audio session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    BOOL success = [audioSession setActive:NO error:&error];
+    //Enable "NotifyOthersOnDeactivation" to allow other apps to intervene and use AudioSession
+    BOOL success = [audioSession setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
+    //BOOL success = [audioSession setActive:NO error:&error];
     if (!success) {
         NSLog(@"AVAudioSession error deactivating: %@",error);
     } else {
