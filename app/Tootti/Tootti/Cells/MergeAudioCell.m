@@ -23,6 +23,10 @@
         [self.cellPlayer stop];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"play.circle"] forState:UIControlStateNormal];
     } else {
+        //This ensures playback on silent mode too (music track playback)
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                         withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker
+                                               error:nil];
         self.cellPlayer.currentTime = 0;
         [self.cellPlayer play];
         [sender setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];

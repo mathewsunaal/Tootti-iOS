@@ -171,30 +171,6 @@
     [self.userTypeLabel setTextColor:[UIColor whiteColor]];
 }
 
--(BOOL) renameRecordedFile: (NSString *)newFileName {
-    NSError * err = NULL;
-    NSArray *pathComponents = [NSArray arrayWithObjects:
-                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               [self getAudioPathwithName:newFileName fileFormat:@".wav"],
-                               nil];
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:self.audioRecorder.url error:nil];
-    [self.audioPlayer setDelegate:self];
-    [self.audioPlayer play];
-    NSURL *newPathURL = [NSURL fileURLWithPathComponents:pathComponents];
-    BOOL result;
-    result = [[NSFileManager defaultManager] fileExistsAtPath:self.audioRecorder.url.absoluteString];
-    NSLog(@"FIle exists at %@? %d",self.audioRecorder.url,result);
-//    result = [[NSFileManager defaultManager] moveItemAtPath:self.audioRecorder.url.absoluteString
-//                                                        toPath:newPathURL
-//                                                         error:&err];
-    if(!result) {
-        NSLog(@"Error: %@", err);
-    }
-    
-    return result;
-}
-
-
 // Get path for storage
 -(NSString *) getAudioPathwithName:(NSString *)name fileFormat: (NSString *)audioFormat  {
     return [NSString stringWithFormat:@"%@%@", name,audioFormat];
@@ -207,16 +183,10 @@
     // Setup AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
     success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                       withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
+                       withOptions:AVAudioSessionCategoryOptionAllowBluetooth
+                             error:&error];
     if (!success) {
         NSLog(@"AVAudioSession error setting category:%@",error.description);
-    }
-    if (speaker) {
-        // Set the audioSession override
-        success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-        if (!success) {
-            NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-        }
     }
     
     // Define AVAudioRecorder settings (PCM,44100,2xchannels)
@@ -246,12 +216,6 @@
     self.waveformTimer = nil;
     [self.wv removeFromSuperview];
     [self.waveFormView reloadInputViews];
-}
-
-- (IBAction)testButton:(UIButton *)sender {
-    
-    //TODO: remove after alertview implemented
-    [self renameRecordedFile:@"test-track"];
 }
 
 -(void)prepareForNewRecording {
@@ -319,8 +283,10 @@
     NSError *error;
     [self startWaveform];
     // Activate AVAudioSession
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    BOOL success = [session setActive:YES error:&error];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
+                                     withOptions:AVAudioSessionCategoryOptionAllowBluetooth
+                                           error:&error];
+    BOOL success = [[AVAudioSession sharedInstance] setActive:YES error:&error];
     if (!success) {
         NSLog(@"AVAudioSession error activating: %@",error);
         return;
@@ -328,12 +294,17 @@
     else {
          NSLog(@"AudioSession active");
     }
-    // Setup recording
-    [self prepareForNewRecording];
+    
+
     // Start recording
+    [self prepareForNewRecording];
     BOOL result = [self.audioRecorder record];
     if(result) {
         NSLog(@"Audio recordring!");
+        // Disable idle timer so screen doesn't dim or lock when recording
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+
+        // Setup clictrack
         self.clickTrack.player.currentTime = 0;
         [self.clickTrack playAudio];
         [self startTimer];
@@ -355,20 +326,16 @@
     NSError *error;
     [self resetTimer];
     if(self.audioRecorder.isRecording == NO){
+        NSLog(@"No recording detected!!");
         return;
     }
     [self.audioRecorder stop];
     [self.clickTrack stopAudio];
     // Deactivate audio session
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    //Enable "NotifyOthersOnDeactivation" to allow other apps to intervene and use AudioSession
-    BOOL success = [audioSession setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
-    //BOOL success = [audioSession setActive:NO error:&error];
-    if (!success) {
-        NSLog(@"AVAudioSession error deactivating: %@",error);
-    } else {
-         NSLog(@"AudioSession inactive");
-    }
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
+    // Disable the idletimer to allow screen to dim if needed
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+
     //Update Firestore hostStartRecording field
     NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
     if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){

@@ -280,6 +280,10 @@ void myDeleteFile (NSString* path){
         [self.audioPlayer stop];
         [self.playTrackButton setTitle:@"Play track" forState:UIControlStateNormal];
     } else {
+        //This ensures playback on silent mode too (music track playback)
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
+                                         withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker
+                                               error:nil];
         self.audioPlayer.currentTime = 0;
         [self.audioPlayer play];
         [self.playTrackButton setTitle:@"Stop playback" forState:UIControlStateNormal];
