@@ -350,7 +350,9 @@ Audio *_audio;
                 [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
                     NSLog(@"!!!!!!!!!!!!!!!");
                     if (success){
+                        NSLog(@"merged track is: \n %@",self.merge.mergedTrack);
                         dispatch_async(dispatch_get_main_queue(), ^{
+                            [self shareTracks:@[[self.merge.mergedTrack getURL]]];
                             UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
                                                                                                 message:@"The final merged track is uploaded and ready to share.\nTap Share to copy the download link!"
                                                                                          preferredStyle:UIAlertControllerStyleAlert];
@@ -369,7 +371,7 @@ Audio *_audio;
                             }];
                             [alertVC addAction:shareButton];
                             [alertVC addAction:cancelButton];
-                            [self presentViewController:alertVC animated:YES completion:nil];
+                            //[self presentViewController:alertVC animated:YES completion:nil];
                         });
                         [[ActivityIndicator sharedInstance] stop];
                     }
@@ -379,6 +381,14 @@ Audio *_audio;
     });
       // Move to confirmation share screen
 //    [self performSegueWithIdentifier:@"showShareLink" sender:self];
+}
+- (void)shareTracks:(NSArray *)tracks {
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:tracks applicationActivities:nil];
+        
+    // and present it
+    [self presentViewController:controller animated:YES completion:^{
+        // executes after the user selects something
+    }];
 }
 
 - (IBAction)completeSession:(UIButton *)sender {

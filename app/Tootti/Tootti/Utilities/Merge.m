@@ -54,20 +54,20 @@
     AVMutableComposition *composition = [AVMutableComposition composition];
     for (Audio *audioTrack in self.audioTracks){
         // 2) Get track as AVAsset
-        AVURLAsset* audioAsset;
+        AVURLAsset* audioURLAsset;
         //TODO: Local filepath not loading to AVURLAsset //Determine whether local or remote URL and initialize AVURLAsset accordingly
         if ([[audioTrack getURL] isFileURL]) {
-            audioAsset = [[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:audioTrack.audioURL] options:nil];
+            audioURLAsset = [[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:audioTrack.audioURL] options:nil];
         } else {
-            audioAsset = [[AVURLAsset alloc]initWithURL:[audioTrack getURL] options:nil];
+            audioURLAsset = [[AVURLAsset alloc]initWithURL:[audioTrack getURL] options:nil];
         }
         NSLog(@"URL of %@ is: %@",audioTrack.audioName,audioTrack.audioURL);
         
         // 3) Add track to composition as a AVMutableCompositionTrack
         NSError *error;
         AVMutableCompositionTrack *compTrack = [composition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
-        [compTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioAsset.duration)
-                           ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0]
+        [compTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioURLAsset.duration)
+                           ofTrack:[[audioURLAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0]
                             atTime:kCMTimeZero
                              error:&error];
         if (error) {
