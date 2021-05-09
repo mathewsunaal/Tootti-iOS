@@ -80,8 +80,9 @@ Audio *_audio;
 - (void) setupViews {
     // Set background colour of view controller
     [self.view setBackgroundColor: BACKGROUND_LIGHT_TEAL];
-    [self setupButton:self.mergeButton];
-    [self setupButton:self.doneButton];
+    [self setupButton:self.mergeShareButton];
+    [self setupButton:self.clickTrackButton];
+    
     // Setup table
     self.mergeTableView.delegate = self;
     self.mergeTableView.dataSource = self;
@@ -319,8 +320,6 @@ Audio *_audio;
 - (IBAction)mergeTracks:(UIButton *)sender {
     NSLog(@"Merge and render all tracks");
     
-//    Audio *s1 = [[Audio alloc] initWithAudioName:@"Flute-1" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-1" ofType:@".wav"]];
-//    Audio *s2 = [[Audio alloc] initWithAudioName:@"Flute-2" audioURL:[[NSBundle mainBundle] pathForResource:@"Flute-2" ofType:@".wav"]];
     if([self.selectedTracks count] == 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"No tracks selected for merge!"
@@ -343,44 +342,26 @@ Audio *_audio;
         }
         NSString *hostUid = self.cachedSessionMerged.hostUid;
         NSString *hostUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
-        [self.merge performMerge: ^(BOOL success) {
-            if (success){
-                NSString *sessionId =  self.cachedSessionMerged.uid;
-                NSString *hostId = self.cachedSessionMerged.hostUid;
-                [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
-                    NSLog(@"!!!!!!!!!!!!!!!");
+        [self.merge performMerge:hostUid
+                    hostUsername:hostUsername
+                  mergedFileName:@"finalMergedTrack"
+                 completionBlock:^(BOOL success) {
                     if (success){
-                        NSLog(@"merged track is: \n %@",self.merge.mergedTrack);
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self shareTracks:@[[self.merge.mergedTrack getURL]]];
-                            UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Final merged track ready!"
-                                                                                                message:@"The final merged track is uploaded and ready to share.\nTap Share to copy the download link!"
-                                                                                         preferredStyle:UIAlertControllerStyleAlert];
-                            UIAlertAction* shareButton = [UIAlertAction actionWithTitle:@"Share" style:UIAlertActionStyleDefault
-                            handler:^(UIAlertAction * action) {
-                                // Copy link to clipboard
-                                NSLog(@"Share this final merged track at: %@",finalDownloadURL.absoluteString);
-                                UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-                                pasteBoard.string = finalDownloadURL.absoluteString;
-                                                    
-                            }];
-                            UIAlertAction* cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
-                            handler:^(UIAlertAction * action) {
-                                //Perform any clear or reset operations for session
-                                [self.mergeTableView reloadData];
-                            }];
-                            [alertVC addAction:shareButton];
-                            [alertVC addAction:cancelButton];
-                            //[self presentViewController:alertVC animated:YES completion:nil];
-                        });
-                        [[ActivityIndicator sharedInstance] stop];
+                        NSString *sessionId =  self.cachedSessionMerged.uid;
+                        NSString *hostId = self.cachedSessionMerged.hostUid;
+                        [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"finalMergedResultRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
+                            NSLog(@"!!!!!!!!!!!!!!!");
+                            if (success){
+                                NSLog(@"merged track is: \n %@",self.merge.mergedTrack);
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self shareTracks:@[[self.merge.mergedTrack getURL]]];
+                                });
+                                [[ActivityIndicator sharedInstance] stop];
+                            }
+                        }];
                     }
                 }];
-            }
-        } hostUid:hostUid hostUsername:hostUsername];
     });
-      // Move to confirmation share screen
-//    [self performSegueWithIdentifier:@"showShareLink" sender:self];
 }
 - (void)shareTracks:(NSArray *)tracks {
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:tracks applicationActivities:nil];
@@ -391,9 +372,63 @@ Audio *_audio;
     }];
 }
 
-- (IBAction)completeSession:(UIButton *)sender {
-    NSLog(@"Session completed");
+- (IBAction)mergeForClicktrack:(UIButton *)sender {
+    NSLog(@"Merge for Clicktrack");
+    
+    if([self.selectedTracks count] == 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"No tracks selected!"
+                                                                                message:@"Please select the tracks to merge for clicktrack.\nThe yellow highlight indicates that a track is selected."
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+            handler:^(UIAlertAction * action) {
+                [self.mergeTableView reloadData];
+                                    
+            }];
+            [alertVC addAction:okButton];
+            [self presentViewController:alertVC animated:YES completion:nil];
+        });
+    }
+    [[ActivityIndicator sharedInstance] startWithSuperview:self.view];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        self.merge = [[Merge alloc] init];
+        for(Audio *selectedTrack in self.selectedTracks) {
+            [self.merge addAudio:selectedTrack];
+        }
+        NSString *hostUid = self.cachedSessionMerged.hostUid;
+        NSString *hostUsername = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+        [self.merge performMerge:hostUid
+                    hostUsername:hostUsername
+                  mergedFileName:@"mergedClickTrack"
+                 completionBlock:^(BOOL success) {
+                    if (success){
+                        NSString *sessionId =  self.cachedSessionMerged.uid;
+                        NSString *hostId = self.cachedSessionMerged.hostUid;
+                        [self.merge.mergedTrack uploadTypedAudioSound:hostId sessionUid:sessionId audioType:@"clickTrackRef" completionBlock: ^(BOOL success, NSURL *finalDownloadURL) {
+                            NSLog(@"!!!!!!!!!!!!!!!");
+                            if (success){
+                                NSLog(@"Successfully uploaded the clicktrack");
+                                [self.tabBarController setSelectedIndex:1]; // move to record page
+                                UIAlertController * alertVC = [UIAlertController
+                                                               alertControllerWithTitle:@"Your clicktrack has been updated!"
+                                                                                message:nil
+                                                               preferredStyle:UIAlertControllerStyleAlert];
+                                UIAlertAction* okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    
+                                }];
+                                [alertVC addAction:okButton];
+                                [self presentViewController:alertVC animated:YES completion:nil];
+                            } else {
+                                NSLog(@"Failed to upload the clicktrack");
+                            }
+                            [[ActivityIndicator sharedInstance] stop];
+                        }];
+                    }
+                }];
+    });
 }
+
 
 - (IBAction)play:(UIButton *)sender {
     if(!self.isMergePlaying) {

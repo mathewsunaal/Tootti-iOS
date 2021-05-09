@@ -122,8 +122,7 @@
 - (void) uploadTypedAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
                       audioType: (NSString *) audioType
-               completionBlock:(void (^)(BOOL success, NSURL *finalDownloadURL))completionBlock
-                    {
+               completionBlock:(void (^)(BOOL success, NSURL *finalDownloadURL))completionBlock {
     //upload the audio sound to fire storage
     FIRStorage *storage = [FIRStorage storage];
     FIRFirestore *db =  [FIRFirestore firestore];

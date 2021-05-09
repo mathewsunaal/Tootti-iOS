@@ -44,9 +44,10 @@
     [track playAudio];
 }
 
--(BOOL)performMerge: (void (^)(BOOL success))completionBlock
-            hostUid: (NSString *) hostUid
-        hostUsername: (NSString *) hostUsername
+-(BOOL)performMerge:(NSString *) hostUid
+       hostUsername:(NSString *) hostUsername
+     mergedFileName:(NSString *) fileName
+    completionBlock:(void (^)(BOOL success))completionBlock
 {
     NSLog(@"%@",self.audioTracks);
     
@@ -78,8 +79,8 @@
     // 4) Create AVAsset Export Session
     //TODO: AVAssetExportPresetPassthrough is supposed to allow ".wav" but doesn't seem to work --> using .m4a for now
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:composition presetName:AVAssetExportPresetAppleM4A];
-    NSString* mixedAudio = @"finalMergedTrack.m4a";
-    NSString *exportPath = [NSTemporaryDirectory() stringByAppendingString:mixedAudio];
+    NSString* endFilePath = [NSString stringWithFormat:@"%@%@",fileName,@".m4a"];
+    NSString *exportPath = [NSTemporaryDirectory() stringByAppendingString:endFilePath];
     NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:exportPath]) {
         [[NSFileManager defaultManager]removeItemAtPath:exportPath error:nil];

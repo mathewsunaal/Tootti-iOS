@@ -17,9 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithSettings:(NSDictionary *)settings;
 - (void)addAudio:(Audio *)track;
-- (BOOL)performMerge: (void (^)(BOOL success))completion
-          hostUid: (NSString *) hostUid
-           hostUsername: (NSString *) hostUsername;
+-(BOOL)performMerge:(NSString *) hostUid
+       hostUsername:(NSString *) hostUsername
+     mergedFileName:(NSString *) fileName
+    completionBlock:(void (^)(BOOL success))completionBlock;
 
 //TODO: delete after
 -(void)testTrackAtIndex:(NSUInteger)index;

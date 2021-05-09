@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 @property (weak, nonatomic) IBOutlet UILabel *sessionCodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userTypeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *mergeButton;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *mergeShareButton;
+@property (weak, nonatomic) IBOutlet UIButton *clickTrackButton;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *rewindButton;
 @property (weak, nonatomic) IBOutlet UIButton *forwardButton;
