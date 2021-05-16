@@ -131,6 +131,7 @@
 
 - (IBAction)viewPastSessions:(UIButton *)sender {
     NSLog(@"View Past Sessions button pressed");
+    [self performSegueWithIdentifier:@"showPastSessions" sender:self];
 }
 
 - (IBAction)logOutTapped:(id)sender {

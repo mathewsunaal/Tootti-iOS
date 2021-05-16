@@ -35,6 +35,8 @@
 		4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994A25F19CBB004C1C8B /* MergeSessionVC.m */; };
 		4DB7994F25F19E4F004C1C8B /* ClickTrackSessionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */; };
 		4DC50FE626162DCD0098C52E /* UserStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC50FE526162DCD0098C52E /* UserStatusCell.m */; };
+		4DD0FAF126501A1C000C7F94 /* ViewPastSessionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD0FAF026501A1C000C7F94 /* ViewPastSessionsVC.m */; };
+		4DD0FAF426502955000C7F94 /* SessionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD0FAF326502955000C7F94 /* SessionCell.m */; };
 		4DD423132603BD5A0027DCDC /* AudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423122603BD5A0027DCDC /* AudioCell.m */; };
 		4DD423172603F4F30027DCDC /* MergeAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD423162603F4F30027DCDC /* MergeAudioCell.m */; };
 		4DD9122425F96CF50021F3C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9122325F96CF50021F3C8 /* MediaPlayer.framework */; };
@@ -97,6 +99,10 @@
 		4DB7994E25F19E4F004C1C8B /* ClickTrackSessionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickTrackSessionVC.m; sourceTree = "<group>"; };
 		4DC50FE426162DCD0098C52E /* UserStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserStatusCell.h; sourceTree = "<group>"; };
 		4DC50FE526162DCD0098C52E /* UserStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserStatusCell.m; sourceTree = "<group>"; };
+		4DD0FAEF26501A1C000C7F94 /* ViewPastSessionsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewPastSessionsVC.h; sourceTree = "<group>"; };
+		4DD0FAF026501A1C000C7F94 /* ViewPastSessionsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewPastSessionsVC.m; sourceTree = "<group>"; };
+		4DD0FAF226502955000C7F94 /* SessionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SessionCell.h; sourceTree = "<group>"; };
+		4DD0FAF326502955000C7F94 /* SessionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SessionCell.m; sourceTree = "<group>"; };
 		4DD423112603BD5A0027DCDC /* AudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioCell.h; sourceTree = "<group>"; };
 		4DD423122603BD5A0027DCDC /* AudioCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioCell.m; sourceTree = "<group>"; };
 		4DD423152603F4F30027DCDC /* MergeAudioCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MergeAudioCell.h; sourceTree = "<group>"; };
@@ -156,6 +162,8 @@
 				4DD423162603F4F30027DCDC /* MergeAudioCell.m */,
 				4DC50FE426162DCD0098C52E /* UserStatusCell.h */,
 				4DC50FE526162DCD0098C52E /* UserStatusCell.m */,
+				4DD0FAF226502955000C7F94 /* SessionCell.h */,
+				4DD0FAF326502955000C7F94 /* SessionCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -185,6 +193,8 @@
 				4DB3245A25E5656D006B09B4 /* SignupViewController.m */,
 				4D8B0120260B8891006659AC /* ShareLinkVC.h */,
 				4D8B0121260B8891006659AC /* ShareLinkVC.m */,
+				4DD0FAEF26501A1C000C7F94 /* ViewPastSessionsVC.h */,
+				4DD0FAF026501A1C000C7F94 /* ViewPastSessionsVC.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -440,9 +450,11 @@
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
 				4D86E8C525F2C6EE00A70623 /* Session.m in Sources */,
+				4DD0FAF126501A1C000C7F94 /* ViewPastSessionsVC.m in Sources */,
 				4D86E8C925F2C6EE00A70623 /* Audio.m in Sources */,
 				529E89AC25D4F16C004CD9B4 /* AppDelegate.m in Sources */,
 				4DB5B18E2602D25700583C54 /* AudioLibraryViewController.m in Sources */,
+				4DD0FAF426502955000C7F94 /* SessionCell.m in Sources */,
 				529E89BD25D4F16E004CD9B4 /* main.m in Sources */,
 				4DB7994B25F19CBB004C1C8B /* MergeSessionVC.m in Sources */,
 				529E89AF25D4F16C004CD9B4 /* SceneDelegate.m in Sources */,
