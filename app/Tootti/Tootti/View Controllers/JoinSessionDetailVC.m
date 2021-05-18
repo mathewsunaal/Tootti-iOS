@@ -170,7 +170,7 @@ ClickTrackSessionVC *vc;
         }];
 }
 
-
+#pragma mark - navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -178,7 +178,7 @@ ClickTrackSessionVC *vc;
         UITabBarController *tabBarVC = [segue destinationViewController];
         //ClickTrackSessionVC *vc = (ClickTrackSessionVC *) [tabBarVC.viewControllers objectAtIndex:1];
         //[vc setCachedSession:self.session];
-        [tabBarVC setSelectedIndex:1];
+        [tabBarVC setSelectedIndex:2]; // navigate to recording 
         }
 }
 

@@ -14,12 +14,12 @@
     // Initialization code
 }
 
--(void)setSessionCell:(NSString *)sessionName numberOfCollaborators:(int)colabCount numberOfTracks:(int)trackCount host:(NSString *)hostUserName {
+-(void)setSessionCell:(NSString *)sessionName numberOfCollaborators:(NSUInteger)colabCount numberOfTracks:(NSUInteger)trackCount host:(NSString *)hostUserName {
     
     [self.sessionName setText:sessionName];
     [self.hostUserLabel setText:hostUserName];
-    [self.numCollaboratorsLabel setText:[NSString stringWithFormat:@"%i",colabCount]];
-    [self.numTracksLabel setText:[NSString stringWithFormat:@"%i",trackCount]];
+    [self.numCollaboratorsLabel setText:[NSString stringWithFormat:@"%lu",(unsigned long)colabCount]];
+    [self.numTracksLabel setText:[NSString stringWithFormat:@"%lu",(unsigned long)trackCount]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

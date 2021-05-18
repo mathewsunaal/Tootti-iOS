@@ -10,6 +10,7 @@
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *sessionName;
 @property (strong, nonatomic) NSString *hostUid;
+@property (strong, nonatomic) NSString *hostUsername;
 @property (strong, nonatomic) NSArray *guestPlayerList;
 @property (strong, nonatomic) NSArray *currentPlayerList;
 @property (strong, nonatomic) Audio *clickTrack;

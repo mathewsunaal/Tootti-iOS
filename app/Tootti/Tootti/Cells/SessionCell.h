@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *hostUserLabel;
 
 
--(void)setSessionCell:(NSString *)sessionName numberOfCollaborators:(int)colabCount numberOfTracks:(int)trackCount host:(NSString *)hostUserName;
+-(void)setSessionCell:(NSString *)sessionName numberOfCollaborators:(NSUInteger)colabCount numberOfTracks:(NSUInteger)trackCount host:(NSString *)hostUserName;
 @end
 
 NS_ASSUME_NONNULL_END
