@@ -11,7 +11,7 @@
 #import "ActivityIndicator.h"
 
 @interface CreateSessionDetailVC () <UITextFieldDelegate>
-
+@property (nonatomic, readwrite) FIRFirestore *db;
 @end
 
 @implementation CreateSessionDetailVC
@@ -60,37 +60,62 @@
     // TODO:Check if session name exists
     NSMutableDictionary *recordedAudioDict = [[NSMutableDictionary alloc] init];
     Session *sn = [[Session alloc] initWithUid:sessionUid sessionName: sessionName hostUid:hostUid guestPlayerList:emptyGuestPlayerList clickTrack:[[Audio alloc] init] recordedAudioDict:recordedAudioDict finalMergedResult:[[Audio alloc] init] hostStartRecording: NO currentPlayerList:currentPlayerList];
-    [sn saveSessionToDatabase: ^(BOOL success) {
-        if (success){
-            FIRFirestore *db =  [FIRFirestore firestore];
-            FIRDocumentReference *userRef = [[db collectionWithPath:@"user"] documentWithPath:hostUid];
-            NSMutableArray *joinedSessionList = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"joinedSessions"]];
-            [joinedSessionList addObject:sn.uid];
-            [userRef updateData:@{
-                @"joinedSessions": joinedSessionList
-            } completion:^(NSError * _Nullable error) {
-                //Save the audioFile to firestore
-                if (error){
-                    NSLog(@"%@",error);
-                    [[ActivityIndicator sharedInstance] stop];
-                }
-                else{
-                    NSLog(@"Audio file is saved successfully");
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
-                    [[NSUserDefaults standardUserDefaults] setObject: [[ NSArray alloc] initWithArray: joinedSessionList] forKey:@"joinedSessions"];
-                    [[ActivityIndicator sharedInstance] stop];
-                    [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
-                }
+    //verify the duplicate
+    self.db =  [FIRFirestore firestore];
+    [[[[self.db collectionWithPath:@"session"] queryWhereField:@"hostUid" isEqualTo: hostUid ] queryWhereField:@"sessionName" isEqualTo:sessionName]
+        getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+              if (error != nil) {
+                NSLog(@"Error getting documents: %@", error);
+              } else {
+                  if ([snapshot.documents count] > 0) {
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          UIAlertController * alertVC = [UIAlertController alertControllerWithTitle:@"Session name exists!"
+                                                                                              message:@"Please create a new one."
+                                                                                       preferredStyle:UIAlertControllerStyleAlert];
+                          UIAlertAction* okButton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                          handler:^(UIAlertAction * action) {
+                              // Handle stuff incase of session not found
+                          }];
+                          [alertVC addAction:okButton];
+                          [self presentViewController:alertVC animated:YES completion:nil];
+                      });
+                      [[ActivityIndicator sharedInstance] stop];
+                  }
+                  else{
+                      //save the session
+                      [sn saveSessionToDatabase: ^(BOOL success) {
+                          if (success){
+                              FIRFirestore *db =  [FIRFirestore firestore];
+                              FIRDocumentReference *userRef = [[db collectionWithPath:@"user"] documentWithPath:hostUid];
+                              NSMutableArray *joinedSessionList = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"joinedSessions"]];
+                              [joinedSessionList addObject:sn.uid];
+                              [userRef updateData:@{
+                                  @"joinedSessions": joinedSessionList
+                              } completion:^(NSError * _Nullable error) {
+                                  //Save the audioFile to firestore
+                                  if (error){
+                                      NSLog(@"%@",error);
+                                      [[ActivityIndicator sharedInstance] stop];
+                                  }
+                                  else{
+                                      NSLog(@"Audio file is saved successfully");
+                                      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"joinedSessions"];
+                                      [[NSUserDefaults standardUserDefaults] setObject: [[ NSArray alloc] initWithArray: joinedSessionList] forKey:@"joinedSessions"];
+                                      [[ActivityIndicator sharedInstance] stop];
+                                      [self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+                                  }
+                              }];
+                              //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
+                          } else {
+                              // ERROR saving session to database
+                              NSLog(@"Error saving new session to database");
+                              [[ActivityIndicator sharedInstance] stop];
+                          }
+                      }];
+                  }
+        
+                    }
             }];
-            //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
-        } else {
-            // ERROR saving session to database
-            NSLog(@"Error saving new session to database");
-            [[ActivityIndicator sharedInstance] stop];
-        }
-    }];
-    //save the new session
-    //[self performSegueWithIdentifier:@"createSessionRecording" sender:self];
 }
 
 #pragma mark - Navigation
