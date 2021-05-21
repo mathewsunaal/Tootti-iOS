@@ -1621,6 +1621,8 @@
                                     <constraint firstAttribute="width" constant="220" id="4eo-3l-skj">
                                         <variation key="heightClass=regular-widthClass=compact" constant="330"/>
                                     </constraint>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="330" id="Fhx-Xg-eDQ"/>
+                                    <constraint firstAttribute="height" constant="34" id="NTK-PF-4bB"/>
                                     <constraint firstAttribute="width" constant="500" id="iqi-on-cc0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1656,20 +1658,48 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Host Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="532-Om-7Wg">
+                                <rect key="frame" x="49" y="292" width="330" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="500" id="RiH-xq-EPC"/>
+                                    <constraint firstAttribute="height" constant="34" id="cP4-AP-GKe"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="330" id="fHm-2J-jnU"/>
+                                    <constraint firstAttribute="width" constant="220" id="zoV-Ka-DLl">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="330"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="zoV-Ka-DLl"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="RiH-xq-EPC"/>
+                                        <include reference="zoV-Ka-DLl"/>
+                                    </mask>
+                                </variation>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zhs-Gp-HvE"/>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="MWB-Sz-C2Y" firstAttribute="centerX" secondItem="w3Q-Aw-XRw" secondAttribute="centerX" id="22P-gF-Uwb"/>
-                            <constraint firstItem="MWB-Sz-C2Y" firstAttribute="top" secondItem="w3Q-Aw-XRw" secondAttribute="bottom" constant="50" id="Dtm-A6-FKU"/>
                             <constraint firstItem="w3Q-Aw-XRw" firstAttribute="top" secondItem="zhs-Gp-HvE" secondAttribute="top" constant="30" id="GVt-kR-QKF"/>
+                            <constraint firstItem="532-Om-7Wg" firstAttribute="leading" secondItem="zhs-Gp-HvE" secondAttribute="leading" constant="49" id="OLc-6d-bZY"/>
                             <constraint firstItem="WpL-R4-KWQ" firstAttribute="top" secondItem="MWB-Sz-C2Y" secondAttribute="bottom" constant="40" id="OVP-L9-HDC">
                                 <variation key="heightClass=regular-widthClass=compact" constant="60"/>
                             </constraint>
                             <constraint firstItem="w3Q-Aw-XRw" firstAttribute="centerX" secondItem="YsY-Hs-mMJ" secondAttribute="centerX" id="PVD-8A-x2l"/>
+                            <constraint firstItem="zhs-Gp-HvE" firstAttribute="trailing" secondItem="MWB-Sz-C2Y" secondAttribute="trailing" constant="49" id="QS2-pJ-yFP"/>
+                            <constraint firstItem="zhs-Gp-HvE" firstAttribute="trailing" secondItem="532-Om-7Wg" secondAttribute="trailing" constant="49" id="TgX-gM-hAd"/>
                             <constraint firstItem="WpL-R4-KWQ" firstAttribute="centerX" secondItem="w3Q-Aw-XRw" secondAttribute="centerX" id="d1E-q3-u7T"/>
                             <constraint firstItem="MWB-Sz-C2Y" firstAttribute="top" secondItem="w3Q-Aw-XRw" secondAttribute="bottom" constant="100" id="dkb-Rm-VMl"/>
+                            <constraint firstItem="MWB-Sz-C2Y" firstAttribute="leading" secondItem="zhs-Gp-HvE" secondAttribute="leading" constant="49" id="pWA-vk-bd2"/>
                             <constraint firstItem="w3Q-Aw-XRw" firstAttribute="top" secondItem="zhs-Gp-HvE" secondAttribute="top" constant="70" id="wGS-Fw-VXu"/>
+                            <constraint firstItem="532-Om-7Wg" firstAttribute="top" secondItem="MWB-Sz-C2Y" secondAttribute="bottom" constant="18" id="xm7-xE-16H"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -1687,6 +1717,7 @@
                     <navigationItem key="navigationItem" id="Kdp-eS-KYh"/>
                     <connections>
                         <outlet property="errorMessage" destination="40b-qI-oId" id="kTv-Sr-diH"/>
+                        <outlet property="hostNameTestField" destination="532-Om-7Wg" id="b5Q-lK-RTM"/>
                         <outlet property="joinSessionButton" destination="WpL-R4-KWQ" id="UXU-3n-Gvt"/>
                         <outlet property="logoImageView" destination="w3Q-Aw-XRw" id="uh0-XP-Yhq"/>
                         <outlet property="sessionCodeTextField" destination="MWB-Sz-C2Y" id="wmA-Nq-3pw"/>
@@ -1889,7 +1920,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Uo9-lX-44t"/>
+        <segue reference="Xbx-20-0tr"/>
         <segue reference="137-yG-boL"/>
     </inferredMetricsTieBreakers>
     <resources>

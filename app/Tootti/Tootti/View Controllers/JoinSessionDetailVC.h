@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITextField *sessionCodeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *joinSessionButton;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessage;
+@property (weak, nonatomic) IBOutlet UITextField *hostNameTestField;
 
 @end
 
