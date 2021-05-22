@@ -61,6 +61,21 @@
         // Lock other tabs
         [self updateTabStatus:NO];
     }
+    
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if ([audioSession recordPermission] == AVAudioSessionRecordPermissionDenied ||
+        [audioSession recordPermission] == AVAudioSessionRecordPermissionUndetermined) {
+        
+        [audioSession requestRecordPermission: ^(BOOL granted) {
+            if (granted) {
+                NSLog(@"Microphone Permission granted");
+            }
+            else {
+                NSLog(@"Microphone Permission denied");
+            }
+        }];
+    }
+    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSessionInfoFromNotification:) name:@"sessionNotification" object:nil];
 }
 
