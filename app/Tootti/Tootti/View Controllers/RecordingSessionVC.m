@@ -97,8 +97,20 @@
     } else {
         [self updateTabStatus:NO]; // Lock other tabBarItems and navigate to home
     }
+    
+    // Setup notification observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleBackgroundStatus:)
+                                                 name:UISceneWillDeactivateNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleForegroundStatus:)
+                                                 name:UISceneDidActivateNotification
+                                               object:nil];
+
 
 }
+
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -240,6 +252,7 @@
     //cachedSessionRecordingVC = [dict valueForKey:@"currentSession"];
 }
 */
+
 #pragma  mark - Button methods
 - (IBAction)recordAudio:(UIButton *)sender {
     NSLog(@"Audio recording pressed");
@@ -262,7 +275,7 @@
     if(sender.on) {
         NSLog(@"User status changed to READY");
         [self.statusLabel setText:@"Ready"];
-        //TODO: Update user status in firebase session
+        // Update user status in Firebase
         [self.cachedSessionRecordingVC updateSessionActivityStatus:YES
                                                                uid:[[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]
                                                    completionBlock:nil];
@@ -270,7 +283,7 @@
     } else {
         NSLog(@"User status changed to STANDBY");
         [self.statusLabel setText:@"Standby"];
-        //TODO: Update user status in firebase session
+        // Update user status in Firebase
         [self.cachedSessionRecordingVC updateSessionActivityStatus:NO
                                                                uid:[[NSUserDefaults standardUserDefaults] stringForKey:@"uid"]
                                                    completionBlock:nil];
@@ -522,5 +535,38 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
+
+#pragma mark - NSNotification Methods
+
+-(void)handleBackgroundStatus:(NSNotification *)notification {
+    NSLog(@"Recording Session: Scene will deactivate");
+    [self.cachedSessionRecordingVC updateCurrentPlayerListWithActivity:NO
+                                 username:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]
+                                      uid:[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]
+                          completionBlock:^(BOOL success) {
+                                if(success) {
+                                    NSLog(@"User removed from session activity!");
+                                } else {
+                                    NSLog(@"Failed to update Firebase-currentPlayerList!");
+                                }
+                        }];
+}
+
+-(void)handleForegroundStatus:(NSNotification *)notification {
+    NSLog(@"Recording Session: Scene did activate");
+    [self.cachedSessionRecordingVC updateCurrentPlayerListWithActivity:YES
+                                 username:[[NSUserDefaults standardUserDefaults] objectForKey:@"username"]
+                                      uid:[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]
+                          completionBlock:^(BOOL success) {
+                                if(success) {
+                                    NSLog(@"User added back to session activity!");
+                                } else {
+                                    NSLog(@"Failed to update Firebase-currentPlayerList!");
+                                }
+                        }];
+    
+    [self updateUsersStatus:self.statusSwitch];
+}
+
 
 @end

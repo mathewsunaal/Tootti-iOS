@@ -130,9 +130,12 @@
     [sessionRef updateData:@{
         @"currentPlayerList": _currentPlayerList
     } completion:^(NSError * _Nullable error) {
-        //Save the audioFile to firestore
-        NSLog(@"Player (%@) has left currentPlayerList",uid);
-        if (completionBlock != nil) completionBlock(YES);
+        if(error) {
+            NSLog(@"Failed to update currentPlayerList in Firebased!");
+        } else {
+            NSLog(@"Player (%@) has left currentPlayerList",uid);
+            if (completionBlock != nil) completionBlock(YES);
+        }
     }];
     return;
 }
