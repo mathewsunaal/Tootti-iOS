@@ -311,28 +311,28 @@
 
     // Start recording
     [self prepareForNewRecording];
+
+    // Setup clictrack
+    self.clickTrack.player.currentTime = 0;
+    [self.clickTrack playAudio];
+    NSLog(@"Starting recording");
     BOOL result = [self.audioRecorder record];
     if(result) {
-        NSLog(@"Audio recordring!");
-        // Disable idle timer so screen doesn't dim or lock when recording
-        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-
-        // Setup clictrack
-        self.clickTrack.player.currentTime = 0;
-        [self.clickTrack playAudio];
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES]; // Disable idle timer so screen doesn't dim or lock when recording
         [self startTimer];
         //Update Firestore hostStartRecording field
         NSString *currentUserId = [[NSUserDefaults standardUserDefaults] stringForKey:@"uid"];
         if([currentUserId isEqual:self.cachedSessionRecordingVC.hostUid]){
             [self.cachedSessionRecordingVC sessionRecordingStatusUpdate:TRUE];
         }
+        // Update UI
+        [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
+        [self setTabBarStatusEnabled:NO];
     } else {
         NSLog(@"Recording failed to start");
+        [self.clickTrack stopAudio];
         return;
     }
-    // Update UI
-    [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
-    [self setTabBarStatusEnabled:NO];
     
 }
 -(void)endRecording:(UIButton *)sender {
