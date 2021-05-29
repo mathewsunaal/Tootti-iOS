@@ -194,6 +194,13 @@
     
     // Setup AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSLog(@"Available audio inputs: /n %@",session.availableInputs[0].dataSources);
+    AVAudioSessionPortDescription *port = [AVAudioSession sharedInstance].availableInputs[0];
+    for (AVAudioSessionDataSourceDescription *source in port.dataSources) {
+        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
+            [session setInputDataSource:source error:nil]; // Force microhpone to Back built-in mic of iPhone (used for voice memos)
+        }
+    }
     success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
                        withOptions:AVAudioSessionCategoryOptionAllowBluetooth
                              error:&error];
@@ -296,16 +303,25 @@
     NSError *error;
     [self startWaveform];
     // Activate AVAudioSession
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSLog(@"Available audio inputs: /n %@",session.availableInputs[0].dataSources);
+    AVAudioSessionPortDescription *port = [AVAudioSession sharedInstance].availableInputs[0];
+    for (AVAudioSessionDataSourceDescription *source in port.dataSources) {
+        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
+            [session setInputDataSource:source error:nil]; // Force microhpone to Back built-in mic of iPhone (used for voice memos)
+        }
+    }
+    BOOL categroySuccess = [session setCategory:AVAudioSessionCategoryPlayAndRecord
                                      withOptions:AVAudioSessionCategoryOptionAllowBluetooth
                                            error:&error];
-    BOOL success = [[AVAudioSession sharedInstance] setActive:YES error:&error];
-    if (!success) {
+    if(!categroySuccess) {
+        NSLog(@"AVAudioSession error setting category:%@",error.description);
+    }
+    
+    BOOL activationSucces = [session setActive:YES error:&error];
+    if (!activationSucces) {
         NSLog(@"AVAudioSession error activating: %@",error);
         return;
-    }
-    else {
-         NSLog(@"AudioSession active");
     }
     
 
