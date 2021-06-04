@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4D2D53FE260E3F6700DA7E32 /* Merge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D53FD260E3F6700DA7E32 /* Merge.m */; };
 		4D2D5402260E461000DA7E32 /* Merge.h in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D53FC260E3F6700DA7E32 /* Merge.h */; };
+		4D59EE9F2663F53B00A7BEAC /* AudioMixer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D59EE9E2663F53B00A7BEAC /* AudioMixer.swift */; };
 		4D86E8C525F2C6EE00A70623 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BB25F2C6EE00A70623 /* Session.m */; };
 		4D86E8C625F2C6EE00A70623 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8BC25F2C6EE00A70623 /* User.m */; };
 		4D86E8C725F2C6EE00A70623 /* HostUserDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D86E8C225F2C6EE00A70623 /* HostUserDecorator.m */; };
@@ -64,6 +65,8 @@
 		20076766DB71A729C47BA469 /* Pods-Tootti.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tootti.release.xcconfig"; path = "Target Support Files/Pods-Tootti/Pods-Tootti.release.xcconfig"; sourceTree = "<group>"; };
 		4D2D53FC260E3F6700DA7E32 /* Merge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Merge.h; sourceTree = "<group>"; };
 		4D2D53FD260E3F6700DA7E32 /* Merge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Merge.m; sourceTree = "<group>"; };
+		4D59EE9D2663F53B00A7BEAC /* Tootti-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tootti-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D59EE9E2663F53B00A7BEAC /* AudioMixer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMixer.swift; sourceTree = "<group>"; };
 		4D86E8BB25F2C6EE00A70623 /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		4D86E8BC25F2C6EE00A70623 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		4D86E8BD25F2C6EE00A70623 /* HostUserDecorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostUserDecorator.h; sourceTree = "<group>"; };
@@ -219,6 +222,15 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
+		4D59EE9C2663F4BA00A7BEAC /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				4D59EE9E2663F53B00A7BEAC /* AudioMixer.swift */,
+				4D59EE9D2663F53B00A7BEAC /* Tootti-Bridging-Header.h */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
 		4D86E8BA25F2C6EE00A70623 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +298,7 @@
 				529E89B625D4F16E004CD9B4 /* Assets.xcassets */,
 				4D28D009262B4ECD00AE9658 /* Cells */,
 				4D28D011262B4FB000AE9658 /* Delegates */,
+				4D59EE9C2663F4BA00A7BEAC /* Swift */,
 				4D28D010262B4F8D00AE9658 /* Storyboards */,
 				4D86E8BA25F2C6EE00A70623 /* Utilities */,
 				4D28D00C262B4F0600AE9658 /* View Controllers */,
@@ -347,6 +360,7 @@
 				TargetAttributes = {
 					529E89A625D4F16C004CD9B4 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -446,6 +460,7 @@
 				4D86E8CF25F2C70C00A70623 /* User.h in Sources */,
 				52671A0925FDF850001E9856 /* MOWaveTableView.m in Sources */,
 				4D925A5E25EC68E700907574 /* HomeSessionVC.m in Sources */,
+				4D59EE9F2663F53B00A7BEAC /* AudioMixer.swift in Sources */,
 				52671A0A25FDF850001E9856 /* MOTimeTableView.m in Sources */,
 				529E89B225D4F16C004CD9B4 /* HomeViewController.m in Sources */,
 				4D925A6025EC68E700907574 /* JoinSessionDetailVC.m in Sources */,
@@ -616,9 +631,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.7;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 769F367252;
 				INFOPLIST_FILE = Tootti/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -630,6 +647,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "tootti-app.Tootti";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tootti/Swift/Tootti-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -640,9 +660,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.7;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 769F367252;
 				INFOPLIST_FILE = Tootti/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
@@ -654,6 +676,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "tootti-app.Tootti";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tootti/Swift/Tootti-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

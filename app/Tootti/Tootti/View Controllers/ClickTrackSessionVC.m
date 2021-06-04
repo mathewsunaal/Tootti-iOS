@@ -282,7 +282,7 @@ void myDeleteFile (NSString* path){
     } else {
         //This ensures playback on silent mode too (music track playback)
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                         withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker
+                                         withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker
                                                error:nil];
         self.audioPlayer.currentTime = 0;
         [self.audioPlayer play];

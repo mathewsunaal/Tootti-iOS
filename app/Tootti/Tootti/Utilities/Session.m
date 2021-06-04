@@ -140,12 +140,12 @@
     return;
 }
 
-+ (void) mergeAllTracks{
-    return;
-}
 
-+ (void) updateRecordedTracks: (Audio *) audioClip{
-    return;
+- (void) updateAudioLatency {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    self.audioLatency = session.outputLatency + session.IOBufferDuration + session.inputLatency;
+    NSLog(@"The total audio latency is: %f",self.audioLatency);
+    
 }
 
 //un tested

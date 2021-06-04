@@ -215,7 +215,7 @@ Audio *_audio;
     NSTimeInterval timeOffset = lastPlayer.deviceCurrentTime + MERGE_PLAYBACK_TIME_BUFFER; // get current device time from lastPlayer
     //This ensures playback on silent mode too (music track playback)
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                     withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker
+                                     withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker
                                            error:nil];
     for(Audio *track in self.selectedTracks) {
         [track stopAudio];

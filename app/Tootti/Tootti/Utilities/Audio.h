@@ -35,6 +35,7 @@
 - (BOOL) playAudioAtTime:(NSTimeInterval)time;
 - (void) pauseAudio;
 - (void) stopAudio;
+- (BOOL)cropAudioWithStartTime:(NSTimeInterval)start;
 - (void) uploadAudioSound: (NSString *) userUid
                sessionUid: (NSString *) sessionUid
                  username: (NSString *) username
@@ -48,5 +49,6 @@
          guestPlayerList: (NSArray *) guestPlayerList
          completionBlock: (void (^)(BOOL success))completion;
 - (NSArray *) convertAVToArr;
+
 - (NSURL *)getURL;
 @end

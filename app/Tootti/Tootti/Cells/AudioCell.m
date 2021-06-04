@@ -25,7 +25,7 @@
     } else {
         //This ensures playback on silent mode too (music track playback)
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback
-                                         withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionDefaultToSpeaker
+                                         withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker
                                                error:nil];
         self.cellPlayer.currentTime = 0;
         [self.cellPlayer play];

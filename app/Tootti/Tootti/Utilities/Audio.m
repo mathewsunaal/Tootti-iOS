@@ -337,6 +337,52 @@
     }
 }
 
+- (BOOL)cropAudioWithStartTime:(NSTimeInterval)start {
+    
+    // 1) Get track as AVAsset
+    AVURLAsset* audioAsset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:self.audioURL] options:nil];
+    NSLog(@"URL of %@ is: %@",self.audioName,self.audioURL);
+    NSLog(@"AVURL audio asset: %@ ",audioAsset.URL);
+        
+    // 2) Create AVAsset Export Session
+    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:audioAsset
+                                                                            presetName:AVAssetExportPresetAppleM4A];
+    if (exportSession == nil)
+    {
+        return NO;
+    }
+    // File output path
+    NSArray *pathComponents = [NSArray arrayWithObjects:
+                               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
+                               [NSString stringWithFormat:@"%@%@", self.audioName,@".wav"],
+                               nil];
+    exportSession.outputURL = [NSURL fileURLWithPathComponents:pathComponents];
+    [[NSFileManager defaultManager] removeItemAtURL:exportSession.outputURL error:NULL];
+    exportSession.outputFileType = AVFileTypeAppleM4A;
+
+    // Set the time scale to 44100 as per 44.1kHz sps fo raudio (audioAsset.duration.timescale)
+    NSTimeInterval end = CMTimeGetSeconds(audioAsset.duration);
+    NSLog(@"Time interval(s) from CMtime: %f %f",CMTimeGetSeconds(CMTimeMakeWithSeconds(start,audioAsset.duration.timescale)),end); // done as a check to ensure conversions for CMTime make sense when generating new exportTimeRange
+    // Set output timeRange
+    CMTimeRange exportTimeRange = CMTimeRangeFromTimeToTime(CMTimeMakeWithSeconds(start,audioAsset.duration.timescale),audioAsset.duration);
+    exportSession.timeRange = exportTimeRange;
+    
+    [exportSession exportAsynchronouslyWithCompletionHandler:^  {
+         if (AVAssetExportSessionStatusCompleted == exportSession.status) {
+             //NSLog(@"Cropped audio: %@",self.audioURL);
+             // Update audioURL and player objects for current <Audio> Instance
+             self.audioURL = [exportSession.outputURL absoluteString];
+             self.player = [[AVAudioPlayer alloc]  initWithData: [NSData dataWithContentsOfURL:exportSession.outputURL] error:nil];
+             [self.player setDelegate:self];
+             NSLog(@"New duration: %f",self.player.duration);
+         }
+         else if (AVAssetExportSessionStatusFailed == exportSession.status) {
+             NSLog(@"Failed to crop: %@",exportSession.error.localizedDescription);
+         }
+     }];
+    return YES;
+}
+
 #pragma mark - Getter methods
 
 -(NSURL *)getURL {

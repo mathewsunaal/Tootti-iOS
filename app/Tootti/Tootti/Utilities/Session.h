@@ -18,6 +18,7 @@
 @property (strong, nonatomic) Audio *finalMergedResult;
 @property (assign, nonatomic) BOOL hostStartRecording;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (nonatomic) NSTimeInterval audioLatency;
 
 - (instancetype) initWithUid: (NSString *)uid
                  sessionName: (NSString *)sessionName
@@ -39,8 +40,7 @@
                              uid:(NSString *)uid
                  completionBlock:(void (^)(BOOL success))completionBlock;
 
-+ (void) mergeAllTracks;
-+ (void) updateRecordedTracks: (Audio *) audioClip;
+- (void) updateAudioLatency;
 -(void) deleteGuestPerformer;
 -(NSArray* ) getOnlineUserSession;
 @end

@@ -14,6 +14,7 @@
 #import "Session.h"
 #import "ApplicationState.h"
 #import "UserStatusCell.h"
+#import "Tootti-Swift.h"
 
 @interface RecordingSessionVC () <AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -190,24 +191,27 @@
 
 // Setup AVAudioSession and properties
 -(void) setupAVSessionwithSpeaker:(BOOL) speaker {
-    BOOL success; NSError *error;
-    
-    // Setup AVAudioSession
+    NSError *error;
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSLog(@"Available audio inputs: /n %@",session.availableInputs[0].dataSources);
-    AVAudioSessionPortDescription *port = [AVAudioSession sharedInstance].availableInputs[0];
-    for (AVAudioSessionDataSourceDescription *source in port.dataSources) {
-        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
-            [session setInputDataSource:source error:nil]; // Force microhpone to Back built-in mic of iPhone (used for voice memos)
-        }
-    }
-    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                       withOptions:AVAudioSessionCategoryOptionAllowBluetooth
-                             error:&error];
-    if (!success) {
+    BOOL categroySuccess = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                                     withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP
+                                           error:&error];
+    if(!categroySuccess) {
         NSLog(@"AVAudioSession error setting category:%@",error.description);
     }
     
+    // TODO: Assuming that the port[0] is always the built-in micrphone port, might need a smarter way to check this
+    AVAudioSessionPortDescription *portPhoneMic = session.availableInputs[0]; // Grab audio port for built-in microphone
+    [session setPreferredInput:portPhoneMic error:nil]; // set preffered audio input port
+    
+    // Set the dataSource for the phoneMicPort to be "Bottom" microhpone
+    NSLog(@"Data sources for current port:%@",session.inputDataSources);
+    for (AVAudioSessionDataSourceDescription *source in portPhoneMic.dataSources) {
+        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
+            [session setInputDataSource:source error:nil];
+        }
+    }
+
     // Define AVAudioRecorder settings (PCM,44100,2xchannels)
     self.recordingSettings = [[NSMutableDictionary alloc] init];
     [self.recordingSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
@@ -217,6 +221,9 @@
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
     [self.recordingSettings setValue :[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     
+    // Update audio latency
+    [self.cachedSessionRecordingVC updateAudioLatency];
+     
     //waveform initial image
     self.waveFormView.backgroundColor =  [UIColor grayColor];
 }
@@ -304,20 +311,24 @@
     [self startWaveform];
     // Activate AVAudioSession
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSLog(@"Available audio inputs: /n %@",session.availableInputs[0].dataSources);
-    AVAudioSessionPortDescription *port = [AVAudioSession sharedInstance].availableInputs[0];
-    for (AVAudioSessionDataSourceDescription *source in port.dataSources) {
-        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
-            [session setInputDataSource:source error:nil]; // Force microhpone to Back built-in mic of iPhone (used for voice memos)
-        }
-    }
     BOOL categroySuccess = [session setCategory:AVAudioSessionCategoryPlayAndRecord
-                                     withOptions:AVAudioSessionCategoryOptionAllowBluetooth
+                                     withOptions:AVAudioSessionCategoryOptionAllowBluetoothA2DP
                                            error:&error];
     if(!categroySuccess) {
         NSLog(@"AVAudioSession error setting category:%@",error.description);
     }
+    // TODO: Assuming that the port[0] is always the built-in micrphone port, might need a smarter way to check this
+    AVAudioSessionPortDescription *portPhoneMic = session.availableInputs[0]; // Grab audio port for built-in microphone
+    [session setPreferredInput:portPhoneMic error:nil]; // set preffered audio input port
     
+    // Set the dataSource for the phoneMicPort to be "Bottom" microhpone
+    NSLog(@"Data sources for current port:%@",session.inputDataSources);
+    for (AVAudioSessionDataSourceDescription *source in portPhoneMic.dataSources) {
+        if ([source.dataSourceName isEqualToString:@"Bottom"]) {
+            [session setInputDataSource:source error:nil];
+        }
+    }
+
     BOOL activationSucces = [session setActive:YES error:&error];
     if (!activationSucces) {
         NSLog(@"AVAudioSession error activating: %@",error);
@@ -344,11 +355,18 @@
         // Update UI
         [self.recordButton setBackgroundImage:[UIImage systemImageNamed:@"stop.circle"] forState:UIControlStateNormal];
         [self setTabBarStatusEnabled:NO];
+        
+        // Update audio latency
+        [self.cachedSessionRecordingVC updateAudioLatency];
+        //NSLog(@"%@", [session outputDataSource]);
+        //NSLog(@"Input latency is = %f, Ouptut Latency = %f, IOBuffer = %f",[session inputLatency],[session outputLatency],[session IOBufferDuration]);
+        
     } else {
         NSLog(@"Recording failed to start");
         [self.clickTrack stopAudio];
         return;
     }
+    
     
 }
 -(void)endRecording:(UIButton *)sender {
@@ -392,6 +410,8 @@
     }
     NSLog(@"New audio recording added: Name = %@, \n URL = %@",newRecordingAudio.audioName,newRecordingAudio.audioURL);
     [libraryVC.audioRecordings addObject:newRecordingAudio];
+    // Crop audio file asynchronously
+    [newRecordingAudio cropAudioWithStartTime:self.cachedSessionRecordingVC.audioLatency];
    
 }
 
