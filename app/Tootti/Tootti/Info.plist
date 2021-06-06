@@ -64,8 +64,6 @@
 	</array>
 	<key>NSSupportsSuddenTermination</key>
 	<false/>
-	<key>UIApplicationExitsOnSuspend</key>
-	<false/>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 </dict>
