@@ -1,6 +1,6 @@
 # Tootti for iOS
 
-## Built for musicians to collaborate from anywhere
+🎵 Built for musicians to collaborate from anywhere 🎵
 
 There are two directories, app/ and server/.
 app/ directory stores the obj-c code for iOS code
