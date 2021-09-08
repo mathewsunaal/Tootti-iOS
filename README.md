@@ -2,6 +2,6 @@
 
 🎵 Built for musicians to collaborate from anywhere 🎵
 
-[![Alt text](https://img.youtube.com/vi/jHU8X8QG9w4&t/0.jpg)](https://www.youtube.com/watch?v=jHU8X8QG9w4&t)
-
-[![Alt text](https://img.youtube.com/vi/1Sesa70JJAo/0.jpg)](https://www.youtube.com/watch?v=1Sesa70JJAo)
+Presentation on this project can be found at: https://youtu.be/jHU8X8QG9w4
+Detailed report: https://www.eecg.utoronto.ca/~jayar/ece1778/download/tooti.pdf
+App demo: https://youtu.be/1Sesa70JJAo
